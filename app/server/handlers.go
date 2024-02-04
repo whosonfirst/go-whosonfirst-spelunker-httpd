@@ -24,3 +24,20 @@ func geoJSONHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	return www.GeoJSONHandler(opts)
 }
+
+func descendantsHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupCommonOnce.Do(setupCommon)
+
+	if setupCommonError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupCommonError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	}
+
+	opts := &www.DescendantsHandlerOptions{
+		Spelunker: sp,
+		Templates: html_templates,
+	}
+
+	return www.DescendantsHandler(opts)
+}

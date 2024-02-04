@@ -15,7 +15,7 @@ import (
 
 type DescendantsHandlerOptions struct {
 	Spelunker spelunker.Spelunker
-	Templates template.Template
+	Templates *template.Template
 }
 
 type DescendantsHandlerVars struct {

@@ -25,12 +25,21 @@ func RunWithFlagSet(ctx context.Context, fs *flag.FlagSet, logger *slog.Logger) 
 	slog.SetDefault(logger)
 
 	uris_table = &httpd.URIs{
+		// WWW/human-readable		
 		Id:      "/id/",
+		Descendants:      "/descendants/",		// FIX ME: Update to use improved syntax in Go 1.22
+
+		// API/machine-readable		
 		GeoJSON: "/geojson",
 	}
 
 	handlers := map[string]handler.RouteHandlerFunc{
-		uris_table.GeoJSON: geoJSONHandlerFunc,
+
+		// WWW/human-readable
+		uris_table.Descendants: descendantsHandlerFunc,
+
+		// API/machine-readable
+		uris_table.GeoJSON: geoJSONHandlerFunc,				
 	}
 
 	route_handler, err := handler.RouteHandler(handlers)

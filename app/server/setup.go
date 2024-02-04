@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
+	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/html"
 )
 
 func setupCommon() {
@@ -17,4 +18,11 @@ func setupCommon() {
 	if err != nil {
 		setupCommonError = fmt.Errorf("Failed to set up network, %w", err)
 	}
+
+	html_templates, err = html.LoadTemplates(ctx)
+
+	if err != nil {
+		setupCommonError = fmt.Errorf("Failed to load HTML templates, %w", err)
+	}
+
 }
