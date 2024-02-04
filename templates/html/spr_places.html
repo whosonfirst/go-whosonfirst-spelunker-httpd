@@ -7,6 +7,8 @@
 	</div>
 	<div style="font-size:small;margin-top:.3rem;">
 	    <span style="font-weight:700;">{{ $spr.Repo }}</span>/{{ $spr.Path }}
+	    <br />
+	    It was last modifed {{ FormatUnixTime $spr.LastModified "January 02, 2006" }}.
 	</div>
     </li>
     {{ end -}}

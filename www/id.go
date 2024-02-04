@@ -8,6 +8,7 @@ import (
 
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
+	"github.com/tidwall/gjson"
 )
 
 type IdHandlerOptions struct {
@@ -17,6 +18,8 @@ type IdHandlerOptions struct {
 
 type IdHandlerVars struct {
 	Id int64
+	PageTitle string
+	Properties string
 }
 
 func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
@@ -44,7 +47,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 
 		logger = logger.With("wofid", uri.Id)
 
-		_, err = opts.Spelunker.GetById(ctx, uri.Id)
+		f, err := opts.Spelunker.GetById(ctx, uri.Id)
 
 		if err != nil {
 			slog.Error("Failed to get by ID", "id", uri.Id, "error", err)
@@ -52,8 +55,14 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
+		props := gjson.GetBytes(f, "properties")
+
+		page_title := gjson.GetBytes(f, "properties.wof:name")
+		
 		vars := IdHandlerVars{
 			Id: uri.Id,
+			Properties: props.String(),
+			PageTitle: page_title.String(),
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

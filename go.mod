@@ -7,7 +7,8 @@ require (
 	github.com/aaronland/go-http-server v1.3.0
 	github.com/aaronland/go-pagination v0.2.0
 	github.com/sfomuseum/go-flags v0.10.0
-	github.com/sfomuseum/go-template v1.8.0
+	github.com/sfomuseum/go-template v1.9.0
+	github.com/tidwall/gjson v1.17.0
 	github.com/whosonfirst/go-reader v1.0.2
 	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240203235306-fca075c84be0
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
@@ -25,7 +26,6 @@ require (
 	github.com/paulmach/orb v0.10.0 // indirect
 	github.com/sfomuseum/go-edtf v1.1.1 // indirect
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
-	github.com/tidwall/gjson v1.17.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/whosonfirst/go-ioutil v1.0.2 // indirect

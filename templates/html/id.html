@@ -1,7 +1,11 @@
 {{ define "id" -}}
-{{ template "header" -}}
+{{ template "header" . -}}
 
-ID {{ .Id }}
+[{{ GjsonGet .Properties "wof:name" }}]
 
-{{ template "footer" -}}
+<pre>
+{{ .Properties }}
+</pre>
+
+{{ template "footer" . -}}
 {{ end -}}
