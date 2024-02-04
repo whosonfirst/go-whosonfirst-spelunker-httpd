@@ -3,9 +3,9 @@ package server
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"log/slog"
-	
+	"net/http"
+
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/www"
 )
 
