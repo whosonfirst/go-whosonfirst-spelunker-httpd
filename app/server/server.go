@@ -42,6 +42,10 @@ func RunWithFlagSet(ctx context.Context, fs *flag.FlagSet, logger *slog.Logger) 
 		uris_table.GeoJSON: geoJSONHandlerFunc,				
 	}
 
+	for uri, h := range handlers {
+		slog.Info("Enable handler", "uri", uri, "handler", fmt.Sprintf("%T", h))
+	}
+	
 	route_handler, err := handler.RouteHandler(handlers)
 
 	if err != nil {

@@ -8,8 +8,11 @@ import (
 )
 
 type URIs struct {
-	// www URIs
+	// WWW/human-readable		
 	Id      string `json:"id"`
+	Descendants string `json:"descendants"`
+	
+	// API/machine-readable			
 	GeoJSON string `json:"geojson"`
 }
 

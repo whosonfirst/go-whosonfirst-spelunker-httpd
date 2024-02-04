@@ -38,6 +38,8 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
 
+		slog.Info("Get descendants")
+		
 		uri, err, status := httpd.ParseURIFromRequest(req, nil)
 
 		if err != nil {
