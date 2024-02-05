@@ -4,7 +4,7 @@
 	{{ if eq $.Pagination.Pages 1 }}
 	&#8212;
 	{{ else }}
-	<a href="#">previous</a>
+	<a href="?page={{ $.Pagination.Previous }}">previous</a>
 	{{ end }}
     </span>
     <span id="pagination-current" class="pagination">    
@@ -14,7 +14,7 @@
 	{{ if eq $.Pagination.Page $.Pagination.Pages }}
 	&#8212;
 	{{ else }}
-	<a href="#">next</a>
+	<a href="?page={{ $.Pagination.Next }}">next</a>
 	{{ end }}	
     </span>
 </div>

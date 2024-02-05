@@ -28,6 +28,7 @@ func RunWithFlagSet(ctx context.Context, fs *flag.FlagSet, logger *slog.Logger) 
 		// WWW/human-readable
 		Id:          "/id/",
 		Descendants: "/descendants/", // FIX ME: Update to use improved syntax in Go 1.22
+		Search:      "/search/",
 
 		// API/machine-readable
 		GeoJSON: "/geojson",
@@ -38,6 +39,7 @@ func RunWithFlagSet(ctx context.Context, fs *flag.FlagSet, logger *slog.Logger) 
 		// WWW/human-readable
 		uris_table.Descendants: descendantsHandlerFunc,
 		uris_table.Id:          idHandlerFunc,
+		uris_table.Search:      searchHandlerFunc,
 
 		// API/machine-readable
 		uris_table.GeoJSON: geoJSONHandlerFunc,

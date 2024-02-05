@@ -16,9 +16,12 @@ import (
 type DescendantsHandlerOptions struct {
 	Spelunker spelunker.Spelunker
 	Templates *template.Template
+	URIs      *httpd.URIs
 }
 
 type DescendantsHandlerVars struct {
+	PageTitle  string
+	URIs       *httpd.URIs
 	Places     []spr.StandardPlacesResult
 	Pagination pagination.Results
 }
@@ -75,6 +78,7 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 		vars := DescendantsHandlerVars{
 			Places:     r.Results(),
 			Pagination: pg_r,
+			URIs:       opts.URIs,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

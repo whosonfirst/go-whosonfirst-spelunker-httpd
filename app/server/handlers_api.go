@@ -6,7 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/www"
+	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/api"
 )
 
 func geoJSONHandlerFunc(ctx context.Context) (http.Handler, error) {
@@ -18,9 +18,9 @@ func geoJSONHandlerFunc(ctx context.Context) (http.Handler, error) {
 		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
 	}
 
-	opts := &www.GeoJSONHandlerOptions{
+	opts := &api.GeoJSONHandlerOptions{
 		Spelunker: sp,
 	}
 
-	return www.GeoJSONHandler(opts)
+	return api.GeoJSONHandler(opts)
 }

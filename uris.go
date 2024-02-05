@@ -11,6 +11,7 @@ type URIs struct {
 	// WWW/human-readable
 	Id          string `json:"id"`
 	Descendants string `json:"descendants"`
+	Search      string `json:"search"`
 
 	// API/machine-readable
 	GeoJSON string `json:"geojson"`

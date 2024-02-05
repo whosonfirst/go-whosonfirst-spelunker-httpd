@@ -14,11 +14,13 @@ import (
 type IdHandlerOptions struct {
 	Spelunker spelunker.Spelunker
 	Templates *template.Template
+	URIs      *httpd.URIs
 }
 
 type IdHandlerVars struct {
 	Id         int64
 	PageTitle  string
+	URIs       *httpd.URIs
 	Properties string
 }
 
@@ -63,6 +65,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			Id:         uri.Id,
 			Properties: props.String(),
 			PageTitle:  page_title.String(),
+			URIs:       opts.URIs,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

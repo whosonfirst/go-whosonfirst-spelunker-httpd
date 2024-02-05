@@ -8,5 +8,14 @@
 	<title>Who's On First | Spelunker{{ if (IsAvailable "PageTitle" .) }} | {{ .PageTitle }}{{ end }}</title>
     </head>
     <body>
+	<header>
+	    {{ if (IsAvailable "URIs" .) }}
+	    <form method="GET" action="{{ .URIs.Search }}">
+		<input type="text" name="q" id="q" value="" placeholder="..." />
+		<input type="submit" value="Search" />
+	    </form>
+	    {{ end }}
+	</header>
+	
 	<div class="container">
 {{ end -}}
