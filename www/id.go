@@ -6,9 +6,9 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
-	"github.com/tidwall/gjson"
 )
 
 type IdHandlerOptions struct {
@@ -17,8 +17,8 @@ type IdHandlerOptions struct {
 }
 
 type IdHandlerVars struct {
-	Id int64
-	PageTitle string
+	Id         int64
+	PageTitle  string
 	Properties string
 }
 
@@ -58,11 +58,11 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		props := gjson.GetBytes(f, "properties")
 
 		page_title := gjson.GetBytes(f, "properties.wof:name")
-		
+
 		vars := IdHandlerVars{
-			Id: uri.Id,
+			Id:         uri.Id,
 			Properties: props.String(),
-			PageTitle: page_title.String(),
+			PageTitle:  page_title.String(),
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

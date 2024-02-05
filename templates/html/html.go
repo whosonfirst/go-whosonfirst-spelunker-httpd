@@ -3,7 +3,7 @@ package html
 import (
 	"context"
 	"embed"
-	
+
 	sfomuseum_html "github.com/sfomuseum/go-template/html"
 	"html/template"
 )

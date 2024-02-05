@@ -108,3 +108,18 @@ func ParseURIFromPath(ctx context.Context, path string, r reader.Reader) (*URI, 
 
 	return parsed_uri, nil, 0
 }
+
+func ParsePageNumberFromRequest(req *go_http.Request) (int64, error) {
+
+	page, err := sanitize.GetInt64(req, "page")
+
+	if err != nil {
+		return 0, fmt.Errorf("Failed to derive ?page= parameter, %w", err)
+	}
+
+	if page == 0 {
+		page = 1
+	}
+
+	return page, nil
+}

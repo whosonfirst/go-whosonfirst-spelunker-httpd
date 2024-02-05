@@ -58,6 +58,12 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 			return
 		}
 
+		pg, pg_err := httpd.ParsePageNumberFromRequest(req)
+
+		if pg_err == nil {
+			pg_opts.Pointer(pg)
+		}
+
 		r, pg_r, err := opts.Spelunker.GetDescendants(ctx, uri.Id, pg_opts)
 
 		if err != nil {

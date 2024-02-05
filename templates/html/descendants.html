@@ -1,7 +1,13 @@
 {{ define "descendants" -}}
-{{ template "header" -}}
+{{ template "header" . -}}
 
 {{ template "spr_places" . -}}
 
-{{ template "footer" -}}
+{{ if (IsAvailable "Pagination" .) -}}
+{{ if gt .Pagination.Pages 1 }}
+{{ template "inc_pagination" . -}}
+{{ end }}
+{{ end -}}
+
+{{ template "footer" . -}}
 {{ end -}}
