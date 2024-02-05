@@ -9,6 +9,8 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 )
 
+var run_options *RunOptions
+
 var sp spelunker.Spelunker
 
 var authenticator auth.Authenticator

@@ -6,6 +6,7 @@ require (
 	github.com/aaronland/go-http-sanitize v0.0.8
 	github.com/aaronland/go-http-server v1.3.0
 	github.com/aaronland/go-pagination v0.2.0
+	github.com/mitchellh/copystructure v1.2.0
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-http-auth v0.9.0
 	github.com/sfomuseum/go-template v1.9.0
@@ -26,6 +27,7 @@ require (
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/jtacoma/uritemplates v1.0.0 // indirect
+	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/paulmach/go.geojson v1.4.0 // indirect
 	github.com/paulmach/orb v0.10.0 // indirect
 	github.com/sfomuseum/go-edtf v1.1.1 // indirect
