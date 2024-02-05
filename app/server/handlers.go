@@ -11,17 +11,18 @@ import (
 
 func descendantsHandlerFunc(ctx context.Context) (http.Handler, error) {
 
-	setupCommonOnce.Do(setupCommon)
+	setupWWWOnce.Do(setupWWW)
 
-	if setupCommonError != nil {
-		slog.Error("Failed to set up common configuration", "error", setupCommonError)
-		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	if setupWWWError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupWWWError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupWWWError)
 	}
 
 	opts := &www.DescendantsHandlerOptions{
-		Spelunker: sp,
-		Templates: html_templates,
-		URIs:      uris_table,
+		Spelunker:     sp,
+		Authenticator: authenticator,
+		Templates:     html_templates,
+		URIs:          uris_table,
 	}
 
 	return www.DescendantsHandler(opts)
@@ -29,17 +30,18 @@ func descendantsHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 func idHandlerFunc(ctx context.Context) (http.Handler, error) {
 
-	setupCommonOnce.Do(setupCommon)
+	setupWWWOnce.Do(setupWWW)
 
-	if setupCommonError != nil {
-		slog.Error("Failed to set up common configuration", "error", setupCommonError)
-		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	if setupWWWError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupWWWError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupWWWError)
 	}
 
 	opts := &www.IdHandlerOptions{
-		Spelunker: sp,
-		Templates: html_templates,
-		URIs:      uris_table,
+		Spelunker:     sp,
+		Authenticator: authenticator,
+		Templates:     html_templates,
+		URIs:          uris_table,
 	}
 
 	return www.IdHandler(opts)
@@ -47,17 +49,18 @@ func idHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 func searchHandlerFunc(ctx context.Context) (http.Handler, error) {
 
-	setupCommonOnce.Do(setupCommon)
+	setupWWWOnce.Do(setupWWW)
 
-	if setupCommonError != nil {
-		slog.Error("Failed to set up common configuration", "error", setupCommonError)
-		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	if setupWWWError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupWWWError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupWWWError)
 	}
 
 	opts := &www.SearchHandlerOptions{
-		Spelunker: sp,
-		Templates: html_templates,
-		URIs:      uris_table,
+		Spelunker:     sp,
+		Authenticator: authenticator,
+		Templates:     html_templates,
+		URIs:          uris_table,
 	}
 
 	return www.SearchHandler(opts)

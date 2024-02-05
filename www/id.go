@@ -6,15 +6,17 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/sfomuseum/go-http-auth"
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 )
 
 type IdHandlerOptions struct {
-	Spelunker spelunker.Spelunker
-	Templates *template.Template
-	URIs      *httpd.URIs
+	Spelunker     spelunker.Spelunker
+	Authenticator auth.Authenticator
+	Templates     *template.Template
+	URIs          *httpd.URIs
 }
 
 type IdHandlerVars struct {

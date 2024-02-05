@@ -8,15 +8,17 @@ import (
 
 	"github.com/aaronland/go-pagination"
 	"github.com/aaronland/go-pagination/countable"
+	"github.com/sfomuseum/go-http-auth"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 )
 
 type DescendantsHandlerOptions struct {
-	Spelunker spelunker.Spelunker
-	Templates *template.Template
-	URIs      *httpd.URIs
+	Spelunker     spelunker.Spelunker
+	Authenticator auth.Authenticator
+	Templates     *template.Template
+	URIs          *httpd.URIs
 }
 
 type DescendantsHandlerVars struct {

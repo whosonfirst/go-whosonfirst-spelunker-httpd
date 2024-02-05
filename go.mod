@@ -7,6 +7,7 @@ require (
 	github.com/aaronland/go-http-server v1.3.0
 	github.com/aaronland/go-pagination v0.2.0
 	github.com/sfomuseum/go-flags v0.10.0
+	github.com/sfomuseum/go-http-auth v0.9.0
 	github.com/sfomuseum/go-template v1.9.0
 	github.com/tidwall/gjson v1.17.0
 	github.com/whosonfirst/go-reader v1.0.2
