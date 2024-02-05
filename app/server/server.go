@@ -13,6 +13,13 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 )
 
+type RunOptions struct {
+	Logger           *slog.Logger
+	ServerURI        string
+	SpelunkerURI     string
+	AuthenticatorURI string
+}
+
 func Run(ctx context.Context, logger *slog.Logger) error {
 	fs := DefaultFlagSet()
 	return RunWithFlagSet(ctx, fs, logger)
@@ -20,9 +27,32 @@ func Run(ctx context.Context, logger *slog.Logger) error {
 
 func RunWithFlagSet(ctx context.Context, fs *flag.FlagSet, logger *slog.Logger) error {
 
+	opts, err := RunOptionsFromFlagSet(ctx, fs, logger)
+
+	if err != nil {
+		return fmt.Errorf("Failed to derive run options from flagset, %w", err)
+	}
+
+	return RunWithOptions(ctx, opts)
+}
+
+func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet, logger *slog.Logger) (*RunOptions, error) {
+
 	flagset.Parse(fs)
 
-	slog.SetDefault(logger)
+	opts := &RunOptions{
+		Logger:           logger,
+		ServerURI:        server_uri,
+		AuthenticatorURI: authenticator_uri,
+		SpelunkerURI:     spelunker_uri,
+	}
+
+	return opts, nil
+}
+
+func RunWithOptions(ctx context.Context, opts *RunOptions) error {
+
+	slog.SetDefault(opts.Logger)
 
 	uris_table = &httpd.URIs{
 		// WWW/human-readable
@@ -68,7 +98,7 @@ func RunWithFlagSet(ctx context.Context, fs *flag.FlagSet, logger *slog.Logger) 
 		return fmt.Errorf("Failed to create new server, %w", err)
 	}
 
-	logger.Info("Listening for requests", "address", s.Address())
+	slog.Info("Listening for requests", "address", s.Address())
 
 	err = s.ListenAndServe(ctx, mux)
 
