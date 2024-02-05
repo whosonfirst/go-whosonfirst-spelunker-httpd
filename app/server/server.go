@@ -31,7 +31,8 @@ func RunWithFlagSet(ctx context.Context, fs *flag.FlagSet, logger *slog.Logger) 
 		Search:      "/search/",
 
 		// API/machine-readable
-		GeoJSON: "/geojson",
+		GeoJSON: "/geojson/",
+		SVG:     "/svg/",
 	}
 
 	handlers := map[string]handler.RouteHandlerFunc{
@@ -43,6 +44,7 @@ func RunWithFlagSet(ctx context.Context, fs *flag.FlagSet, logger *slog.Logger) 
 
 		// API/machine-readable
 		uris_table.GeoJSON: geoJSONHandlerFunc,
+		uris_table.SVG:     svgHandlerFunc,
 	}
 
 	go func() {

@@ -15,6 +15,7 @@ type URIs struct {
 
 	// API/machine-readable
 	GeoJSON string `json:"geojson"`
+	SVG     string `json:"svg"`
 }
 
 func (u *URIs) ApplyPrefix(prefix string) error {
