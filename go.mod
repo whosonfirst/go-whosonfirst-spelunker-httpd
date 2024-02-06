@@ -1,6 +1,6 @@
 module github.com/whosonfirst/go-whosonfirst-spelunker-httpd
 
-go 1.21.3
+go 1.22
 
 require (
 	github.com/aaronland/go-http-sanitize v0.0.8

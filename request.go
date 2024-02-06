@@ -3,9 +3,10 @@ package httpd
 import (
 	"context"
 	"fmt"
-	_ "io"
+	_ "log/slog"
 	go_http "net/http"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/aaronland/go-http-sanitize"
@@ -13,6 +14,8 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/webfinger"
 	wof_uri "github.com/whosonfirst/go-whosonfirst-uri"
 )
+
+var re_path_id = regexp.MustCompile(`/id/(\d+)/.*$`)
 
 type URI struct {
 	Id          int64
@@ -49,8 +52,22 @@ func ParseURIFromRequest(req *go_http.Request, r reader.Reader) (*URI, error, in
 		path = wof_uri
 	}
 
+	// Y U NO WORK...
+	// https://pkg.go.dev/net/http@master#hdr-Patterns
+
 	if path == "" {
+		path = req.PathValue("id")
+	}
+
+	// Oh well, at least the ServeMux recognizes wildcards now...
+	if path == "" {
+
 		path = req.URL.Path
+
+		if re_path_id.MatchString(path) {
+			m := re_path_id.FindStringSubmatch(path)
+			path = m[1]
+		}
 	}
 
 	return ParseURIFromPath(ctx, path, r)

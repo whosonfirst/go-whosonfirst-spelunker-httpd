@@ -47,8 +47,9 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 
 	uris_table = &httpd.URIs{
 		// WWW/human-readable
-		Id:          "/id/",
-		Descendants: "/descendants/", // FIX ME: Update to use improved syntax in Go 1.22
+		Descendants: "/id/{id}/descendants",		
+		Id: "/id/",
+		// Descendants: "/descendants/", // FIX ME: Update to use improved syntax in Go 1.22
 		Search:      "/search/",
 
 		// API/machine-readable
@@ -72,7 +73,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 
 	go func() {
 		for uri, h := range handlers {
-			slog.Debug("Enable handler", "uri", uri, "handler", fmt.Sprintf("%T", h))
+			slog.Info("Enable handler", "uri", uri, "handler", fmt.Sprintf("%T", h))
 		}
 	}()
 
