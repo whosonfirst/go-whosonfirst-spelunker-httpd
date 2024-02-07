@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
+	"net/url"
 
 	"github.com/aaronland/go-http-sanitize"
 	"github.com/aaronland/go-pagination"
@@ -23,10 +24,11 @@ type SearchHandlerOptions struct {
 }
 
 type SearchHandlerVars struct {
-	PageTitle  string
-	URIs       *httpd.URIs
-	Places     []spr.StandardPlacesResult
-	Pagination pagination.Results
+	PageTitle     string
+	URIs          *httpd.URIs
+	Places        []spr.StandardPlacesResult
+	Pagination    pagination.Results
+	PaginationURL string
 }
 
 func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
@@ -87,6 +89,12 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 
 			vars.Places = r.Results()
 			vars.Pagination = pg_r
+
+			pagination_q := &url.Values{}
+			pagination_q.Set("q", q)
+
+			pagination_url := opts.URIs.Search + "?" + pagination_q.Encode()
+			vars.PaginationURL = pagination_url
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

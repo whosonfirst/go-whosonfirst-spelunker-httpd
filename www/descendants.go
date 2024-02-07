@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
+	"path/filepath"
+	"strconv"
 
 	"github.com/aaronland/go-pagination"
 	"github.com/aaronland/go-pagination/countable"
@@ -22,10 +24,11 @@ type DescendantsHandlerOptions struct {
 }
 
 type DescendantsHandlerVars struct {
-	PageTitle  string
-	URIs       *httpd.URIs
-	Places     []spr.StandardPlacesResult
-	Pagination pagination.Results
+	PageTitle     string
+	URIs          *httpd.URIs
+	Places        []spr.StandardPlacesResult
+	Pagination    pagination.Results
+	PaginationURL string
 }
 
 func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
@@ -77,10 +80,14 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 			return
 		}
 
+		str_id := strconv.FormatInt(uri.Id, 10)
+		pagination_url := filepath.Join(opts.URIs.Descendants, str_id) + "?"
+
 		vars := DescendantsHandlerVars{
-			Places:     r.Results(),
-			Pagination: pg_r,
-			URIs:       opts.URIs,
+			Places:        r.Results(),
+			Pagination:    pg_r,
+			URIs:          opts.URIs,
+			PaginationURL: pagination_url,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")
