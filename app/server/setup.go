@@ -3,9 +3,10 @@ package server
 import (
 	"context"
 	"fmt"
+	html_template "html/template"
+	_ "log/slog"
 
 	"github.com/sfomuseum/go-http-auth"
-	sfom_html "github.com/sfomuseum/go-template/html"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 )
 
@@ -14,6 +15,7 @@ func setupCommon() {
 	ctx := context.Background()
 	var err error
 
+	// defined in vars.go
 	sp, err = spelunker.NewSpelunker(ctx, run_options.SpelunkerURI)
 
 	if err != nil {
@@ -34,6 +36,7 @@ func setupWWW() {
 		return
 	}
 
+	// defined in vars.go
 	authenticator, err = auth.NewAuthenticator(ctx, run_options.AuthenticatorURI)
 
 	if err != nil {
@@ -41,13 +44,17 @@ func setupWWW() {
 		return
 	}
 
-	// To do: custom funcs...
+	// defined in vars.go
+	html_templates = html_template.New("html").Funcs(run_options.HTMLTemplateFuncs)
 
-	html_templates, err = sfom_html.LoadTemplates(ctx, run_options.Templates...)
+	for idx, f := range run_options.HTMLTemplates {
 
-	if err != nil {
-		setupWWWError = fmt.Errorf("Failed to load HTML templates, %w", err)
-		return
+		html_templates, err = html_templates.ParseFS(f, "*.html")
+
+		if err != nil {
+			setupWWWError = fmt.Errorf("Failed to load templates from FS at offset %d, %w", idx, err)
+			return
+		}
 	}
 
 }
