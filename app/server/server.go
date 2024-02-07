@@ -47,9 +47,10 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 
 	uris_table = &httpd.URIs{
 		// WWW/human-readable
-		Descendants: "/id/{id}/descendants",		
-		Id: "/id/",
-		// Descendants: "/descendants/", // FIX ME: Update to use improved syntax in Go 1.22
+		// I can't get this to work...
+		// Descendants: "/id/{id}/descendants",
+		Id:          "/id",
+		Descendants: "/descendants/",
 		Search:      "/search/",
 
 		// API/machine-readable
