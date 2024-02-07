@@ -3,11 +3,10 @@ package server
 import (
 	"context"
 	"fmt"
-	_ "log/slog"
 
 	"github.com/sfomuseum/go-http-auth"
+	sfom_html "github.com/sfomuseum/go-template/html"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
-	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/html"
 )
 
 func setupCommon() {
@@ -42,7 +41,9 @@ func setupWWW() {
 		return
 	}
 
-	html_templates, err = html.LoadTemplates(ctx)
+	// To do: custom funcs...
+
+	html_templates, err = sfom_html.LoadTemplates(ctx, run_options.Templates...)
 
 	if err != nil {
 		setupWWWError = fmt.Errorf("Failed to load HTML templates, %w", err)

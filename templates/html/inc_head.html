@@ -1,4 +1,4 @@
-{{ define "header" -}}
+{{ define "inc_head" -}}
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,6 +6,7 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Who's On First | Spelunker{{ if (IsAvailable "PageTitle" .) }} | {{ .PageTitle }}{{ end }}</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/whosonfirst.spelunker.css" />
     </head>
     <body>
 	<header>

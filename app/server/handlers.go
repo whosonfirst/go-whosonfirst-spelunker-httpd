@@ -9,6 +9,14 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/www"
 )
 
+func staticHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	http_fs := http.FS(run_options.StaticAssets)
+	fs_handler := http.FileServer(http_fs)
+
+	return http.StripPrefix(run_options.URIs.Static, fs_handler), nil
+}
+
 func descendantsHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	setupWWWOnce.Do(setupWWW)

@@ -9,7 +9,7 @@ import (
 
 	"github.com/aaronland/go-http-server"
 	"github.com/aaronland/go-http-server/handler"
-	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
+	_ "github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 )
 
 func Run(ctx context.Context, logger *slog.Logger) error {
@@ -43,33 +43,21 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 
 	run_options = v
 
-	// To do: Move this in to RunOptionsFromFlagSet
-
-	uris_table = &httpd.URIs{
-		// WWW/human-readable
-		// I can't get this to work...
-		// Descendants: "/id/{id}/descendants",
-		Id:          "/id",
-		Descendants: "/descendants/",
-		Search:      "/search/",
-
-		// API/machine-readable
-		GeoJSON: "/geojson/",
-		SVG:     "/svg/",
-	}
-
 	// To do: Add/consult "is enabled" flags
 
 	handlers := map[string]handler.RouteHandlerFunc{
 
 		// WWW/human-readable
-		uris_table.Descendants: descendantsHandlerFunc,
-		uris_table.Id:          idHandlerFunc,
-		uris_table.Search:      searchHandlerFunc,
+		run_options.URIs.Descendants: descendantsHandlerFunc,
+		run_options.URIs.Id:          idHandlerFunc,
+		run_options.URIs.Search:      searchHandlerFunc,
+
+		// Static assets
+		run_options.URIs.Static: staticHandlerFunc,
 
 		// API/machine-readable
-		uris_table.GeoJSON: geoJSONHandlerFunc,
-		uris_table.SVG:     svgHandlerFunc,
+		run_options.URIs.GeoJSON: geoJSONHandlerFunc,
+		run_options.URIs.SVG:     svgHandlerFunc,
 	}
 
 	go func() {

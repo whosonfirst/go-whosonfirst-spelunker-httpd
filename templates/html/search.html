@@ -1,13 +1,8 @@
 {{ define "search" -}}
-{{ template "header" . -}}
+{{ template "inc_head" . -}}
 
-{{ template "spr_places" . -}}
-
-{{ if (IsAvailable "Pagination" .) -}}
-{{ if gt .Pagination.Pages 1 }}
+{{ template "inc_places" . -}}
 {{ template "inc_pagination" . -}}
-{{ end }}
-{{ end -}}
 
-{{ template "footer" . -}}
+{{ template "inc_foot" . -}}
 {{ end -}}

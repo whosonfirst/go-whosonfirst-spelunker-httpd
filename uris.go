@@ -13,6 +13,9 @@ type URIs struct {
 	Descendants string `json:"descendants"`
 	Search      string `json:"search"`
 
+	// Static assets
+	Static string `json:"static"`
+
 	// API/machine-readable
 	GeoJSON string `json:"geojson"`
 	SVG     string `json:"svg"`

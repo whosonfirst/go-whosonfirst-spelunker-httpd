@@ -1,4 +1,7 @@
 {{ define "inc_pagination" -}}
+{{ if (IsAvailable "Pagination" $) -}}
+{{ if gt $.Pagination.Pages 1 }}
+
 <div id="pagination" class="pagination">
     <span id="pagination-previous" class="pagination">
 	{{ if eq $.Pagination.Pages 1 }}
@@ -18,4 +21,7 @@
 	{{ end }}	
     </span>
 </div>
+
+{{ end -}}
+{{ end -}}
 {{ end -}}

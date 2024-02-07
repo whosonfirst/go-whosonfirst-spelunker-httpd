@@ -1,5 +1,5 @@
 {{ define "id" -}}
-{{ template "header" . -}}
+{{ template "inc_head" . -}}
 
 <h2>
     {{ GjsonGet .Properties "wof:name" }}
@@ -21,5 +21,5 @@
     <pre>{{ .Properties }}</pre>
 </whosonfirst-properties>
 
-{{ template "footer" . -}}
+{{ template "inc_foot" . -}}
 {{ end -}}
