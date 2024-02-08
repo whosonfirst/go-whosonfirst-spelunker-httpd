@@ -2,12 +2,12 @@
 	</div>
 
 	<div class="footer" id="footer">
-	    <div class="pull-right">this is a <a href="https://www.whosonfirst.org/" class="hey-look">who's on first</a> gig / you can <span class="hey-look">read all the details</span> on the handy <a href="/help/" class="hey-look">about</a> page / see also <a href="https://twitter.com/alloftheplaces" class="hey-look" target="twitter">@alloftheplaces</a></div>
+	    <div class="pull-right">this is a <a href="https://www.whosonfirst.org/" class="hey-look">who's on first</a> gig / you can <span class="hey-look">read all the details</span> on the handy <a href="{{ .URIs.About }}" class="hey-look">about</a> page / see also <a href="https://mapstodon.space/home" class="hey-look" target="mastodon">@whosonfirst</a></div>
 	</div>
 
-	<script type="text/javascript" src="/static/javascript/whosonfirst.spelunker.js"></script>
-	<script type="text/javascript" src="/static/javascript/whosonfirst.spelunker.properties.js"></script>
-	<script type="text/javascript" src="/static/javascript/whosonfirst.spelunker.yesnofix.js"></script>
+	<script type="text/javascript" src="{{ .URIs.Static }}javascript/whosonfirst.spelunker.js"></script>
+	<script type="text/javascript" src="{{ .URIs.Static }}javascript/whosonfirst.spelunker.properties.js"></script>
+	<script type="text/javascript" src="{{ .URIs.Static }}javascript/whosonfirst.spelunker.yesnofix.js"></script>
 	
 	</body>
 </html>

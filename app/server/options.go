@@ -68,7 +68,7 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 		About:      "/about",		
 
 		// Static Assets
-		Static: "/static/",
+		Static: "/static",
 
 		// API/machine-readable
 		GeoJSON: "/geojson/",
