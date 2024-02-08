@@ -18,6 +18,7 @@ type URIs struct {
 
 	// API/machine-readable
 	GeoJSON string `json:"geojson"`
+	GeoJSONLD string `json:"geojsonld"`	
 	SVG     string `json:"svg"`
 }
 

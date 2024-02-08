@@ -54,13 +54,15 @@ func DefaultSVGSizes() map[string]SVGSize {
 
 func SVGHandler(opts *SVGHandlerOptions) (http.Handler, error) {
 
+	logger := slog.Default()
+	
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
 		ctx := req.Context()
 
-		logger := slog.Default()
 		logger = logger.With("request", req.URL)
-
+		logger = logger.With("address", req.RemoteAddr)
+		
 		uri, err, status := httpd.ParseURIFromRequest(req, nil)
 
 		if err != nil {

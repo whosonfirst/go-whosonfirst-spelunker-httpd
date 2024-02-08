@@ -6,13 +6,14 @@ import (
 
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
+	"github.com/sfomuseum/go-geojsonld"	
 )
 
-type GeoJSONHandlerOptions struct {
+type GeoJSONLDHandlerOptions struct {
 	Spelunker spelunker.Spelunker
 }
 
-func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
+func GeoJSONLDHandler(opts *GeoJSONLDHandlerOptions) (http.Handler, error) {
 
 	logger := slog.Default()
 	
@@ -21,8 +22,8 @@ func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
 		ctx := req.Context()
 
 		logger = logger.With("request", req.URL)
-		logger = logger.With("address", req.RemoteAddr)
-		
+		logger = logger.With("address", req.RemoteAddr)		
+
 		uri, err, status := httpd.ParseURIFromRequest(req, nil)
 
 		if err != nil {
@@ -39,8 +40,16 @@ func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		rsp.Header().Set("Content-Type", "application/json")
-		rsp.Write(r)
+		body, err := geojsonld.AsGeoJSONLD(ctx, r)
+
+		if err != nil {
+			slog.Error("Failed to render geojson", "id", uri.Id, "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+		
+		rsp.Header().Set("Content-Type", "application/geo+json")		
+		rsp.Write([]byte(body))
 	}
 
 	h := http.HandlerFunc(fn)

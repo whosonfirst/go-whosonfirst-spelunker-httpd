@@ -57,6 +57,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 
 		// API/machine-readable
 		run_options.URIs.GeoJSON: geoJSONHandlerFunc,
+		run_options.URIs.GeoJSONLD: geoJSONLDHandlerFunc,		
 		run_options.URIs.SVG:     svgHandlerFunc,
 	}
 

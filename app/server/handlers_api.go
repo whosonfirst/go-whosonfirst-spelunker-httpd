@@ -25,6 +25,22 @@ func geoJSONHandlerFunc(ctx context.Context) (http.Handler, error) {
 	return api.GeoJSONHandler(opts)
 }
 
+func geoJSONLDHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupCommonOnce.Do(setupCommon)
+
+	if setupCommonError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupCommonError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	}
+
+	opts := &api.GeoJSONLDHandlerOptions{
+		Spelunker: sp,
+	}
+
+	return api.GeoJSONLDHandler(opts)
+}
+
 func svgHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	setupCommonOnce.Do(setupCommon)

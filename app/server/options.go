@@ -71,6 +71,7 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 
 		// API/machine-readable
 		GeoJSON: "/geojson/",
+		GeoJSONLD: "/geojsonld/",		
 		SVG:     "/svg/",
 	}
 

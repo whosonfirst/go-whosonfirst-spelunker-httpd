@@ -1,28 +1,31 @@
 package api
 
 import (
+	"encoding/json"
 	"log/slog"
 	"net/http"
 
+	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
+	
 )
 
-type GeoJSONHandlerOptions struct {
-	Spelunker spelunker.Spelunker
+type SPRHandlerOptions struct {
+	Spelunker spelunker.Spelunker	
 }
 
-func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
+func SPRHandler(opts *SPRHandlerOptions) (http.Handler, error) {
 
 	logger := slog.Default()
 	
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
 		ctx := req.Context()
-
+		
 		logger = logger.With("request", req.URL)
 		logger = logger.With("address", req.RemoteAddr)
-		
+
 		uri, err, status := httpd.ParseURIFromRequest(req, nil)
 
 		if err != nil {
@@ -39,8 +42,23 @@ func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
 			return
 		}
 
+		s, err := spr.WhosOnFirstSPR(r)
+
+		if err != nil {
+			http.Error(rsp, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
 		rsp.Header().Set("Content-Type", "application/json")
-		rsp.Write(r)
+
+		enc := json.NewEncoder(rsp)
+		err = enc.Encode(s)
+
+		if err != nil {
+			http.Error(rsp, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
 	}
 
 	h := http.HandlerFunc(fn)
