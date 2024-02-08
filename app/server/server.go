@@ -66,13 +66,20 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 			slog.Info("Enable handler", "uri", uri, "handler", fmt.Sprintf("%T", h))
 		}
 	}()
+	
+        log_logger := slog.NewLogLogger(logger.Handler(), slog.LevelInfo)
 
-	route_handler, err := handler.RouteHandler(handlers)
+        route_handler_opts := &handler.RouteHandlerOptions{
+                           Handlers: handlers,
+                           Logger: log_logger,
+        }
+
+        route_handler, err := handler.RouteHandlerWithOptions(route_handler_opts)
 
 	if err != nil {
-		return fmt.Errorf("Failed to create route handlers, %w", err)
+		return fmt.Errorf("Failed to configure route handler, %w", err)
 	}
-
+	
 	mux := http.NewServeMux()
 	mux.Handle("/", route_handler)
 
