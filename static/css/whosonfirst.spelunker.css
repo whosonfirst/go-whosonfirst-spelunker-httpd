@@ -28,6 +28,14 @@ p {
 #nav-links li:last-child:after {
 }
 
+whosonfirst-map img {
+	max-height: 200px;
+}
+
+.whosonfirst-record {
+	display:grid;
+	grid-template-columns: 1fr 1fr;
+}
 
 ol, ul {
     line-height: 1.7em;

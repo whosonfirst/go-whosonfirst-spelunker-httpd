@@ -3,23 +3,33 @@
 
 <h2>
     {{ GjsonGet .Properties "wof:name" }}
-    <small>Parented by <whosonfirst-place id="{{ GjsonGet .Properties "wof:parent_id" }}">{{ GjsonGet .Properties "wof:parent_id" }}</whosonfirst-place></small>
 </h2>
 
 <whosonfirst-map id="{{ .Id }}">
     {{ if (IsAvailable "URIs" .) }}<img src="{{ .URIs.SVG }}/{{ .Id }}" />{{ end }}
+    <p>NAME is a PLACETYPE and its consensus geometry is derived from SOURCE.</p>
 </whosonfirst-map>
 
-<ul>
-        {{ if (IsAvailable "URIs" .) }}<li><a href="{{ .URIs.Descendants }}/{{ .Id }}">See all the descendants of {{ GjsonGet .Properties "wof:name" }}</a></li>{{ end }}
-    {{ if (IsAvailable "URIs" .) }}<li><a href="{{ .URIs.GeoJSON }}/{{ .Id }}">Raw data (GeoJSON)</a></li>{{ end }}
-    <li><a href="https://github.com/whosonfirst-data/{{ GjsonGet .Properties "wof:repo" }}/FIXME">View on GitHub</a></li>
-    <li><a href="https://writefield.nextzen.org/place/edit?url=FIX ME">Edit in Write Field</a></li>
-</ul>
+<div class="whosonfirst-record">
+    <div>
+	<h3>Properties</h3>
+	<whosonfirst-properties>
+	    <pre>{{ .Properties }}</pre>
+	</whosonfirst-properties>
+    </div>
+    <div>
+	<h3>Hierarchy</h3>
+	<ul></ul>
 
-<whosonfirst-properties>
-    <pre>{{ .Properties }}</pre>
-</whosonfirst-properties>
+	<h3>Other</h3>
+	<ul>
+            {{ if (IsAvailable "URIs" .) }}<li><a href="{{ .URIs.Descendants }}/{{ .Id }}">See all the descendants of {{ GjsonGet .Properties "wof:name" }}</a></li>{{ end }}
+	    {{ if (IsAvailable "URIs" .) }}<li><a href="{{ .URIs.GeoJSON }}/{{ .Id }}">Raw data (GeoJSON)</a></li>{{ end }}
+	    <li><a href="https://github.com/whosonfirst-data/{{ GjsonGet .Properties "wof:repo" }}/FIXME">View on GitHub</a></li>
+	    <li><a href="https://writefield.nextzen.org/place/edit?url=FIX ME">Edit in Write Field</a></li>
+	</ul>
+    </div>
+</div>
 
 {{ template "inc_foot" . -}}
 {{ end -}}
