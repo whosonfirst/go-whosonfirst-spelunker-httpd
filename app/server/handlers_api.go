@@ -41,6 +41,55 @@ func geoJSONLDHandlerFunc(ctx context.Context) (http.Handler, error) {
 	return api.GeoJSONLDHandler(opts)
 }
 
+func sprHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupCommonOnce.Do(setupCommon)
+
+	if setupCommonError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupCommonError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	}
+
+	opts := &api.SPRHandlerOptions{
+		Spelunker: sp,
+	}
+
+	return api.SPRHandler(opts)
+}
+
+func selectHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupCommonOnce.Do(setupCommon)
+
+	if setupCommonError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupCommonError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	}
+
+	opts := &api.SelectHandlerOptions{
+		Spelunker: sp,
+	}
+
+	return api.SelectHandler(opts)
+}
+
+func navPlaceHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupCommonOnce.Do(setupCommon)
+
+	if setupCommonError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupCommonError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	}
+
+	opts := &api.NavPlaceHandlerOptions{
+		Spelunker: sp,
+		MaxFeatures: 10,
+	}
+
+	return api.NavPlaceHandler(opts)
+}
+
 func svgHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	setupCommonOnce.Do(setupCommon)

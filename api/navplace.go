@@ -43,16 +43,14 @@ func NavPlaceHandler(opts *NavPlaceHandlerOptions) (http.Handler, error) {
 
 		ids := strings.Split(base, ",")
 
-		uris := make([]*wof_http.URI, len(ids))
+		uris := make([]*httpd.URI, len(ids))
 
-		for idx, id := range ids {
+		for idx, str_id := range ids {
 
-			uri, err, status := wof_http.ParseURIFromPath(ctx, id, opts.Reader)
-
+			uri, err, status :=  httpd.ParseURIFromPath(ctx, str_id, nil)
+			
 			if err != nil {
-
-				opts.Logger.Printf("Failed to parse URI from request %s, %v", req.URL, err)
-
+				slog.Error("Failed to parse URI from request", "id", str_id, "error", err)
 				http.Error(rsp, err.Error(), status)
 				return
 			}
@@ -78,7 +76,15 @@ func NavPlaceHandler(opts *NavPlaceHandlerOptions) (http.Handler, error) {
 
 		for i, uri := range uris {
 
-			rsp.Write(uri.Feature)
+			r, err := opts.Spelunker.GetById(ctx, uri.Id)
+
+			if err != nil {
+				slog.Error("Failed to retrieve record", "id", uri.Id, "error", err)
+				http.Error(rsp, "Failed to retrieve ID", http.StatusInternalServerError)				
+				return
+			}
+			
+			rsp.Write(r)
 
 			if i+1 < count {
 				rsp.Write([]byte(`,`))

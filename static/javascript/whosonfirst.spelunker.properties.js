@@ -1,7 +1,7 @@
-var mapzen = mapzen || {};
-mapzen.whosonfirst = mapzen.whosonfirst || {};
+var whosonfirst = whosonfirst || {};
+whosonfirst.spelunker = whosonfirst.spelunker || {};
 
-mapzen.whosonfirst.properties = (function(){
+whosonfirst.spelunker.properties = (function(){
 
     var self = {
 
@@ -21,8 +21,8 @@ mapzen.whosonfirst.properties = (function(){
 	    ];
 
 	    var text_callbacks = {
-		'wof.id': mapzen.whosonfirst.yesnofix.render_code,
-		//'wof.id': mapzen.whosonfirst.render_wof_id,
+		'wof.id': whosonfirst.spelunker.yesnofix.render_code,
+		//'wof.id': whosonfirst.spelunker.render_wof_id,
 		'wof.placetype': self.render_placetype,
 		'wof.concordances.4sq:id': self.render_foursquare_id,
 		'wof.concordances.companieshouse:number': self.render_companieshouse_number,
@@ -40,7 +40,7 @@ mapzen.whosonfirst.properties = (function(){
 		'wof.concordances.transitland:onestop_id': self.render_transitland_onestop_id,
 		'wof.concordances.wd:id': self.render_wikidata_id,
 		'wof.concordances.wk:page': self.render_wikipedia_page,
-		'wof.lastmodified': mapzen.whosonfirst.yesnofix.render_timestamp,
+		'wof.lastmodified': whosonfirst.spelunker.yesnofix.render_timestamp,
 		'wof.megacity': self.render_megacity,
 		'wof.repo': self.render_wof_repo,
 		'wof.tags': self.render_wof_tags,
@@ -158,28 +158,28 @@ mapzen.whosonfirst.properties = (function(){
 
 	    };
 
-	    mapzen.whosonfirst.yesnofix.set_submit_handler(self.submit_handler);
+	    whosonfirst.spelunker.yesnofix.set_submit_handler(self.submit_handler);
 
-	    mapzen.whosonfirst.yesnofix.set_custom_renderers('text', text_renderers);
-	    mapzen.whosonfirst.yesnofix.set_custom_renderers('dict', dict_renderers);
+	    whosonfirst.spelunker.yesnofix.set_custom_renderers('text', text_renderers);
+	    whosonfirst.spelunker.yesnofix.set_custom_renderers('dict', dict_renderers);
 
-	    mapzen.whosonfirst.yesnofix.set_custom_exclusions('text', text_exclusions);
+	    whosonfirst.spelunker.yesnofix.set_custom_exclusions('text', text_exclusions);
 	    
-	    var pretty = mapzen.whosonfirst.yesnofix.render(props);
+	    var pretty = whosonfirst.spelunker.yesnofix.render(props);
 	    return pretty;
 	},
 
-	// TO DO : make 'mapzen.whosonfirst.spelunker.abs_root_url' something like
-	// 'mapzen.whosonfirst.common.abs_root_url' or equivalent...
+	// TO DO : make 'whosonfirst.spelunker.spelunker.abs_root_url' something like
+	// 'whosonfirst.spelunker.common.abs_root_url' or equivalent...
 
 	'render_wof_id': function(d, ctx){
-	    var root = mapzen.whosonfirst.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
 	    var link = root + "id/" + encodeURIComponent(d) + "/";
-	    var el = mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    var el = whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	    
 	    var text = el.children[0];
-	    text.setAttribute("data-value", mapzen.whosonfirst.php.htmlspecialchars(d));
-	    text.setAttribute("class", "props-uoc props-uoc-name props-uoc-name_" + mapzen.whosonfirst.php.htmlspecialchars(d));
+	    text.setAttribute("data-value", whosonfirst.spelunker.php.htmlspecialchars(d));
+	    text.setAttribute("class", "props-uoc props-uoc-name props-uoc-name_" + whosonfirst.spelunker.php.htmlspecialchars(d));
 	    
 	    return el;
 	    
@@ -196,28 +196,28 @@ mapzen.whosonfirst.properties = (function(){
 	    }
 	    
 	    var link = root + encodeURIComponent(d) + "/";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_wof_placetype': function(d, ctx){
-	    var root = mapzen.whosonfirst.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
 	    var link = root + "placetypes/" + encodeURIComponent(d) + "/";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_foursquare_id': function(d, ctx){
 	    var link = "https://www.foursquare.com/v/" + encodeURIComponent(d) + "/";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_geonames_id': function(d, ctx){
 	    var link = "http://geonames.org/" + encodeURIComponent(d) + "/";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_woedb_id': function(d, ctx){
 	    var link = "https://woe.spum.org/id/" + encodeURIComponent(d) + "/";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_wikipedia_page': function(d, ctx){
@@ -229,18 +229,18 @@ mapzen.whosonfirst.properties = (function(){
 
 	    d = decodeURI(d);
 	    var link = "https://www.wikipedia.org/wiki/" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_wikidata_id': function(d, ctx){
 	    var link = "https://www.wikidata.org/wiki/" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_transitland_onestop_id': function(d, ctx){
 
 	    var href = "https://mobility-explorer.netlify.com/#/stops?bbox=__BBOX__&onestop_id=" + encodeURIComponent(d);
-	    var link = mapzen.whosonfirst.yesnofix.render_link(href, d, ctx);
+	    var link = whosonfirst.spelunker.yesnofix.render_link(href, d, ctx);
 
 	    link.onclick = function(e){
 
@@ -286,43 +286,43 @@ mapzen.whosonfirst.properties = (function(){
 
 	'render_tgn_id': function(d, ctx){
 	    var link = "http://vocab.getty.edu/tgn/" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_ourairport_id': function(d, ctx){
 	    var link = "http://ourairports.com/airports/" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_openstreetmap_node': function(d, ctx){
 	    var link = "https://openstreetmap.org/node/" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_openstreetmap_way': function(d, ctx){
 	    var link = "https://openstreetmap.org/way/" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_openstreetmap_relation': function(d, ctx){
 	    var link = "https://openstreetmap.org/relation/" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_faa_code': function(d, ctx){
 	    var link = "http://www.fly.faa.gov/flyfaa/flyfaaindex.jsp?ARPT=" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_companieshouse_number': function(d, ctx){
 	    var link = "http://data.companieshouse.gov.uk/doc/company/" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_latimes_id': function(d, ctx){
 
 	    var link = "http://maps.latimes.com/neighborhoods/neighborhood/" + encodeURIComponent(d);
-	    var el = mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    var el = whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 
 	    el.onclick = function(e){ 
 
@@ -351,45 +351,45 @@ mapzen.whosonfirst.properties = (function(){
 	},
 
 	'render_megacity': function(d, ctx){
-	    var root = mapzen.whosonfirst.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
 	    var link = root + "megacities/";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, "HOW BIG WOW MEGA SO CITY", ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, "HOW BIG WOW MEGA SO CITY", ctx);
 	},
 
 	'render_wof_tags': function(d, ctx){
-	    var root = mapzen.whosonfirst.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
 	    var link = root + "tags/" + encodeURIComponent(d) + "/";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_wof_name': function(d, ctx){
-	    var root = mapzen.whosonfirst.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
 	    var link = root + "search/?q=" + encodeURIComponent(d);
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_simplegeo_city': function(d, ctx){
-	    var root = mapzen.whosonfirst.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
 	    var link = root + "search/?q=" + encodeURIComponent(d) + "&placetype=locality";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);	    
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);	    
 	},
 	
 	'render_simplegeo_postcode': function(d, ctx){
-	    var root = mapzen.whosonfirst.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
 	    var link = root + "postalcodes/" + encodeURIComponent(d) + "/";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);	    
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);	    
 	},
 
 	'render_simplegeo_classifiers': function(d, ctx){
-	    var root = mapzen.whosonfirst.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
 	    var link = root + "categories/" + encodeURIComponent(d) + "/";
-	    return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_simplegeo_tags': function(d, ctx){
-            var root = mapzen.whosonfirst.spelunker.abs_root_url();
+            var root = whosonfirst.spelunker.spelunker.abs_root_url();
             var link = root + "tags/" + encodeURIComponent(d) + "/";
-            return mapzen.whosonfirst.yesnofix.render_link(link, d, ctx);
+            return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	// pending a final working soundbox installation

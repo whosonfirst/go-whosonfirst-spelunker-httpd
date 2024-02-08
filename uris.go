@@ -12,13 +12,17 @@ type URIs struct {
 	Id          string `json:"id"`
 	Descendants string `json:"descendants"`
 	Search      string `json:"search"`
-
+	About string `json:"about"`
+	
 	// Static assets
 	Static string `json:"static"`
 
 	// API/machine-readable
 	GeoJSON string `json:"geojson"`
-	GeoJSONLD string `json:"geojsonld"`	
+	GeoJSONLD string `json:"geojsonld"`
+	NavPlace string `json:"navplace"`
+	Select string `json:"select"`
+	SPR     string `json:"spr"`		
 	SVG     string `json:"svg"`
 }
 

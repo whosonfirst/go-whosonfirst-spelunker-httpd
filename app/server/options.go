@@ -63,15 +63,19 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 		// Descendants: "/id/{id}/descendants",
 
 		Id:          "/id",
-		Descendants: "/descendants/",
-		Search:      "/search/",
+		Descendants: "/descendants",
+		Search:      "/search",
+		About:      "/about",		
 
 		// Static Assets
 		Static: "/static/",
 
 		// API/machine-readable
 		GeoJSON: "/geojson/",
-		GeoJSONLD: "/geojsonld/",		
+		GeoJSONLD: "/geojsonld/",
+		NavPlace: "/navplace/",
+		Select: "/select/",
+		SPR:     "/spr/",				
 		SVG:     "/svg/",
 	}
 
