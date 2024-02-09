@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
-
+	"regexp"
+	
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/api"
 )
 
@@ -66,7 +67,18 @@ func selectHandlerFunc(ctx context.Context) (http.Handler, error) {
 		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
 	}
 
+	// Make this a config/flag
+	select_pattern := `properties(?:.[a-zA-Z0-9-_]+){1,}`
+	
+	pat, err := regexp.Compile(select_pattern)
+	
+	if err != nil {
+		slog.Error("Failed to compile select pattern", "pattern", select_pattern, "error", err)
+		return nil, fmt.Errorf("Failed to compile select pattern (%s), %w", select_pattern, err)
+	}
+	
 	opts := &api.SelectHandlerOptions{
+		Pattern: pat,
 		Spelunker: sp,
 	}
 
