@@ -12,10 +12,18 @@
 
 <div class="whosonfirst-record">
     <div>
-	<h3>Properties</h3>
+	<h3>Properties
+
+	    <div id="props-toggle" class="pull-right">
+		<button class="btn btn-sm" id="props-toggle-raw">view raw</button>
+		<button class="btn btn-sm" id="props-toggle-pretty">make pretty</button>
+	    </div>
+	</h3>
+	<div id="props-wrapper" class="table-responsive">
 	<whosonfirst-properties>
 	    <pre id="whosonfirst-properties">{{ .Properties }}</pre>
 	</whosonfirst-properties>
+	</div>
     </div>
     <div>
 	<h3>Hierarchy</h3>

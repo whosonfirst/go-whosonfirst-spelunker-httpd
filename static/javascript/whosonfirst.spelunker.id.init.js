@@ -2,20 +2,17 @@ window.addEventListener("load", function load(event){
 
     // START OF wrap me in a webcomponent
 
-    var props;
     var pretty;
     
     try {
 	var el = document.querySelector("#whosonfirst-properties");
 	var raw = el.innerText;
-	props = JSON.parse(raw);
+	var props = JSON.parse(raw);
 	pretty = whosonfirst.spelunker.properties.render(props);	
     } catch(err) {
-	console.log("SAD", err);
+	console.log("Failed to render properties", err);
     }
 
-    console.log("PRETTY", pretty);
-    
     try {
         var wrapper = document.querySelector("#props-wrapper");
         wrapper.appendChild(pretty);
@@ -52,7 +49,8 @@ window.addEventListener("load", function load(event){
         };
 	
     } catch(err){
-	console.log("SAD RENDER", err);
+	console.log("Failed to install pretty properties", err);
     }
-    
+
+    // END OF wrap me in a webcomponent
 });
