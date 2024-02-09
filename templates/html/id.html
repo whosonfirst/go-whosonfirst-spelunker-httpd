@@ -14,7 +14,7 @@
     <div>
 	<h3>Properties</h3>
 	<whosonfirst-properties>
-	    <pre>{{ .Properties }}</pre>
+	    <pre id="whosonfirst-properties">{{ .Properties }}</pre>
 	</whosonfirst-properties>
     </div>
     <div>
@@ -32,4 +32,6 @@
 </div>
 
 {{ template "inc_foot" . -}}
+
+<script type="text/javascript" src="{{ .URIs.Static }}javascript/whosonfirst.spelunker.id.init.js"></script>
 {{ end -}}

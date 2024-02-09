@@ -9,7 +9,6 @@ import (
 
 	"github.com/aaronland/go-http-server"
 	"github.com/aaronland/go-http-server/handler"
-	_ "github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 )
 
 func Run(ctx context.Context, logger *slog.Logger) error {
@@ -65,12 +64,6 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		run_options.URIs.SVG:     svgHandlerFunc,
 	}
 
-	go func() {
-		for uri, h := range handlers {
-			slog.Info("Enable handler", "uri", uri, "handler", fmt.Sprintf("%T", h))
-		}
-	}()
-	
         log_logger := slog.NewLogLogger(logger.Handler(), slog.LevelInfo)
 
         route_handler_opts := &handler.RouteHandlerOptions{
@@ -83,7 +76,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 	if err != nil {
 		return fmt.Errorf("Failed to configure route handler, %w", err)
 	}
-	
+		
 	mux := http.NewServeMux()
 	mux.Handle("/", route_handler)
 
@@ -93,8 +86,13 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		return fmt.Errorf("Failed to create new server, %w", err)
 	}
 
+	go func() {
+		for uri, h := range handlers {
+			slog.Info("Enable handler", "uri", uri, "handler", fmt.Sprintf("%T", h))
+		}
+	}()
+	
 	slog.Info("Listening for requests", "address", s.Address())
-
 	err = s.ListenAndServe(ctx, mux)
 
 	if err != nil {

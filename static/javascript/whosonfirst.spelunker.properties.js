@@ -169,11 +169,11 @@ whosonfirst.spelunker.properties = (function(){
 	    return pretty;
 	},
 
-	// TO DO : make 'whosonfirst.spelunker.spelunker.abs_root_url' something like
+	// TO DO : make 'whosonfirst.spelunker.uris.abs_root_url' something like
 	// 'whosonfirst.spelunker.common.abs_root_url' or equivalent...
 
 	'render_wof_id': function(d, ctx){
-	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.uris.abs_root_url();
 	    var link = root + "id/" + encodeURIComponent(d) + "/";
 	    var el = whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	    
@@ -200,7 +200,7 @@ whosonfirst.spelunker.properties = (function(){
 	},
 
 	'render_wof_placetype': function(d, ctx){
-	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.uris.abs_root_url();
 	    var link = root + "placetypes/" + encodeURIComponent(d) + "/";
 	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
@@ -351,43 +351,43 @@ whosonfirst.spelunker.properties = (function(){
 	},
 
 	'render_megacity': function(d, ctx){
-	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.uris.abs_root_url();
 	    var link = root + "megacities/";
 	    return whosonfirst.spelunker.yesnofix.render_link(link, "HOW BIG WOW MEGA SO CITY", ctx);
 	},
 
 	'render_wof_tags': function(d, ctx){
-	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.uris.abs_root_url();
 	    var link = root + "tags/" + encodeURIComponent(d) + "/";
 	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_wof_name': function(d, ctx){
-	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.uris.abs_root_url();
 	    var link = root + "search/?q=" + encodeURIComponent(d);
 	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_simplegeo_city': function(d, ctx){
-	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.uris.abs_root_url();
 	    var link = root + "search/?q=" + encodeURIComponent(d) + "&placetype=locality";
 	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);	    
 	},
 	
 	'render_simplegeo_postcode': function(d, ctx){
-	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.uris.abs_root_url();
 	    var link = root + "postalcodes/" + encodeURIComponent(d) + "/";
 	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);	    
 	},
 
 	'render_simplegeo_classifiers': function(d, ctx){
-	    var root = whosonfirst.spelunker.spelunker.abs_root_url();
+	    var root = whosonfirst.spelunker.uris.abs_root_url();
 	    var link = root + "categories/" + encodeURIComponent(d) + "/";
 	    return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
 
 	'render_simplegeo_tags': function(d, ctx){
-            var root = whosonfirst.spelunker.spelunker.abs_root_url();
+            var root = whosonfirst.spelunker.uris.abs_root_url();
             var link = root + "tags/" + encodeURIComponent(d) + "/";
             return whosonfirst.spelunker.yesnofix.render_link(link, d, ctx);
 	},
