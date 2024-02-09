@@ -2,6 +2,33 @@ window.addEventListener("load", function load(event){
 
     // START OF wrap me in a webcomponent
 
+    try {
+
+	var map_el = document.querySelector("#map");
+	var wof_id = map_el.getAttribute("data-wof-id");
+
+	whosonfirst.spelunker.feature.fetch(wof_id).then((f) => {
+	    const map = L.map(map_el);
+	    var layer = protomapsL.leafletLayer({url:'FILE.pmtiles OR ENDPOINT/{z}/{x}/{y}.mvt'});
+	    layer.addTo(map);
+
+
+	    var f_style = whosonfirst.spelunker.leaflet.styles.consensus_polygon();
+	    whosonfirst.spelunker.leaflet.draw_poly(map, f, f_style);
+	    
+	}).catch((err) => {
+
+	    console.log("Failed to initialize map", err);
+	});
+	
+    } catch (err) {
+	    console.log("Failed to initialize map", err);
+    }
+    
+    // END OF wrap me in a webcomponent    
+    
+    // START OF wrap me in a webcomponent
+
     var pretty;
     
     try {

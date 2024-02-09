@@ -1,6 +1,8 @@
 var whosonfirst = whosonfirst || {};
 whosonfirst.spelunker = whosonfirst.spelunker || {};
 
+// UPDATE TO USE whosonfirst.spelunker.cache
+
 whosonfirst.spelunker.namify = (function(){
     
     var cache_ttl = 30000;

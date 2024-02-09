@@ -6,7 +6,8 @@
 </h2>
 
 <whosonfirst-map id="{{ .Id }}">
-    {{ if (IsAvailable "URIs" .) }}<img src="{{ .URIs.SVG }}/{{ .Id }}" />{{ end }}
+    {{ if (IsAvailable "URIs" .) }}<img src="{{ .URIs.SVG }}/{{ .Id }}" id="map-svg" />{{ end }}
+    <div id="map" data-wof-id="{{ .Id }}"></div>
     <p>NAME is a PLACETYPE and its consensus geometry is derived from SOURCE.</p>
 </whosonfirst-map>
 
