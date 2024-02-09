@@ -18,34 +18,30 @@ window.addEventListener("load", function load(event){
         wrapper.appendChild(pretty);
 	
         var raw = wrapper.children[0];
-        raw.setAttribute("style", "display:none");
+        raw.style.display = "none";
 
         //wrapper.replaceChild(pretty, raw);
 	
         var toggle = document.querySelector("#props-toggle");
-        toggle.setAttribute("style", "display:block");
+        toggle.style.display = "block";
 	
         var toggle_raw = document.querySelector("#props-toggle-raw");
-        toggle_raw.setAttribute("style", "display:block");
+        toggle_raw.style.display = "block";
 	
-        toggle_raw.onclick = function(){
-	    
-	    raw.setAttribute("style", "display:block");
-            pretty.setAttribute("style", "display:none");
-	    
-            toggle_raw.setAttribute("style", "display:none");
-            toggle_pretty.setAttribute("style", "display:block");
+        toggle_raw.onclick = function(){	    
+	    raw.style.display = "block";
+            pretty.style.display = "none";	    
+            toggle_raw.style.display = "none";
+            toggle_pretty.style.display = "block";
         };
 	
         var toggle_pretty = document.querySelector("#props-toggle-pretty");
 
-	toggle_pretty.onclick = function(){
-	    
-            raw.setAttribute("style", "display:none");
-	    pretty.setAttribute("style", "display:block");
-	    
-            toggle_raw.setAttribute("style", "display:block");
-	    toggle_pretty.setAttribute("style", "display:none");
+	toggle_pretty.onclick = function(){	    
+            raw.style.display = "none";
+	    pretty.style.display = "block";	    
+            toggle_raw.style.display = "block";
+	    toggle_pretty.style.display = "none";
         };
 	
     } catch(err){
@@ -53,4 +49,6 @@ window.addEventListener("load", function load(event){
     }
 
     // END OF wrap me in a webcomponent
+
+    whosonfirst.spelunker.namify.namify_selector(".props-uoc");
 });

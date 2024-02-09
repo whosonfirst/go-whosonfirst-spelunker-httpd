@@ -179,7 +179,8 @@ whosonfirst.spelunker.properties = (function(){
 	    
 	    var text = el.children[0];
 	    text.setAttribute("data-value", whosonfirst.spelunker.php.htmlspecialchars(d));
-	    text.setAttribute("class", "props-uoc props-uoc-name props-uoc-name_" + whosonfirst.spelunker.php.htmlspecialchars(d));
+	    text.setAttribute("data-wof-id", whosonfirst.spelunker.php.htmlspecialchars(d));	    
+	    text.setAttribute("class", "wof-namify props-uoc props-uoc-name props-uoc-name_" + whosonfirst.spelunker.php.htmlspecialchars(d));
 	    
 	    return el;
 	    

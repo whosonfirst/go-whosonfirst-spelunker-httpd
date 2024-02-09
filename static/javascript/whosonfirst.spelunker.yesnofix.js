@@ -208,17 +208,26 @@ whosonfirst.spelunker.yesnofix = (function(){
 
 	'render_bucket': function(ns, bucket){
 	    
-	    var wrapper = document.createElement("div");
+	    // var wrapper = document.createElement("div");
+	    var wrapper = document.createElement("details");	    
+	    wrapper.setAttribute("open", "open");
+	    
+	    if (ns != '_global_'){
+		
+		var header = document.createElement("h3");
+		header.setAttribute("style", "display:inline-block;");
+		
+		var content = document.createTextNode(ns);
+		header.appendChild(content);
+		
+		// wrapper.appendChild(header);
 
-		if (ns != '_global_'){
+		var summary = document.createElement("summary");
+		summary.appendChild(header);
 
-			var header = document.createElement("h3");
-			var content = document.createTextNode(ns);
-			header.appendChild(content);
-
-			wrapper.appendChild(header);			
-		}
-
+		wrapper.appendChild(summary);
+	    }
+	    
 	    var sorted = self.sort_bucket(bucket);
 	    var body = self.render_data(sorted, ns);
 	    
