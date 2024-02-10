@@ -13,7 +13,7 @@ import (
 )
 
 type NavPlaceHandlerOptions struct {
-	Spelunker spelunker.Spelunker	
+	Spelunker   spelunker.Spelunker
 	MaxFeatures int
 }
 
@@ -22,14 +22,14 @@ type NavPlaceHandlerOptions struct {
 func NavPlaceHandler(opts *NavPlaceHandlerOptions) (http.Handler, error) {
 
 	logger := slog.Default()
-	
+
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
 		ctx := req.Context()
 
 		logger = logger.With("request", req.URL)
 		logger = logger.With("address", req.RemoteAddr)
-				
+
 		q := req.URL.Query()
 		base := q.Get("id")
 
@@ -47,8 +47,8 @@ func NavPlaceHandler(opts *NavPlaceHandlerOptions) (http.Handler, error) {
 
 		for idx, str_id := range ids {
 
-			uri, err, status :=  httpd.ParseURIFromPath(ctx, str_id, nil)
-			
+			uri, err, status := httpd.ParseURIFromPath(ctx, str_id, nil)
+
 			if err != nil {
 				slog.Error("Failed to parse URI from request", "id", str_id, "error", err)
 				http.Error(rsp, err.Error(), status)
@@ -80,10 +80,10 @@ func NavPlaceHandler(opts *NavPlaceHandlerOptions) (http.Handler, error) {
 
 			if err != nil {
 				slog.Error("Failed to retrieve record", "id", uri.Id, "error", err)
-				http.Error(rsp, "Failed to retrieve ID", http.StatusInternalServerError)				
+				http.Error(rsp, "Failed to retrieve ID", http.StatusInternalServerError)
 				return
 			}
-			
+
 			rsp.Write(r)
 
 			if i+1 < count {

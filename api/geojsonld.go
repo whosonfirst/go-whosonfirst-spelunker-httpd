@@ -4,9 +4,9 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/sfomuseum/go-geojsonld"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
-	"github.com/sfomuseum/go-geojsonld"	
 )
 
 type GeoJSONLDHandlerOptions struct {
@@ -16,13 +16,13 @@ type GeoJSONLDHandlerOptions struct {
 func GeoJSONLDHandler(opts *GeoJSONLDHandlerOptions) (http.Handler, error) {
 
 	logger := slog.Default()
-	
+
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
 		ctx := req.Context()
 
 		logger = logger.With("request", req.URL)
-		logger = logger.With("address", req.RemoteAddr)		
+		logger = logger.With("address", req.RemoteAddr)
 
 		uri, err, status := httpd.ParseURIFromRequest(req, nil)
 
@@ -47,8 +47,8 @@ func GeoJSONLDHandler(opts *GeoJSONLDHandlerOptions) (http.Handler, error) {
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
-		
-		rsp.Header().Set("Content-Type", "application/geo+json")		
+
+		rsp.Header().Set("Content-Type", "application/geo+json")
 		rsp.Write([]byte(body))
 	}
 

@@ -10,25 +10,24 @@ import (
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
-	
 )
 
 type SelectHandlerOptions struct {
-	Pattern *regexp.Regexp
-	Spelunker spelunker.Spelunker	
+	Pattern   *regexp.Regexp
+	Spelunker spelunker.Spelunker
 }
 
 func SelectHandler(opts *SelectHandlerOptions) (http.Handler, error) {
 
 	logger := slog.Default()
-	
+
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
 		ctx := req.Context()
-		
+
 		logger = logger.With("request", req.URL)
 		logger = logger.With("address", req.RemoteAddr)
-		
+
 		query, err := sanitize.GetString(req, "select")
 
 		if err != nil {

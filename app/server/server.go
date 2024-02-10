@@ -50,33 +50,33 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		run_options.URIs.Descendants: descendantsHandlerFunc,
 		run_options.URIs.Id:          idHandlerFunc,
 		run_options.URIs.Search:      searchHandlerFunc,
-		run_options.URIs.About:      aboutHandlerFunc,		
+		run_options.URIs.About:       aboutHandlerFunc,
 
 		// Static assets
 		run_options.URIs.Static: staticHandlerFunc,
 
 		// API/machine-readable
-		run_options.URIs.GeoJSON: geoJSONHandlerFunc,
+		run_options.URIs.GeoJSON:   geoJSONHandlerFunc,
 		run_options.URIs.GeoJSONLD: geoJSONLDHandlerFunc,
-		run_options.URIs.NavPlace: navPlaceHandlerFunc,
-		run_options.URIs.Select: selectHandlerFunc,		
-		run_options.URIs.SPR:     sprHandlerFunc,		
-		run_options.URIs.SVG:     svgHandlerFunc,
+		run_options.URIs.NavPlace:  navPlaceHandlerFunc,
+		run_options.URIs.Select:    selectHandlerFunc,
+		run_options.URIs.SPR:       sprHandlerFunc,
+		run_options.URIs.SVG:       svgHandlerFunc,
 	}
 
-        log_logger := slog.NewLogLogger(logger.Handler(), slog.LevelInfo)
+	log_logger := slog.NewLogLogger(logger.Handler(), slog.LevelInfo)
 
-        route_handler_opts := &handler.RouteHandlerOptions{
-                           Handlers: handlers,
-                           Logger: log_logger,
-        }
+	route_handler_opts := &handler.RouteHandlerOptions{
+		Handlers: handlers,
+		Logger:   log_logger,
+	}
 
-        route_handler, err := handler.RouteHandlerWithOptions(route_handler_opts)
+	route_handler, err := handler.RouteHandlerWithOptions(route_handler_opts)
 
 	if err != nil {
 		return fmt.Errorf("Failed to configure route handler, %w", err)
 	}
-		
+
 	mux := http.NewServeMux()
 	mux.Handle("/", route_handler)
 
@@ -91,7 +91,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 			slog.Info("Enable handler", "uri", uri, "handler", fmt.Sprintf("%T", h))
 		}
 	}()
-	
+
 	slog.Info("Listening for requests", "address", s.Address())
 	err = s.ListenAndServe(ctx, mux)
 

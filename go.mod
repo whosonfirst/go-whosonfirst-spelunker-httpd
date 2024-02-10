@@ -14,7 +14,7 @@ require (
 	github.com/tidwall/gjson v1.17.0
 	github.com/whosonfirst/go-reader v1.0.2
 	github.com/whosonfirst/go-sanitize v0.1.0
-	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240203235306-fca075c84be0
+	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240210020016-beadb3f1f451
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
 	github.com/whosonfirst/go-whosonfirst-svg v0.1.0
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
@@ -25,7 +25,7 @@ require (
 	github.com/akrylysov/algnhsa v1.0.0 // indirect
 	github.com/aws/aws-lambda-go v1.41.0 // indirect
 	github.com/dominikbraun/graph v0.16.1 // indirect
-	github.com/hashicorp/errwrap v1.1.0 // indirect
+	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/jtacoma/uritemplates v1.0.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect

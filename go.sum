@@ -24,9 +24,8 @@ github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/go-cmp v0.5.5 h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/hashicorp/errwrap v0.0.0-20141028054710-7554cd9344ce/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
+github.com/hashicorp/errwrap v1.0.0 h1:hLrqtEDnRye3+sgx6z4qVLNuviH3MR5aQ0ykNJa/UYA=
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
-github.com/hashicorp/errwrap v1.1.0 h1:OxrOeh75EUXMY8TBjag2fzXGZ40LB6IKw45YeGUDY2I=
-github.com/hashicorp/errwrap v1.1.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
 github.com/hashicorp/go-multierror v0.0.0-20171204182908-b7773ae21874/go.mod h1:JMRHfdO9jKNzS/+BTlxCjKNQHg/jZAft8U7LloJvN7I=
 github.com/hashicorp/go-multierror v1.1.1 h1:H5DkEtf6CXdFp0N0Em5UCwQpXMWke8IA0+lD48awMYo=
 github.com/hashicorp/go-multierror v1.1.1/go.mod h1:iw975J/qwKPdAO1clOe2L8331t/9/fmwbPZ6JB6eMoM=
@@ -109,8 +108,8 @@ github.com/whosonfirst/go-whosonfirst-placetypes v0.7.0 h1:hm1dySC23ZZYHDleAE201
 github.com/whosonfirst/go-whosonfirst-placetypes v0.7.0/go.mod h1:d7S4er4OFfFsgzMOnHH8mX8q+iPhXWB+merbrMDx/rk=
 github.com/whosonfirst/go-whosonfirst-sources v0.1.0 h1:JuKLa6KWke22jBfJ1pM9WQHoz1/3pbDv2C+aR+THPPQ=
 github.com/whosonfirst/go-whosonfirst-sources v0.1.0/go.mod h1:EUMHyGzUmqPPxlMmOp+28BFeoBdxxE0HCKRd67lkqGM=
-github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240203235306-fca075c84be0 h1:UnWR8yPqUG8hL4XNsgrYbBR11FQqESEHNI2x2lhzOaU=
-github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240203235306-fca075c84be0/go.mod h1:TRb6uGjuNgYJH54q5lguzq0WEoqejlE0/qtE610kLDs=
+github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240210020016-beadb3f1f451 h1:PzNE2JcRXJQwsEjs6r3hsTtJ9IqziUFdVZkXp5tv65o=
+github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240210020016-beadb3f1f451/go.mod h1:E4Ho9scPp4+tqLHQwupC3A+kDkKuZpwWQY3YUQV+vY4=
 github.com/whosonfirst/go-whosonfirst-spr/v2 v2.2.1/go.mod h1:3P6fiSVGtIbM3UcyaVMs4i1N6Hi88GmTsdouuXzlr78=
 github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7 h1:1j4IMuVua4/NhqKm2ke16h2V5Z2XiLoOdXbjDrfZb0E=
 github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7/go.mod h1:I2IqsIutlDrvYp37Xzwk4WGq+m/gLh+gEifiLmH0bac=

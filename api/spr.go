@@ -5,24 +5,23 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
-	
+	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 )
 
 type SPRHandlerOptions struct {
-	Spelunker spelunker.Spelunker	
+	Spelunker spelunker.Spelunker
 }
 
 func SPRHandler(opts *SPRHandlerOptions) (http.Handler, error) {
 
 	logger := slog.Default()
-	
+
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
 		ctx := req.Context()
-		
+
 		logger = logger.With("request", req.URL)
 		logger = logger.With("address", req.RemoteAddr)
 

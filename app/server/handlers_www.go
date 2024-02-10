@@ -29,8 +29,8 @@ func aboutHandlerFunc(ctx context.Context) (http.Handler, error) {
 	opts := &www.TemplateHandlerOptions{
 		Authenticator: authenticator,
 		Templates:     html_templates,
-		TemplateName: "about",
-		PageTitle: "About",
+		TemplateName:  "about",
+		PageTitle:     "About",
 		URIs:          uris_table,
 	}
 

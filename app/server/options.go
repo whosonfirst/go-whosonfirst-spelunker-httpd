@@ -65,18 +65,18 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 		Id:          "/id",
 		Descendants: "/descendants",
 		Search:      "/search",
-		About:      "/about",		
+		About:       "/about",
 
 		// Static Assets
 		Static: "/static",
 
 		// API/machine-readable
-		GeoJSON: "/geojson/",
+		GeoJSON:   "/geojson/",
 		GeoJSONLD: "/geojsonld/",
-		NavPlace: "/navplace/",
-		Select: "/select/",
-		SPR:     "/spr/",				
-		SVG:     "/svg/",
+		NavPlace:  "/navplace/",
+		Select:    "/select/",
+		SPR:       "/spr/",
+		SVG:       "/svg/",
 	}
 
 	t_funcs := html_template.FuncMap{
