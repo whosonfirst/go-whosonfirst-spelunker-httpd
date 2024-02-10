@@ -64,6 +64,24 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		run_options.URIs.SVG:       svgHandlerFunc,
 	}
 
+	assign_handlers := func(handler_map map[string]handler.RouteHandlerFunc, paths []string, handler_func handler.RouteHandlerFunc) {
+
+		for _, p := range paths {
+			handler_map[p] = handler_func
+		}
+	}
+
+	assign_handlers(handlers, run_options.URIs.IdAlt, idHandlerFunc)
+	assign_handlers(handlers, run_options.URIs.DescendantsAlt, descendantsHandlerFunc)
+
+	// API/machine-readable
+	assign_handlers(handlers, run_options.URIs.GeoJSONAlt, geoJSONHandlerFunc)
+	assign_handlers(handlers, run_options.URIs.GeoJSONLDAlt, geoJSONLDHandlerFunc)
+	assign_handlers(handlers, run_options.URIs.NavPlaceAlt, navPlaceHandlerFunc)
+	assign_handlers(handlers, run_options.URIs.SelectAlt, selectHandlerFunc)
+	assign_handlers(handlers, run_options.URIs.SPRAlt, sprHandlerFunc)
+	assign_handlers(handlers, run_options.URIs.SVGAlt, svgHandlerFunc)
+
 	log_logger := slog.NewLogLogger(logger.Handler(), slog.LevelInfo)
 
 	route_handler_opts := &handler.RouteHandlerOptions{

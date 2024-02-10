@@ -64,8 +64,11 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 
 		Id:          "/id",
 		Descendants: "/descendants",
-		Search:      "/search",
-		About:       "/about",
+		DescendantsAlt: []string{
+			"/id/{id}/descendants",
+		},
+		Search: "/search",
+		About:  "/about",
 
 		// Static Assets
 		Static: "/static",
