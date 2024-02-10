@@ -114,7 +114,12 @@ q {
     height: 400px;
     width:100%;
     border: solid thin;
-    margin-bottom:.75em;
+	margin-bottom:.75em;
+	display:none;
+}
+
+#map-wrapper {
+	
 }
 
 .facet {

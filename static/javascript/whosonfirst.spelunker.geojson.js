@@ -8,17 +8,18 @@ whosonfirst.spelunker.geojson = (function(){
 	    derive_bounds: function(geojson){
 
 		var bbox = self.derive_bbox(geojson);
-
+		console.log("BBOX", bbox);
+		
 		var bounds = [
-		    [ bbox[0], bbox[1] ],
-		    [ bbox[2], bbox[3] ],		    
+		    [ bbox[1], bbox[0] ],
+		    [ bbox[3], bbox[2] ],		    
 		];
 
 		return bounds;
 	    },
 	    
 	    'derive_bbox': function(geojson){
-		
+
 		if (geojson['bbox']){
 		    return geojson['bbox'];
 		}

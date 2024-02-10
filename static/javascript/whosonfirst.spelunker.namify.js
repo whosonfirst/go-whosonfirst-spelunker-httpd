@@ -127,6 +127,7 @@ whosonfirst.spelunker.namify = (function(){
 		if ((err) || (! rsp)){
 		    // console.log("cache MISS for " + fq_key);
 		    on_miss();
+		    return;
 		}
 
 		// console.log("cache HIT for " + fq_key);
@@ -137,6 +138,7 @@ whosonfirst.spelunker.namify = (function(){
 		if (! data){
 		    // console.log("cache WTF for " + fq_key);
 		    on_miss();
+		    return;
 		}
 
 		var dt = new Date();
@@ -149,6 +151,7 @@ whosonfirst.spelunker.namify = (function(){
 		    // console.log("cache EXPIRED for " + fq_key);
 		    self.cache_unset(key);
 		    on_miss();
+		    return;
 		}
 
 		on_hit(data);

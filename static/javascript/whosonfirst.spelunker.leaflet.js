@@ -83,7 +83,7 @@ whosonfirst.spelunker.leaflet = (function(){
 
 		'fit_map': function(map, geojson, force){
 
-			var bbox = mapzen.whosonfirst.geojson.derive_bbox(geojson);
+			var bbox = whosonfirst.spelunker.geojson.derive_bbox(geojson);
 
 			if (! bbox){
 				console.log("no bounding box");
@@ -133,6 +133,8 @@ whosonfirst.spelunker.leaflet = (function(){
 				else {}
 			}
 
+		    console.log("WYT", redraw);
+		    
 			if (redraw){
 			    var opts = { 'padding': [ 50, 50 ] };
 			    map.fitBounds(bounds, opts);

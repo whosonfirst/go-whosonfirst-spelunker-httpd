@@ -8,16 +8,39 @@ window.addEventListener("load", function load(event){
 	var svg_el = document.querySelector("#map-svg");	
 	var wof_id = map_el.getAttribute("data-wof-id");
 
+	console.log("HI");
+	
 	whosonfirst.spelunker.feature.fetch(wof_id).then((f) => {
 
 	    svg_el.style.display = "none";
+	    map_el.style.display = "block";
 	    
 	    const map = L.map(map_el);
-	    var layer = protomapsL.leafletLayer({url:'FILE.pmtiles OR ENDPOINT/{z}/{x}/{y}.mvt'});
+
+	    var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
+	    map.fitBounds(bounds);
+	    
+	    var tile_url = "https://static.sfomuseum.org/pmtiles/sfomuseum_v3/{z}/{x}/{y}.mvt?key=xxx";
+	    var layer = protomapsL.leafletLayer({url: tile_url});
 	    layer.addTo(map);
 
 	    var f_style = whosonfirst.spelunker.leaflet.styles.consensus_polygon();
 	    whosonfirst.spelunker.leaflet.draw_poly(map, f, f_style);
+
+	    var props = f.properties;
+
+	    var lbl_centroid = [ props["lbl:longitude"], props["lbl:latitude" ] ];
+	    var math_centroid = [ props["geom:longitude"], props["geom:latitude" ] ];	    
+
+	    var lbl_f = { "type": "Feature", "properties": { "lflt:label_text": "label centroid" }, "geometry": { "type": "Point", "coordinates": lbl_centroid }};
+	    var math_f = { "type": "Feature", "properties": { "lflt:label_text": "math centroid" }, "geometry": { "type": "Point", "coordinates": math_centroid }};	    
+
+	    var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();
+	    var math_style = whosonfirst.spelunker.leaflet.styles.math_centroid();	    
+
+	    var pt_handler = whosonfirst.spelunker.leaflet.handlers.point();
+	    whosonfirst.spelunker.leaflet.draw_point(map, math_f, math_style, pt_handler);
+	    whosonfirst.spelunker.leaflet.draw_point(map, lbl_f, lbl_style, pt_handler);
 	    
 	}).catch((err) => {
 
