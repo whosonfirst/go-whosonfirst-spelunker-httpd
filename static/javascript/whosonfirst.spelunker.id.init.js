@@ -8,11 +8,8 @@ window.addEventListener("load", function load(event){
 	var svg_el = document.querySelector("#map-svg");	
 	var wof_id = map_el.getAttribute("data-wof-id");
 
-	console.log("HI");
-	
 	whosonfirst.spelunker.feature.fetch(wof_id).then((f) => {
 
-	    svg_el.style.display = "none";
 	    map_el.style.display = "block";
 	    
 	    const map = L.map(map_el);
@@ -24,6 +21,11 @@ window.addEventListener("load", function load(event){
 	    var layer = protomapsL.leafletLayer({url: tile_url});
 	    layer.addTo(map);
 
+	    if (f.geometry.Type == "Point"){
+		console.log("Point");
+		return;
+	    }
+	    
 	    var f_style = whosonfirst.spelunker.leaflet.styles.consensus_polygon();
 	    whosonfirst.spelunker.leaflet.draw_poly(map, f, f_style);
 
@@ -43,12 +45,13 @@ window.addEventListener("load", function load(event){
 	    whosonfirst.spelunker.leaflet.draw_point(map, lbl_f, lbl_style, pt_handler);
 	    
 	}).catch((err) => {
-
 	    console.log("Failed to initialize map", err);
+	    throw(err);
 	});
 	
     } catch (err) {
-	    console.log("Failed to initialize map", err);
+	console.log("Failed to initialize map", err);
+	svg_el.style.display = "block";	    	
     }
     
     // END OF wrap me in a webcomponent    
@@ -76,7 +79,7 @@ window.addEventListener("load", function load(event){
         //wrapper.replaceChild(pretty, raw);
 	
         var toggle = document.querySelector("#props-toggle");
-        toggle.style.display = "block";
+        toggle.style.display = "inline-block";
 	
         var toggle_raw = document.querySelector("#props-toggle-raw");
         toggle_raw.style.display = "block";

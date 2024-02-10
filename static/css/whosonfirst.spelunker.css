@@ -118,8 +118,8 @@ q {
 	display:none;
 }
 
-#map-wrapper {
-	
+#map-svg {
+	display:none;
 }
 
 .facet {
