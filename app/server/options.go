@@ -7,6 +7,7 @@ import (
 	html_template "html/template"
 	io_fs "io/fs"
 
+	"github.com/aaronland/go-http-server/handler"
 	"github.com/mitchellh/copystructure"
 	"github.com/sfomuseum/go-flags/flagset"
 	sfom_funcs "github.com/sfomuseum/go-template/funcs"
@@ -16,13 +17,14 @@ import (
 )
 
 type RunOptions struct {
-	ServerURI         string                `json:"server_uri"`
-	SpelunkerURI      string                `json:"spelunker_uri"`
-	AuthenticatorURI  string                `json:"authenticator_uri"`
-	URIs              *httpd.URIs           `json:"uris"`
-	HTMLTemplates     []io_fs.FS            `json:"templates,omitemtpy"`
-	HTMLTemplateFuncs html_template.FuncMap `json:"template_funcs,omitempty"`
-	StaticAssets      io_fs.FS              `json:"static_assets,omitempty"`
+	ServerURI         string                              `json:"server_uri"`
+	SpelunkerURI      string                              `json:"spelunker_uri"`
+	AuthenticatorURI  string                              `json:"authenticator_uri"`
+	URIs              *httpd.URIs                         `json:"uris"`
+	HTMLTemplates     []io_fs.FS                          `json:"templates,omitemtpy"`
+	HTMLTemplateFuncs html_template.FuncMap               `json:"template_funcs,omitempty"`
+	StaticAssets      io_fs.FS                            `json:"static_assets,omitempty"`
+	CustomHandlers    map[string]handler.RouteHandlerFunc `json:"custom_handlers,omitempty"`
 }
 
 func (o *RunOptions) Clone() (*RunOptions, error) {
