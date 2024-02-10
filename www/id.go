@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
@@ -20,10 +21,11 @@ type IdHandlerOptions struct {
 }
 
 type IdHandlerVars struct {
-	Id         int64
-	PageTitle  string
-	URIs       *httpd.URIs
-	Properties string
+	Id               int64
+	PageTitle        string
+	URIs             *httpd.URIs
+	Properties       string
+	CountDescendants int64
 }
 
 func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
@@ -59,15 +61,36 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		props := gjson.GetBytes(f, "properties")
+		pg_opts, err := countable.NewCountableOptions()
 
+		if err != nil {
+			slog.Error("Failed to create countable pagination options", "id", uri.Id, "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		pg_opts.PerPage(1)
+
+		_, pg_rsp, err := opts.Spelunker.GetDescendants(ctx, uri.Id, pg_opts)
+
+		if err != nil {
+			slog.Error("Failed to count descendants", "id", uri.Id, "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		count_descendants := pg_rsp.Total()
+		slog.Info("COUNT", "total", count_descendants)
+
+		props := gjson.GetBytes(f, "properties")
 		page_title := gjson.GetBytes(f, "properties.wof:name")
 
 		vars := IdHandlerVars{
-			Id:         uri.Id,
-			Properties: props.String(),
-			PageTitle:  page_title.String(),
-			URIs:       opts.URIs,
+			Id:               uri.Id,
+			Properties:       props.String(),
+			PageTitle:        page_title.String(),
+			URIs:             opts.URIs,
+			CountDescendants: count_descendants,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

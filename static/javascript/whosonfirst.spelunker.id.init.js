@@ -21,8 +21,13 @@ window.addEventListener("load", function load(event){
 	    var layer = protomapsL.leafletLayer({url: tile_url});
 	    layer.addTo(map);
 
+	    // http://localhost:8080/id/1259472055
 	    if (f.geometry.Type == "Point"){
-		console.log("Point");
+
+		var pt_handler = whosonfirst.spelunker.leaflet.handlers.point();
+		var math_style = whosonfirst.spelunker.leaflet.styles.math_centroid();	    		
+		whosonfirst.spelunker.leaflet.draw_point(map, f, math_style, pt_handler);
+		
 		return;
 	    }
 	    

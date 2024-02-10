@@ -34,7 +34,11 @@
 
 	<h3>Other</h3>
 	<ul>
+	    {{ if eq .CountDescendants 0 -}}
+	    <li>This record has no descendants</li>
+	    {{ else -}}
             {{ if (IsAvailable "URIs" .) }}<li><a href="{{ .URIs.Descendants }}/{{ .Id }}">See all the descendants of {{ GjsonGet .Properties "wof:name" }}</a></li>{{ end }}
+	    {{ end -}}
 	    {{ if (IsAvailable "URIs" .) }}<li><a href="{{ .URIs.GeoJSON }}/{{ .Id }}">Raw data (GeoJSON)</a></li>{{ end }}
 	    <li><a href="https://github.com/whosonfirst-data/{{ GjsonGet .Properties "wof:repo" }}/FIXME">View on GitHub</a></li>
 	    <li><a href="https://writefield.nextzen.org/place/edit?url=FIX ME">Edit in Write Field</a></li>
