@@ -14,19 +14,29 @@ window.addEventListener("load", function load(event){
 	    
 	    const map = L.map(map_el);
 
-	    var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
-	    map.fitBounds(bounds);
-	    
+	    if (f.geometry.type == "Point"){
+
+		var coords = f.geometry.coordinates;
+		
+		var pt = [ coords[1], coords[0] ];
+		var zm = Math.max(12, f.properties["mz:min_zoom"]);
+		map.setView(pt, zm);
+		
+	    } else {
+		var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
+		map.fitBounds(bounds);
+	    }
+
 	    var tile_url = "https://static.sfomuseum.org/pmtiles/sfomuseum_v3/{z}/{x}/{y}.mvt?key=xxx";
 	    var layer = protomapsL.leafletLayer({url: tile_url});
 	    layer.addTo(map);
 
 	    // http://localhost:8080/id/1259472055
-	    if (f.geometry.Type == "Point"){
+	    if (f.geometry.type == "Point"){
 
 		var pt_handler = whosonfirst.spelunker.leaflet.handlers.point();
-		var math_style = whosonfirst.spelunker.leaflet.styles.math_centroid();	    		
-		whosonfirst.spelunker.leaflet.draw_point(map, f, math_style, pt_handler);
+		var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();	    		
+		whosonfirst.spelunker.leaflet.draw_point(map, f, lbl_style, pt_handler);
 		
 		return;
 	    }
@@ -112,4 +122,5 @@ window.addEventListener("load", function load(event){
     // END OF wrap me in a webcomponent
 
     whosonfirst.spelunker.namify.namify_selector(".props-uoc");
+    whosonfirst.spelunker.namify.namify_selector(".wof-namify");    
 });

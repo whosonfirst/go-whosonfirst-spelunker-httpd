@@ -8,6 +8,8 @@ import (
 
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/tidwall/gjson"
+	"github.com/whosonfirst/go-whosonfirst-feature/properties"
+	"github.com/whosonfirst/go-whosonfirst-placetypes"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 )
@@ -19,12 +21,18 @@ type IdHandlerOptions struct {
 	URIs          *httpd.URIs
 }
 
+type IdHandlerAncestor struct {
+	Placetype string
+	Id        int64
+}
+
 type IdHandlerVars struct {
 	Id               int64
 	PageTitle        string
 	URIs             *httpd.URIs
 	Properties       string
 	CountDescendants int64
+	Hierarchies      [][]*IdHandlerAncestor
 }
 
 func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
@@ -69,6 +77,65 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		}
 
 		props := gjson.GetBytes(f, "properties")
+
+		// START OF there's got to be a better way to do this...
+
+		str_pt := gjson.GetBytes(f, "properties.wof:placetype")
+
+		pt, err := placetypes.GetPlacetypeByName(str_pt.String())
+
+		if err != nil {
+			slog.Error("Failed to load placetype", "placetype", str_pt, "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		roles := []string{
+			"common",
+			"optional",
+			"common_optional",
+		}
+
+		ancestors := placetypes.AncestorsForRoles(pt, roles)
+		count_ancestors := len(ancestors)
+
+		sorted := make([]string, 0)
+
+		for i := count_ancestors - 1; i >= 0; i-- {
+			n := ancestors[i]
+			sorted = append(sorted, n.String())
+		}
+
+		hierarchies := properties.Hierarchies(f)
+
+		handler_hierarchies := make([][]*IdHandlerAncestor, len(hierarchies))
+
+		for idx, hier := range hierarchies {
+
+			handler_ancestors := make([]*IdHandlerAncestor, 0)
+
+			for _, n := range sorted {
+
+				k := fmt.Sprintf("%s_id", n)
+				v, ok := hier[k]
+
+				if !ok {
+					continue
+				}
+
+				a := &IdHandlerAncestor{
+					Placetype: n,
+					Id:        v,
+				}
+
+				handler_ancestors = append(handler_ancestors, a)
+			}
+
+			handler_hierarchies[idx] = handler_ancestors
+		}
+
+		// END OF there's got to be a better way to do this...
+
 		page_title := gjson.GetBytes(f, "properties.wof:name")
 
 		vars := IdHandlerVars{
@@ -77,6 +144,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			PageTitle:        page_title.String(),
 			URIs:             opts.URIs,
 			CountDescendants: count_descendants,
+			Hierarchies:      handler_hierarchies,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

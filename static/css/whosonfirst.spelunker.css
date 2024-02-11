@@ -35,6 +35,7 @@ whosonfirst-map img {
 .whosonfirst-record {
 	display:grid;
 	grid-template-columns: 1fr 1fr;
+	column-gap: 2em;
 }
 
 ol, ul {
