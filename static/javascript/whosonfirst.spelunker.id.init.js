@@ -2,6 +2,8 @@ window.addEventListener("load", function load(event){
 
     // START OF wrap me in a webcomponent
 
+    whosonfirst.spelunker.yesnofix.enabled(false);
+    
     try {
 
 	var map_el = document.querySelector("#map");
