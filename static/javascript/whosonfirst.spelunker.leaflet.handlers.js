@@ -6,11 +6,11 @@ whosonfirst.spelunker.leaflet.handlers = (function(){
 
 	var self = {
 
-		'point': function(style){
+		'point': function(layer_args){
 
 			return function(feature, latlon){
 
-				var m = L.circleMarker(latlon, style);
+				var m = L.circleMarker(latlon, layer_args);
 				
 				// https://github.com/Leaflet/Leaflet.label
 				

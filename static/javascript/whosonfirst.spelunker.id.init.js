@@ -61,7 +61,11 @@ window.addEventListener("load", function load(event){
 	    // http://localhost:8080/id/1259472055
 	    if (f.geometry.type == "Point"){
 
-		var pt_handler = whosonfirst.spelunker.leaflet.handlers.point();
+		var pt_handler_layer_args = {
+		    pane: centroids_pane_name,
+		};
+		
+		var pt_handler = whosonfirst.spelunker.leaflet.handlers.point(pt_handler_layer_args);
 		var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();
 
 		var layer_args = {
@@ -111,8 +115,13 @@ window.addEventListener("load", function load(event){
 	    };	    
 
 	    var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();
-	    var math_style = whosonfirst.spelunker.leaflet.styles.math_centroid();	    
-	    var pt_handler = whosonfirst.spelunker.leaflet.handlers.point();
+	    var math_style = whosonfirst.spelunker.leaflet.styles.math_centroid();
+
+	    var pt_handler_layer_args = {
+		pane: centroids_pane_name,
+	    };
+	    
+	    var pt_handler = whosonfirst.spelunker.leaflet.handlers.point(pt_handler_layer_args);
 
 	    var math_layer_args = {
 		style: math_style,
