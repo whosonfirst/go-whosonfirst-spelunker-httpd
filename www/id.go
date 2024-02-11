@@ -6,7 +6,6 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
@@ -61,26 +60,13 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		pg_opts, err := countable.NewCountableOptions()
-
-		if err != nil {
-			slog.Error("Failed to create countable pagination options", "id", uri.Id, "error", err)
-			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
-			return
-		}
-
-		pg_opts.PerPage(1)
-
-		_, pg_rsp, err := opts.Spelunker.GetDescendants(ctx, uri.Id, pg_opts)
+		count_descendants, err := opts.Spelunker.CountDescendants(ctx, uri.Id)
 
 		if err != nil {
 			slog.Error("Failed to count descendants", "id", uri.Id, "error", err)
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
-
-		count_descendants := pg_rsp.Total()
-		slog.Info("COUNT", "total", count_descendants)
 
 		props := gjson.GetBytes(f, "properties")
 		page_title := gjson.GetBytes(f, "properties.wof:name")
