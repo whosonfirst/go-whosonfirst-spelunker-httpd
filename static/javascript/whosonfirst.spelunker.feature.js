@@ -9,11 +9,16 @@ whosonfirst.spelunker.feature = (function(){
 	
 	fetch: function(wofid){
 
+	    if (wofid < 0){
+
+		return new Promise((resolve, reject) => {
+		    reject("Not a valid WOF ID to fetch");
+		});
+	    }
+	    
 	    var _self = self;
 	    var _url = whosonfirst.spelunker.uri.id2abspath(wofid);
 
-	    console.log("FETCH", wofid, _url);
-	    
 	    return new Promise((resolve, reject) => {	
 
 		var on_hit = function(f){

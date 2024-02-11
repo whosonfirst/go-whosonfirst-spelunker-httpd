@@ -140,8 +140,27 @@ window.addEventListener("load", function load(event){
 
 	    // Draw parent here...
 
-	    console.log("Draw parent", f.properties["wof:id"]);
+	    var parent_id = f.properties["wof:parent_id"];
+	    console.log("Fetch parent", parent_id);
+	    
+	    whosonfirst.spelunker.feature.fetch(parent_id).then((parent_f) => {
 
+		if (! parent_f.geometry.type.endsWith("Polygon")){
+		    return;
+		}
+
+		var parent_style = whosonfirst.spelunker.leaflet.styles.parent_polygon();
+		
+		var parent_layer_args = {
+		    style: parent_style,
+		    pane: parent_pane_name,
+		};
+		
+		whosonfirst.spelunker.leaflet.draw_poly(map, parent_f, parent_layer_args);
+		
+	    }).catch((err) => {
+		console.log("Failed to fetch parent record", err);
+	    })
 	    
 	}).catch((err) => {
 	    console.log("Failed to initialize map", err);
