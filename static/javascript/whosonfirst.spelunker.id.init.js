@@ -1,8 +1,21 @@
 window.addEventListener("load", function load(event){
 
+    // Because we still don't have a place to send/store these data
+    whosonfirst.spelunker.yesnofix.enabled(false);
+    
     // START OF wrap me in a webcomponent
 
-    whosonfirst.spelunker.yesnofix.enabled(false);
+    const bbox_pane_name = "bbox";
+    const bbox_pane_zindex = 1000;
+    
+    const parent_pane_name = "parent";
+    const parent_pane_zindex = 2000;
+    
+    const poly_pane_name = "polygon";
+    const poly_pane_zindex = 3000;
+    
+    const centroids_pane_name = "centroids";
+    const centroids_pane_zindex = 4000;
     
     try {
 
@@ -16,6 +29,18 @@ window.addEventListener("load", function load(event){
 	    
 	    const map = L.map(map_el);
 
+	    var bbox_pane = map.createPane(bbox_pane_name);
+	    bbox_pane.style.zIndex = bbox_pane_zindex;
+	    
+	    var parent_pane = map.createPane(parent_pane_name);
+	    parent_pane.style.zIndex = parent_pane_zindex;
+	    
+	    var poly_pane = map.createPane(poly_pane_name);
+	    poly_pane.style.zIndex = poly_pane_zindex;
+	    
+	    var centroids_pane = map.createPane(centroids_pane_name);
+	    centroids_pane.style.zIndex = centroids_pane_zindex;
+	    
 	    if (f.geometry.type == "Point"){
 
 		var coords = f.geometry.coordinates;
@@ -37,29 +62,77 @@ window.addEventListener("load", function load(event){
 	    if (f.geometry.type == "Point"){
 
 		var pt_handler = whosonfirst.spelunker.leaflet.handlers.point();
-		var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();	    		
-		whosonfirst.spelunker.leaflet.draw_point(map, f, lbl_style, pt_handler);
+		var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();
+
+		var layer_args = {
+		    style: lbl_style,
+		    pointToLayer: pt_handler,
+		    pane: centroids_pane_name,
+		}
+		
+		whosonfirst.spelunker.leaflet.draw_point(map, f, layer_args);
 		
 		return;
 	    }
+
+	    var bbox_style = whosonfirst.spelunker.leaflet.styles.bbox();
+
+	    var bbox_layer_args = {
+		style: bbox_style,
+		pane: bbox_pane_name,
+	    }
 	    
-	    var f_style = whosonfirst.spelunker.leaflet.styles.consensus_polygon();
-	    whosonfirst.spelunker.leaflet.draw_poly(map, f, f_style);
+	    whosonfirst.spelunker.leaflet.draw_bbox(map, f, bbox_layer_args);
+	    
+	    var poly_style = whosonfirst.spelunker.leaflet.styles.consensus_polygon();
+	    
+	    var poly_layer_args = {
+		style: poly_style,
+		pane: poly_pane_name,
+	    };
+	    
+	    whosonfirst.spelunker.leaflet.draw_poly(map, f, poly_layer_args);
 
 	    var props = f.properties;
 
 	    var lbl_centroid = [ props["lbl:longitude"], props["lbl:latitude" ] ];
 	    var math_centroid = [ props["geom:longitude"], props["geom:latitude" ] ];	    
 
-	    var lbl_f = { "type": "Feature", "properties": { "lflt:label_text": "label centroid" }, "geometry": { "type": "Point", "coordinates": lbl_centroid }};
-	    var math_f = { "type": "Feature", "properties": { "lflt:label_text": "math centroid" }, "geometry": { "type": "Point", "coordinates": math_centroid }};	    
+	    var lbl_f = {
+		"type": "Feature",
+		"properties": { "lflt:label_text": "label centroid" },
+		"geometry": { "type": "Point", "coordinates": lbl_centroid }
+	    };
+	    
+	    var math_f = {
+		"type": "Feature",
+		"properties": { "lflt:label_text": "math centroid" },
+		"geometry": { "type": "Point", "coordinates": math_centroid }
+	    };	    
 
 	    var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();
 	    var math_style = whosonfirst.spelunker.leaflet.styles.math_centroid();	    
-
 	    var pt_handler = whosonfirst.spelunker.leaflet.handlers.point();
-	    whosonfirst.spelunker.leaflet.draw_point(map, math_f, math_style, pt_handler);
-	    whosonfirst.spelunker.leaflet.draw_point(map, lbl_f, lbl_style, pt_handler);
+
+	    var math_layer_args = {
+		style: math_style,
+		pointToLayer: pt_handler,
+		pane: centroids_pane_name,
+	    };
+
+	    var lbl_layer_args = {
+		style: lbl_style,
+		pointToLayer: pt_handler,
+		pane: centroids_pane_name,
+	    };
+	    
+	    whosonfirst.spelunker.leaflet.draw_point(map, math_f, math_layer_args);
+	    whosonfirst.spelunker.leaflet.draw_point(map, lbl_f, lbl_layer_args);
+
+	    // Draw parent here...
+
+	    console.log("Draw parent", f.properties["wof:id"]);
+
 	    
 	}).catch((err) => {
 	    console.log("Failed to initialize map", err);
