@@ -176,12 +176,13 @@ window.addEventListener("load", function load(event){
     
     // START OF wrap me in a webcomponent
 
+    var props;
     var pretty;
     
     try {
 	var el = document.querySelector("#whosonfirst-properties");
 	var raw = el.innerText;
-	var props = JSON.parse(raw);
+	props = JSON.parse(raw);
 	pretty = whosonfirst.spelunker.properties.render(props);	
     } catch(err) {
 	console.log("Failed to render properties", err);
@@ -224,6 +225,111 @@ window.addEventListener("load", function load(event){
 
     // END OF wrap me in a webcomponent
 
+    var map_wrapper = document.querySelector("#map-wrapper");
+
+    var is_ceased = false;
+    var is_deprecated = false;    
+    var is_superseded = false;
+    var is_superseding = false;
+    
+    if ((props["edtf:deprecated"]) && (props["edtf:deprecated"] != "")){
+	console.log("WTF", props["edtf:deprecated"]);
+	is_deprecated = true;
+    }
+
+    if ((props["edtf:cessation"] != "") && (props["edtf:cessation"] != "uuuu")){
+	is_ceased = true;
+    }
+
+    if (is_deprecated){
+	var span = document.createElement("span");
+	span.setAttribute("class", "hey-look");
+	span.setAttribute("style", "color:red;");
+	span.appendChild(document.createTextNode("This record is deprecated. "));
+	map_wrapper.appendChild(span);
+
+	document.querySelector("#writefield-link").style.display = "none";
+    } else if (is_ceased){
+	var el = document.createTextNode("This record is ceased. ");
+	map_wrapper.appendChild(el);
+    } else {
+
+    }
+
+    var count_supersedes = props["wof:supersedes"].length;
+    var count_superseded_by = props["wof:superseded_by"].length;    
+
+    if (count_supersedes > 0){
+	var span = document.createElement("span");
+	span.appendChild(document.createTextNode("This record "));
+
+	var sup_span = document.createElement("span");
+	sup_span.setAttribute("class", "hey-look");
+	sup_span.appendChild(document.createTextNode("supersedes"));
+
+	span.appendChild(sup_span);
+	
+	for (var i=0; i < count_supersedes; i++){
+	    var a = document.createElement("a");
+	    a.setAttribute("href", "#");
+	    a.setAttribute("class", "wof-namify");
+	    a.setAttribute("data-wof-id", props["wof:supersedes"][i]);
+	    a.appendChild(document.createTextNode(props["wof:supersedes"]));
+
+	    var c = document.createElement("code");
+	    c.appendChild(document.createTextNode(props["wof:supersedes"][i]));
+	    
+	    span.appendChild(a);
+	    span.appendChild(c);	    
+
+	    if (i < (count_supersedes-1)){
+		span.appendChild(document.createTextNode(", "));
+	    }
+	}
+
+	span.appendChild(document.createTextNode(". "));
+	map_wrapper.appendChild(span);
+    }
+
+    if (count_superseded_by > 0){
+	var span = document.createElement("span");
+	span.appendChild(document.createTextNode("This record has been "));
+
+	var sup_span = document.createElement("span");
+	sup_span.setAttribute("class", "hey-look");
+	sup_span.appendChild(document.createTextNode("superseded"));
+
+	span.appendChild(sup_span);
+	span.appendChild(document.createTextNode(" by "));
+
+	for (var i=0; i < count_superseded_by; i++){
+	    var a = document.createElement("a");
+	    a.setAttribute("href", "#");
+	    a.setAttribute("class", "wof-namify");
+	    a.setAttribute("data-wof-id", props["wof:superseded_by"][i]);
+	    a.appendChild(document.createTextNode(props["wof:superseded_by"]));
+
+	    var c = document.createElement("code");
+	    c.appendChild(document.createTextNode(props["wof:superseded_by"][i]));
+	    
+	    span.appendChild(a);
+	    // span.appendChild(document.createTextNode("("));
+	    span.appendChild(c);
+	    // span.appendChild(document.createTextNode(")"));
+	    
+	    if (i < (count_supersedes-1)){
+		span.appendChild(document.createTextNode(", "));
+	    }
+	}
+
+	span.appendChild(document.createTextNode(". "));	
+	map_wrapper.appendChild(span);
+    }
+    
+    //
+    
     whosonfirst.spelunker.namify.namify_selector(".props-uoc");
-    whosonfirst.spelunker.namify.namify_selector(".wof-namify");    
+    whosonfirst.spelunker.namify.namify_selector(".wof-namify");
+    whosonfirst.spelunker.namify.namify_selector(".yesnofix-uoc");
+    
 });

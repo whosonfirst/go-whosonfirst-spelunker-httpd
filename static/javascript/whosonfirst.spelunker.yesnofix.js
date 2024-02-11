@@ -380,7 +380,11 @@ whosonfirst.spelunker.yesnofix = (function(){
 	    span.setAttribute("id", ctx);
 	    span.setAttribute("title", ctx);
 	    span.setAttribute("class", "yesnofix-uoc");
-	    	    
+
+	    if (ctx.startsWith("wof.belongsto")){
+		span.setAttribute("data-wof-id", text);	    
+	    }
+	    
 	    var el = document.createTextNode(text);
 	    span.appendChild(el);
 

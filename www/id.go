@@ -12,6 +12,7 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-placetypes"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
+	"github.com/whosonfirst/go-whosonfirst-uri"
 )
 
 type IdHandlerOptions struct {
@@ -33,6 +34,8 @@ type IdHandlerVars struct {
 	Properties       string
 	CountDescendants int64
 	Hierarchies      [][]*IdHandlerAncestor
+	GitHubURL        string
+	WriteFieldURL    string
 }
 
 func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
@@ -50,7 +53,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
 
-		uri, err, status := httpd.ParseURIFromRequest(req, nil)
+		req_uri, err, status := httpd.ParseURIFromRequest(req, nil)
 
 		if err != nil {
 			slog.Error("Failed to parse URI from request", "error", err)
@@ -58,20 +61,20 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		logger = logger.With("wofid", uri.Id)
+		logger = logger.With("wofid", req_uri.Id)
 
-		f, err := opts.Spelunker.GetById(ctx, uri.Id)
+		f, err := opts.Spelunker.GetById(ctx, req_uri.Id)
 
 		if err != nil {
-			slog.Error("Failed to get by ID", "id", uri.Id, "error", err)
+			slog.Error("Failed to get by ID", "error", err)
 			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
 			return
 		}
 
-		count_descendants, err := opts.Spelunker.CountDescendants(ctx, uri.Id)
+		count_descendants, err := opts.Spelunker.CountDescendants(ctx, req_uri.Id)
 
 		if err != nil {
-			slog.Error("Failed to count descendants", "id", uri.Id, "error", err)
+			slog.Error("Failed to count descendants", "error", err)
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
@@ -135,16 +138,30 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		}
 
 		// END OF there's got to be a better way to do this...
+		
+		rel_path, err := uri.Id2RelPath(req_uri.Id, req_uri.URIArgs)
+
+		if err != nil {
+			slog.Error("Failed to derive relative path for record", "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			return
+		}
 
 		page_title := gjson.GetBytes(f, "properties.wof:name")
+		repo_name := gjson.GetBytes(f, "properties.wof:repo")
+
+		github_url := fmt.Sprintf("https://github.com/whosonfirst-data/%s/blob/master/data/%s", repo_name, rel_path)
+		writefield_url := fmt.Sprintf("https://raw.githubusercontent.com/whosonfirst-data/%s/master/data/%s", repo_name, rel_path)
 
 		vars := IdHandlerVars{
-			Id:               uri.Id,
+			Id:               req_uri.Id,
 			Properties:       props.String(),
 			PageTitle:        page_title.String(),
 			URIs:             opts.URIs,
 			CountDescendants: count_descendants,
 			Hierarchies:      handler_hierarchies,
+			GitHubURL:        github_url,
+			WriteFieldURL:    writefield_url,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

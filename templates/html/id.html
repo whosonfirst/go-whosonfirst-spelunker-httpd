@@ -6,12 +6,12 @@
 </h2>
 
 <div id="map-wrapper">
-<whosonfirst-map id="{{ .Id }}">
     {{ if (IsAvailable "URIs" .) }}<img src="{{ .URIs.SVG }}/{{ .Id }}" id="map-svg" loading="lazy" />{{ end }}
     <div id="map" data-wof-id="{{ .Id }}"></div>
     <p>{{ GjsonGet .Properties "wof:name" }} is a <span class="hey-look">{{ GjsonGet .Properties "wof:placetype" }}</span> and its consensus geometry is derived from <span class="hey-look">{{ GjsonGet .Properties "src:geom" }}</span>.</p>
-</whosonfirst-map>
 </div>
+
+<!-- superseded: http://localhost:8080/id/85897633 -->
 
 <div class="whosonfirst-record">
     <div id="whosonfirst-record-properties">
@@ -43,11 +43,11 @@
 	    {{ if eq .CountDescendants 0 -}}
 	    <li>This record has no descendants</li>
 	    {{ else -}}
-            {{ if (IsAvailable "URIs" .) }}<li><a href="{{ .URIs.Descendants }}/{{ .Id }}">See all the descendants of {{ GjsonGet .Properties "wof:name" }}</a></li>{{ end }}
+            <li><a href="{{ .URIs.Descendants }}{{ .Id }}">See all the descendants of {{ GjsonGet .Properties "wof:name" }}</a></li>
 	    {{ end -}}
-	    {{ if (IsAvailable "URIs" .) }}<li><a href="{{ .URIs.GeoJSON }}/{{ .Id }}">Raw data (GeoJSON)</a></li>{{ end }}
-	    <li><a href="https://github.com/whosonfirst-data/{{ GjsonGet .Properties "wof:repo" }}/FIXME">View on GitHub</a></li>
-	    <li><a href="https://writefield.nextzen.org/place/edit?url=FIX ME">Edit in Write Field</a></li>
+	    <li><a href="{{ .URIs.GeoJSON }}{{ .Id }}">Raw data (GeoJSON)</a></li>
+	    <li><a href="{{ .GitHubURL }}" target="github">View on GitHub</a></li>
+	    <li id="writefield-link"><a href="https://writefield.nextzen.org/place/edit?url={{ .WriteFieldURL }}" target="writefield">Edit in Write Field</a></li>
 	</ul>
     </div>
 </div>

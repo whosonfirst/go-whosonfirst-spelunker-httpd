@@ -61,19 +61,16 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 
 		// WWW/human-readable
 
-		// I can't get this to work...
-		// Descendants: "/id/{id}/descendants",
-
-		Id:          "/id",
-		Descendants: "/descendants",
+		Id:          "/id/",
+		Descendants: "/descendants/",
 		DescendantsAlt: []string{
-			"/id/{id}/descendants",
+			"/id/{id}/descendants/",
 		},
 		Search: "/search",
 		About:  "/about",
 
 		// Static Assets
-		Static: "/static",
+		Static: "/static/",
 
 		// API/machine-readable
 		GeoJSON:   "/geojson/",
