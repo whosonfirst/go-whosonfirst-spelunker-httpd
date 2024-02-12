@@ -46,6 +46,12 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		return nil, fmt.Errorf("Failed to locate 'id' template")
 	}
 
+	alt_t := opts.Templates.Lookup("alt")
+
+	if alt_t == nil {
+		return nil, fmt.Errorf("Missing alt template")
+	}
+
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
 		ctx := req.Context()
@@ -71,6 +77,30 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
+		props := gjson.GetBytes(f, "properties")		
+		page_title := gjson.GetBytes(f, "properties.wof:name")
+
+		vars := IdHandlerVars{
+			Id:         req_uri.Id,
+			Properties: props.String(),
+			PageTitle:  page_title.String(),
+			URIs:       opts.URIs,
+		}
+
+		if req_uri.IsAlternate {
+
+			rsp.Header().Set("Content-Type", "text/html")
+
+			err = alt_t.Execute(rsp, vars)
+
+			if err != nil {
+				slog.Error("Failed to return ", "error", err)
+				http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			}
+
+			return
+		}
+
 		count_descendants, err := opts.Spelunker.CountDescendants(ctx, req_uri.Id)
 
 		if err != nil {
@@ -78,8 +108,6 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
-
-		props := gjson.GetBytes(f, "properties")
 
 		// START OF there's got to be a better way to do this...
 
@@ -138,7 +166,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		}
 
 		// END OF there's got to be a better way to do this...
-		
+
 		rel_path, err := uri.Id2RelPath(req_uri.Id, req_uri.URIArgs)
 
 		if err != nil {
@@ -147,22 +175,15 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		page_title := gjson.GetBytes(f, "properties.wof:name")
 		repo_name := gjson.GetBytes(f, "properties.wof:repo")
 
 		github_url := fmt.Sprintf("https://github.com/whosonfirst-data/%s/blob/master/data/%s", repo_name, rel_path)
 		writefield_url := fmt.Sprintf("https://raw.githubusercontent.com/whosonfirst-data/%s/master/data/%s", repo_name, rel_path)
 
-		vars := IdHandlerVars{
-			Id:               req_uri.Id,
-			Properties:       props.String(),
-			PageTitle:        page_title.String(),
-			URIs:             opts.URIs,
-			CountDescendants: count_descendants,
-			Hierarchies:      handler_hierarchies,
-			GitHubURL:        github_url,
-			WriteFieldURL:    writefield_url,
-		}
+		vars.CountDescendants = count_descendants
+		vars.Hierarchies = handler_hierarchies
+		vars.GitHubURL = github_url
+		vars.WriteFieldURL = writefield_url
 
 		rsp.Header().Set("Content-Type", "text/html")
 
