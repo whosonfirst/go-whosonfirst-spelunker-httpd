@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
+	"path/filepath"
+	"strings"
 
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/tidwall/gjson"
@@ -29,6 +31,8 @@ type IdHandlerAncestor struct {
 
 type IdHandlerVars struct {
 	Id               int64
+	RequestId        string
+	URIArgs          *uri.URIArgs
 	PageTitle        string
 	URIs             *httpd.URIs
 	Properties       string
@@ -67,9 +71,22 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		logger = logger.With("wofid", req_uri.Id)
+		wof_id := req_uri.Id
 
-		f, err := opts.Spelunker.GetById(ctx, req_uri.Id)
+		req_id, err := uri.Id2Fname(req_uri.Id, req_uri.URIArgs)
+
+		if err != nil {
+			slog.Error("Failed to derive request ID", "error", err)
+			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
+			return
+		}
+
+		req_id = strings.Replace(req_id, filepath.Ext(req_id), "", 1)
+
+		logger = logger.With("request id", req_id)
+		logger = logger.With("wof id", wof_id)
+
+		f, err := opts.Spelunker.GetById(ctx, wof_id)
 
 		if err != nil {
 			slog.Error("Failed to get by ID", "error", err)
@@ -77,11 +94,13 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		props := gjson.GetBytes(f, "properties")		
+		props := gjson.GetBytes(f, "properties")
 		page_title := gjson.GetBytes(f, "properties.wof:name")
 
 		vars := IdHandlerVars{
-			Id:         req_uri.Id,
+			Id:         wof_id,
+			RequestId:  req_id,
+			URIArgs:    req_uri.IsAlternate,
 			Properties: props.String(),
 			PageTitle:  page_title.String(),
 			URIs:       opts.URIs,
@@ -101,7 +120,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		count_descendants, err := opts.Spelunker.CountDescendants(ctx, req_uri.Id)
+		count_descendants, err := opts.Spelunker.CountDescendants(ctx, wof_id)
 
 		if err != nil {
 			slog.Error("Failed to count descendants", "error", err)
@@ -167,7 +186,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 
 		// END OF there's got to be a better way to do this...
 
-		rel_path, err := uri.Id2RelPath(req_uri.Id, req_uri.URIArgs)
+		rel_path, err := uri.Id2RelPath(wof_id, req_uri.URIArgs)
 
 		if err != nil {
 			slog.Error("Failed to derive relative path for record", "error", err)

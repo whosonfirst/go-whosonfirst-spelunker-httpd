@@ -1,7 +1,16 @@
 {{ define "alt" }}
-{{ include file="inc_head" . -}}
-<div class="container">
-    ALT
+{{ template "inc_head" . -}}
+
+<h2>
+    {{ GjsonGet .Properties "wof:name" }} ({{ .RequestId }})
+</h2>
+
+<div id="map-wrapper">
+    <img src="{{ .URIs.SVG }}/{{ .RequestId }}" id="map-svg" loading="lazy" />
+    <div id="map" data-wof-id="{{ .RequestId }}"></div>
+    <p>{{ GjsonGet .Properties "wof:name" }} is a <span class="hey-look">{{ GjsonGet .Properties "wof:placetype" }}</span> and its consensus geometry is derived from <span class="hey-look">{{ GjsonGet .Properties "src:geom" }}</span>.</p>
 </div>
-{{ include file="inc_foot" . -}}
+
+{{ template "inc_foot" . -}}
+<script type="text/javascript" src="{{ .URIs.Static }}javascript/whosonfirst.spelunker.id.init.js"></script>
 {{ end }}
