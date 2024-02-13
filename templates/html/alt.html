@@ -11,6 +11,25 @@
     <p><a href="{{ .URIs.Id }}{{ .Id }}">{{ GjsonGet .Properties "wof:name" }}</a> is a <span class="hey-look">{{ GjsonGet .Properties "wof:placetype" }}</span> and this alternate geometry is derived from <span class="hey-look">{{ .URIArgs.AltGeom.Source }}</span>.</p>
 </div>
 
+<div class="whosonfirst-record">
+    <div id="whosonfirst-record-properties">
+	<h3>Properties
+
+	    <div id="props-toggle" class="pull-right">
+		<button class="btn btn-sm" id="props-toggle-raw">view raw</button>
+		<button class="btn btn-sm" id="props-toggle-pretty">make pretty</button>
+	    </div>
+	</h3>
+	<div id="props-wrapper" class="table-responsive">
+	<whosonfirst-properties>
+	    <pre id="whosonfirst-properties">{{ .Properties }}</pre>
+	</whosonfirst-properties>
+	</div>
+    </div>
+    <div id="whosonfirst-record-other">
+    </div>
+</div>
+
 {{ template "inc_foot" . -}}
 <script type="text/javascript" src="{{ .URIs.Static }}javascript/whosonfirst.spelunker.id.init.js"></script>
 {{ end }}

@@ -86,8 +86,15 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		logger = logger.With("request id", req_id)
 		logger = logger.With("wof id", wof_id)
 
-		f, err := opts.Spelunker.GetById(ctx, wof_id)
+		var f []byte
 
+		if req_uri.IsAlternate {
+			alt_geom := req_uri.URIArgs.AltGeom
+			f, err = opts.Spelunker.GetAlternateGeometryById(ctx, wof_id, alt_geom)
+		} else {
+			f, err = opts.Spelunker.GetById(ctx, wof_id)
+		}
+		
 		if err != nil {
 			slog.Error("Failed to get by ID", "error", err)
 			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
