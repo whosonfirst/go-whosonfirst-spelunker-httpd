@@ -7,7 +7,7 @@ whosonfirst.spelunker.feature = (function(){
     
     var self = {
 	
-	fetch: function(wofid){
+	fetch: function(wofid, uri_args){
 
 	    if (wofid < 0){
 
@@ -17,8 +17,10 @@ whosonfirst.spelunker.feature = (function(){
 	    }
 	    
 	    var _self = self;
-	    var _url = whosonfirst.spelunker.uri.id2abspath(wofid);
+	    var _url = whosonfirst.spelunker.uri.id2abspath(wofid, uri_args);
 
+	    console.log("FETCH", _url);
+	    
 	    return new Promise((resolve, reject) => {	
 
 		var on_hit = function(f){

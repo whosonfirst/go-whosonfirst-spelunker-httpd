@@ -23,7 +23,17 @@ window.addEventListener("load", function load(event){
 	var svg_el = document.querySelector("#map-svg");	
 	var wof_id = map_el.getAttribute("data-wof-id");
 
-	whosonfirst.spelunker.feature.fetch(wof_id).then((f) => {
+	var alt_source = map_el.getAttribute("data-wof-alt-source");
+	var alt_function = map_el.getAttribute("data-wof-alt-function");
+	var alt_extra = map_el.getAttribute("data-wof-alt-extra");		
+
+	var uri_args = {
+	    source: alt_source,
+	    function: alt_function,
+	    extra: alt_extra,
+	};
+	
+	whosonfirst.spelunker.feature.fetch(wof_id, uri_args).then((f) => {
 
 	    map_el.style.display = "block";
 	    

@@ -7,8 +7,8 @@
 
 <div id="map-wrapper">
     <img src="{{ .URIs.SVG }}/{{ .RequestId }}" id="map-svg" loading="lazy" />
-    <div id="map" data-wof-id="{{ .RequestId }}"></div>
-    <p>{{ GjsonGet .Properties "wof:name" }} is a <span class="hey-look">{{ GjsonGet .Properties "wof:placetype" }}</span> and its consensus geometry is derived from <span class="hey-look">{{ GjsonGet .Properties "src:geom" }}</span>.</p>
+    <div id="map" data-wof-id="{{ .RequestId }}" data-wof-alt-source="{{ .URIArgs.AltGeom.Source }}" data-wof-alt-function="{{ .URIArgs.AltGeom.Function }}" {{if (IsAvailable "Extra" .URIArgs.AltGeom) }}data-wof-alt-extra="{{ .URIArgs.AltGeom.Extra }}"{{ end }}></div>
+    <p><a href="{{ .URIs.Id }}{{ .Id }}">{{ GjsonGet .Properties "wof:name" }}</a> is a <span class="hey-look">{{ GjsonGet .Properties "wof:placetype" }}</span> and this alternate geometry is derived from <span class="hey-look">{{ .URIArgs.AltGeom.Source }}</span>.</p>
 </div>
 
 {{ template "inc_foot" . -}}

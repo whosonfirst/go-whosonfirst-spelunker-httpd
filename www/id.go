@@ -100,7 +100,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		vars := IdHandlerVars{
 			Id:         wof_id,
 			RequestId:  req_id,
-			URIArgs:    req_uri.IsAlternate,
+			URIArgs:    req_uri.URIArgs,
 			Properties: props.String(),
 			PageTitle:  page_title.String(),
 			URIs:       opts.URIs,
