@@ -13,6 +13,7 @@ type URIs struct {
 	IdAlt          []string `json:"id_alt"`
 	Descendants    string   `json:"descendants"`
 	DescendantsAlt []string `json:"descendants_alt"`
+	Index string `json:"index"`	
 	Search         string   `json:"search"`
 	About          string   `json:"about"`
 

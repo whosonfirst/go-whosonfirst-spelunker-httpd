@@ -66,6 +66,7 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 		DescendantsAlt: []string{
 			"/id/{id}/descendants/",
 		},
+		Index: "/",
 		Search: "/search",
 		About:  "/about",
 

@@ -17,6 +17,26 @@ func staticHandlerFunc(ctx context.Context) (http.Handler, error) {
 	return http.StripPrefix(run_options.URIs.Static, fs_handler), nil
 }
 
+func indexHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupWWWOnce.Do(setupWWW)
+
+	if setupWWWError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupWWWError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupWWWError)
+	}
+
+	opts := &www.TemplateHandlerOptions{
+		Authenticator: authenticator,
+		Templates:     html_templates,
+		TemplateName:  "index",
+		PageTitle:     "",
+		URIs:          uris_table,
+	}
+
+	return www.TemplateHandler(opts)
+}
+
 func aboutHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	setupWWWOnce.Do(setupWWW)
