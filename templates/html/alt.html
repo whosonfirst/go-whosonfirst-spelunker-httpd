@@ -2,13 +2,17 @@
 {{ template "inc_head" . -}}
 
 <h2>
-    {{ GjsonGet .Properties "wof:name" }} ({{ .RequestId }})
+    <span class="wof-namify" data-wof-id="{{ .Id }}">{{ .Id }}</span>
+    <small class="rel-path">{{ .RelPath }}</small>
 </h2>
 
 <div id="map-wrapper">
     <img src="{{ .URIs.SVG }}/{{ .RequestId }}" id="map-svg" loading="lazy" />
     <div id="map" data-wof-id="{{ .RequestId }}" data-wof-alt-source="{{ .URIArgs.AltGeom.Source }}" data-wof-alt-function="{{ .URIArgs.AltGeom.Function }}" {{if (IsAvailable "Extra" .URIArgs.AltGeom) }}data-wof-alt-extra="{{ .URIArgs.AltGeom.Extra }}"{{ end }}></div>
-    <p><a href="{{ .URIs.Id }}{{ .Id }}">{{ GjsonGet .Properties "wof:name" }}</a> is a <span class="hey-look">{{ GjsonGet .Properties "wof:placetype" }}</span> and this alternate geometry is derived from <span class="hey-look">{{ .URIArgs.AltGeom.Source }}</span>.</p>
+    <p>
+
+
+	This is an alternate geometry for <a href="{{ .URIs.Id }}{{ .Id }}" class="wof-namify" data-wof-id="{{ .Id }}">{{ .Id }}</a> derived from <span class="hey-look">{{ .URIArgs.AltGeom.Source }}</span>.</p>
 </div>
 
 <div class="whosonfirst-record">
@@ -27,6 +31,12 @@
 	</div>
     </div>
     <div id="whosonfirst-record-other">
+	<h3>Other</h3>
+	<ul>
+	    <li><a href="{{ .URIs.GeoJSON }}{{ .RequestId }}">Raw data (GeoJSON)</a></li>
+	    <li><a href="{{ .GitHubURL }}" target="github">View on GitHub</a></li>
+	</ul>
+	
     </div>
 </div>
 

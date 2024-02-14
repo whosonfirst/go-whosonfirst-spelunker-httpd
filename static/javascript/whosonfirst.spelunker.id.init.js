@@ -1,3 +1,5 @@
+// failed to bind label because TypeError: m.bindLabel is not a function
+
 window.addEventListener("load", function load(event){
 
     // Because we still don't have a place to send/store these data
@@ -109,68 +111,81 @@ window.addEventListener("load", function load(event){
 
 	    var props = f.properties;
 
-	    var lbl_centroid = [ props["lbl:longitude"], props["lbl:latitude" ] ];
-	    var math_centroid = [ props["geom:longitude"], props["geom:latitude" ] ];	    
-
-	    var lbl_f = {
-		"type": "Feature",
-		"properties": { "lflt:label_text": "label centroid" },
-		"geometry": { "type": "Point", "coordinates": lbl_centroid }
-	    };
-	    
-	    var math_f = {
-		"type": "Feature",
-		"properties": { "lflt:label_text": "math centroid" },
-		"geometry": { "type": "Point", "coordinates": math_centroid }
-	    };	    
-
-	    var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();
-	    var math_style = whosonfirst.spelunker.leaflet.styles.math_centroid();
-
 	    var pt_handler_layer_args = {
 		pane: centroids_pane_name,
 	    };
 	    
 	    var pt_handler = whosonfirst.spelunker.leaflet.handlers.point(pt_handler_layer_args);
-
-	    var math_layer_args = {
-		style: math_style,
-		pointToLayer: pt_handler,
-		pane: centroids_pane_name,
-	    };
-
-	    var lbl_layer_args = {
-		style: lbl_style,
-		pointToLayer: pt_handler,
-		pane: centroids_pane_name,
-	    };
 	    
-	    whosonfirst.spelunker.leaflet.draw_point(map, math_f, math_layer_args);
-	    whosonfirst.spelunker.leaflet.draw_point(map, lbl_f, lbl_layer_args);
+	    if ((props["lbl:longitude"]) && (props["lbl:latitude"])){
+		
+		var lbl_centroid = [ props["lbl:longitude"], props["lbl:latitude" ] ];
+		
+		var lbl_f = {
+		    "type": "Feature",
+		    "properties": { "lflt:label_text": "label centroid" },
+		    "geometry": { "type": "Point", "coordinates": lbl_centroid }
+		};
+		
+		var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();
+		
+		var lbl_layer_args = {
+		    style: lbl_style,
+		    pointToLayer: pt_handler,
+		    pane: centroids_pane_name,
+		};
+		
+		whosonfirst.spelunker.leaflet.draw_point(map, lbl_f, lbl_layer_args);		
+	    }
 
+	    if ((props["geom:longitude"]) && (props["geom:latitude"])){
+		
+		var math_centroid = [ props["geom:longitude"], props["geom:latitude" ] ];
+		
+		var math_f = {
+		    "type": "Feature",
+		    "properties": { "lflt:label_text": "math centroid" },
+		    "geometry": { "type": "Point", "coordinates": math_centroid }
+		};	    
+		
+		var math_style = whosonfirst.spelunker.leaflet.styles.math_centroid();
+		
+		var math_layer_args = {
+		    style: math_style,
+		    pointToLayer: pt_handler,
+		    pane: centroids_pane_name,
+		};
+		
+		whosonfirst.spelunker.leaflet.draw_point(map, math_f, math_layer_args);
+	    }
+	    
 	    // Draw parent here...
 
 	    var parent_id = f.properties["wof:parent_id"];
-	    console.log("Fetch parent", parent_id);
-	    
-	    whosonfirst.spelunker.feature.fetch(parent_id).then((parent_f) => {
 
-		if (! parent_f.geometry.type.endsWith("Polygon")){
-		    return;
-		}
-
-		var parent_style = whosonfirst.spelunker.leaflet.styles.parent_polygon();
+	    if ((parent_id) && (parent_id > 0)){
 		
-		var parent_layer_args = {
-		    style: parent_style,
-		    pane: parent_pane_name,
-		};
+		console.log("Fetch parent", parent_id);
 		
-		whosonfirst.spelunker.leaflet.draw_poly(map, parent_f, parent_layer_args);
-		
-	    }).catch((err) => {
-		console.log("Failed to fetch parent record", err);
-	    })
+		whosonfirst.spelunker.feature.fetch(parent_id).then((parent_f) => {
+		    
+		    if (! parent_f.geometry.type.endsWith("Polygon")){
+			return;
+		    }
+		    
+		    var parent_style = whosonfirst.spelunker.leaflet.styles.parent_polygon();
+		    
+		    var parent_layer_args = {
+			style: parent_style,
+			pane: parent_pane_name,
+		    };
+		    
+		    whosonfirst.spelunker.leaflet.draw_poly(map, parent_f, parent_layer_args);
+		    
+		}).catch((err) => {
+		    console.log("Failed to fetch parent record", err);
+		})
+	    }
 	    
 	}).catch((err) => {
 	    console.log("Failed to initialize map", err);
@@ -243,11 +258,10 @@ window.addEventListener("load", function load(event){
     var is_superseding = false;
     
     if ((props["edtf:deprecated"]) && (props["edtf:deprecated"] != "")){
-	console.log("WTF", props["edtf:deprecated"]);
 	is_deprecated = true;
     }
 
-    if ((props["edtf:cessation"] != "") && (props["edtf:cessation"] != "uuuu")){
+    if ((! props["src:alt_label"]) && (props["edtf:cessation"] != "") && (props["edtf:cessation"] != "uuuu")){
 	is_ceased = true;
     }
 
@@ -266,8 +280,10 @@ window.addEventListener("load", function load(event){
 
     }
 
-    var count_supersedes = props["wof:supersedes"].length;
-    var count_superseded_by = props["wof:superseded_by"].length;    
+    // alternate geometries will not have these properties
+    
+    var count_supersedes = (props["wof:supersedes"]) ? props["wof:supersedes"].length : 0;
+    var count_superseded_by = (props["wof:superseded_by"]) ? props["wof:superseded_by"].length : 0;    
 
     if (count_supersedes > 0){
 	var span = document.createElement("span");
@@ -334,6 +350,38 @@ window.addEventListener("load", function load(event){
 
 	span.appendChild(document.createTextNode(". "));	
 	map_wrapper.appendChild(span);
+    }
+
+    // alt geoms
+
+    var alt_geoms = props["src:geom_alt"];
+
+    if (alt_geoms){
+	var count_alt = alt_geoms.length;
+	
+	if (count_alt > 0){
+	    
+	    var wrapper_el = document.querySelector("#whosonfirst-alt-geoms");
+	    
+	    var alt_list = document.createElement("ul");
+	    
+	    for (var i=0; i < count_alt; i++){
+		var label = alt_geoms[i];
+		var uri = props["wof:id"] + "-alt-" + label;
+		
+		var a = document.createElement("a");
+		a.setAttribute("href", uri);
+		a.setAttribute("class", "hey-look");
+		a.appendChild(document.createTextNode(label));
+		
+		var item = document.createElement("li");
+		item.appendChild(a);
+		alt_list.appendChild(item);
+	    }
+	    
+	    wrapper_el.appendChild(document.createTextNode("This record has alternate geometries from the following sources: "));
+	    wrapper_el.appendChild(alt_list);
+	}
     }
     
     //

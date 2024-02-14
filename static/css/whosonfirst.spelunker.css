@@ -16,6 +16,37 @@ p {
     color:#333;
 }
 
+.rel-path {
+	display: block;
+	font-size:small;
+	margin-top:.3rem;
+}
+
+#whosonfirst-alt-geoms {
+	font-style:italic;
+}
+
+#whosonfirst-alt-geoms ul {
+	display: inline;
+	padding:0px;
+	margin:0px;	
+}
+
+#whosonfirst-alt-geoms ul li {
+	list-style-type: none;
+	display:inline;
+	padding:0px;
+	margin:0px;
+}
+
+#whosonfirst-alt-geoms ul li:after {
+	content:", ";
+}
+
+#whosonfirst-alt-geoms ul li:last-child:after {
+	content:"" !important;
+}
+
 #nav-links {
     margin:0px !important;
     padding:0px !important;

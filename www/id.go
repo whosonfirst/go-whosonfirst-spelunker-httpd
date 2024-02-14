@@ -38,6 +38,7 @@ type IdHandlerVars struct {
 	Properties       string
 	CountDescendants int64
 	Hierarchies      [][]*IdHandlerAncestor
+	RelPath string
 	GitHubURL        string
 	WriteFieldURL    string
 }
@@ -104,13 +105,27 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		props := gjson.GetBytes(f, "properties")
 		page_title := gjson.GetBytes(f, "properties.wof:name")
 
+		rel_path, err := uri.Id2RelPath(wof_id, req_uri.URIArgs)
+
+		if err != nil {
+			slog.Error("Failed to derive relative path for record", "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		repo_name := gjson.GetBytes(f, "properties.wof:repo")
+
+		github_url := fmt.Sprintf("https://github.com/whosonfirst-data/%s/blob/master/data/%s", repo_name, rel_path)
+		
 		vars := IdHandlerVars{
 			Id:         wof_id,
 			RequestId:  req_id,
 			URIArgs:    req_uri.URIArgs,
 			Properties: props.String(),
 			PageTitle:  page_title.String(),
+			GitHubURL: github_url,
 			URIs:       opts.URIs,
+			RelPath: rel_path,
 		}
 
 		if req_uri.IsAlternate {
@@ -193,22 +208,10 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 
 		// END OF there's got to be a better way to do this...
 
-		rel_path, err := uri.Id2RelPath(wof_id, req_uri.URIArgs)
-
-		if err != nil {
-			slog.Error("Failed to derive relative path for record", "error", err)
-			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
-			return
-		}
-
-		repo_name := gjson.GetBytes(f, "properties.wof:repo")
-
-		github_url := fmt.Sprintf("https://github.com/whosonfirst-data/%s/blob/master/data/%s", repo_name, rel_path)
 		writefield_url := fmt.Sprintf("https://raw.githubusercontent.com/whosonfirst-data/%s/master/data/%s", repo_name, rel_path)
 
 		vars.CountDescendants = count_descendants
 		vars.Hierarchies = handler_hierarchies
-		vars.GitHubURL = github_url
 		vars.WriteFieldURL = writefield_url
 
 		rsp.Header().Set("Content-Type", "text/html")

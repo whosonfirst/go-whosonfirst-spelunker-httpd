@@ -23,7 +23,7 @@ func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
 		logger = logger.With("request", req.URL)
 		logger = logger.With("address", req.RemoteAddr)
 
-		uri, err, status := httpd.ParseURIFromRequest(req, nil)
+		req_uri, err, status := httpd.ParseURIFromRequest(req, nil)
 
 		if err != nil {
 			slog.Error("Failed to parse URI from request", "error", err)
@@ -31,10 +31,20 @@ func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		r, err := opts.Spelunker.GetById(ctx, uri.Id)
+		wof_id := req_uri.Id
+		logger = logger.With("wof id", wof_id)
+		
+		var r []byte
+
+		if req_uri.IsAlternate {
+			alt_geom := req_uri.URIArgs.AltGeom
+			r, err = opts.Spelunker.GetAlternateGeometryById(ctx, wof_id, alt_geom)
+		} else {
+			r, err = opts.Spelunker.GetById(ctx, wof_id)
+		}
 
 		if err != nil {
-			slog.Error("Failed to get by ID", "id", uri.Id, "error", err)
+			slog.Error("Failed to get by ID", "id", wof_id, "error", err)
 			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
 			return
 		}
