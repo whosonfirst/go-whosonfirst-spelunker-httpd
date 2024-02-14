@@ -24,6 +24,7 @@ whosonfirst.spelunker.cache = (function(){
 		if ((err) || (! rsp)){
 		    // console.log("cache MISS for " + fq_key);
 		    on_miss();
+		    return false;
 		}
 
 		// console.log("cache HIT for " + fq_key);
@@ -34,6 +35,7 @@ whosonfirst.spelunker.cache = (function(){
 		if (! data){
 		    // console.log("cache WTF for " + fq_key);
 		    on_miss();
+		    return false;
 		}
 
 		var dt = new Date();
@@ -46,6 +48,7 @@ whosonfirst.spelunker.cache = (function(){
 		    // console.log("cache EXPIRED for " + fq_key);
 		    self.unset(key);
 		    on_miss();
+		    return false;
 		}
 
 		on_hit(data);
