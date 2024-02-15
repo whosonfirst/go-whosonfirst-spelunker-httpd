@@ -31,13 +31,13 @@ window.addEventListener("load", function load(event){
 	}
 
 	coords[i] = [ lon, lat ];
-	names[i] = n.innerText;
+	names[ JSON.stringify(coords[i]) ] = n.innerText;
     }
 
     var f = {
 	"type": "Feature",
 	"properties": {
-	    "names": names,
+	    "lflt:label_names": names,
 	},
 	"geometry": {
 	    "type": "MultiPoint",

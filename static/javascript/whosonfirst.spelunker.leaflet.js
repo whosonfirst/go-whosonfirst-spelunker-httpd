@@ -28,7 +28,13 @@ whosonfirst.spelunker.leaflet = (function(){
 		    var label = props['lflt:label_text'];
 		    
 		    if (label){
-			layer.bindLabel(label, {noHide: true });
+
+			var label_args = {
+			    noHide: true,
+			    pane: layer_args.pane,
+			}
+			
+			layer.bindTooltip(label, label_args);			
 		    }
 		}
 		
@@ -46,8 +52,6 @@ whosonfirst.spelunker.leaflet = (function(){
 	},
 	
 	'draw_bbox': function(map, geojson, layer_args){
-	    
-	    console.log("BBOX", layer_args);
 	    
 	    var bbox = whosonfirst.spelunker.geojson.derive_bbox(geojson);
 	    
