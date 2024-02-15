@@ -34,7 +34,43 @@ window.addEventListener("load", function load(event){
 	names[i] = n.innerText;
     }
 
-    console.log("Coords", coords);
-    console.log("Names", names);
+    var f = {
+	"type": "Feature",
+	"properties": {
+	    "names": names,
+	},
+	"geometry": {
+	    "type": "MultiPoint",
+	    "coordinates": coords,
+	},
+    };
+	    
+    var map_el = document.querySelector("#map");
+    map_el.style.display = "block";
     
-})();
+    const map = L.map(map_el);
+
+    var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
+    map.fitBounds(bounds);
+    
+    var tile_url = "https://static.sfomuseum.org/pmtiles/sfomuseum_v3/{z}/{x}/{y}.mvt?key=xxx";
+    var layer = protomapsL.leafletLayer({url: tile_url});
+    layer.addTo(map);
+
+    var pt_handler_layer_args = {
+	//pane: centroids_pane_name,
+    };
+		
+    var pt_handler = whosonfirst.spelunker.leaflet.handlers.point(pt_handler_layer_args);
+    var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();
+
+    var points_layer_args = {
+	style: lbl_style,
+	pointToLayer: pt_handler,
+	//pane: centroids_pane_name,
+    }
+    
+    var points_layer = L.geoJSON(f, points_layer_args);
+    points_layer.addTo(map);
+    
+});

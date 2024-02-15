@@ -1,4 +1,8 @@
 {{ define "inc_places" -}}
+<div id="map-wrapper">
+    <div id="map"></div>
+</div>
+
 <ul class="whosonfirst-places-list">
     {{ range $idx, $spr := .Places -}}
     <li class="spr-place" data-latitude="{{ $spr.Latitude }}" data-longitude="{{ $spr.Longitude }}" style="margin-bottom:.5rem;">
