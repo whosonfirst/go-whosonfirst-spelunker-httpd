@@ -33,15 +33,8 @@ func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
 
 		wof_id := req_uri.Id
 		logger = logger.With("wof id", wof_id)
-		
-		var r []byte
 
-		if req_uri.IsAlternate {
-			alt_geom := req_uri.URIArgs.AltGeom
-			r, err = opts.Spelunker.GetAlternateGeometryById(ctx, wof_id, alt_geom)
-		} else {
-			r, err = opts.Spelunker.GetById(ctx, wof_id)
-		}
+		r, err := httpd.FeatureFromRequestURI(ctx, opts.Spelunker, req_uri)
 
 		if err != nil {
 			slog.Error("Failed to get by ID", "id", wof_id, "error", err)

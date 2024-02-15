@@ -24,7 +24,7 @@ func GeoJSONLDHandler(opts *GeoJSONLDHandlerOptions) (http.Handler, error) {
 		logger = logger.With("request", req.URL)
 		logger = logger.With("address", req.RemoteAddr)
 
-		uri, err, status := httpd.ParseURIFromRequest(req, nil)
+		req_uri, err, status := httpd.ParseURIFromRequest(req, nil)
 
 		if err != nil {
 			slog.Error("Failed to parse URI from request", "error", err)
@@ -32,10 +32,10 @@ func GeoJSONLDHandler(opts *GeoJSONLDHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		r, err := opts.Spelunker.GetById(ctx, uri.Id)
+		r, err := httpd.FeatureFromRequestURI(ctx, opts.Spelunker, req_uri)		
 
 		if err != nil {
-			slog.Error("Failed to get by ID", "id", uri.Id, "error", err)
+			slog.Error("Failed to get by ID", "id", req_uri.Id, "error", err)
 			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
 			return
 		}
@@ -43,7 +43,7 @@ func GeoJSONLDHandler(opts *GeoJSONLDHandlerOptions) (http.Handler, error) {
 		body, err := geojsonld.AsGeoJSONLD(ctx, r)
 
 		if err != nil {
-			slog.Error("Failed to render geojson", "id", uri.Id, "error", err)
+			slog.Error("Failed to render geojson", "id", req_uri.Id, "error", err)
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}

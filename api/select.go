@@ -45,7 +45,7 @@ func SelectHandler(opts *SelectHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		uri, err, status := httpd.ParseURIFromRequest(req, nil)
+		req_uri, err, status := httpd.ParseURIFromRequest(req, nil)
 
 		if err != nil {
 			slog.Error("Failed to parse URI from request", "error", err)
@@ -53,10 +53,10 @@ func SelectHandler(opts *SelectHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		r, err := opts.Spelunker.GetById(ctx, uri.Id)
+		r, err := httpd.FeatureFromRequestURI(ctx, opts.Spelunker, req_uri)		
 
 		if err != nil {
-			slog.Error("Failed to get by ID", "id", uri.Id, "error", err)
+			slog.Error("Failed to get by ID", "id", req_uri.Id, "error", err)
 			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
 			return
 		}
