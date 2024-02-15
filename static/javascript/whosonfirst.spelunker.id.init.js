@@ -38,20 +38,8 @@ window.addEventListener("load", function load(event){
 	whosonfirst.spelunker.feature.fetch(wof_id, uri_args).then((f) => {
 
 	    map_el.style.display = "block";
-	    
-	    const map = L.map(map_el);
 
-	    var bbox_pane = map.createPane(bbox_pane_name);
-	    bbox_pane.style.zIndex = bbox_pane_zindex;
-	    
-	    var parent_pane = map.createPane(parent_pane_name);
-	    parent_pane.style.zIndex = parent_pane_zindex;
-	    
-	    var poly_pane = map.createPane(poly_pane_name);
-	    poly_pane.style.zIndex = poly_pane_zindex;
-	    
-	    var centroids_pane = map.createPane(centroids_pane_name);
-	    centroids_pane.style.zIndex = centroids_pane_zindex;
+	    const map = whosonfirst.spelunker.maps.map(map_el);
 	    
 	    if (f.geometry.type == "Point"){
 
@@ -65,16 +53,13 @@ window.addEventListener("load", function load(event){
 		var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
 		map.fitBounds(bounds);
 	    }
-
-	    var tile_url = "https://static.sfomuseum.org/pmtiles/sfomuseum_v3/{z}/{x}/{y}.mvt?key=xxx";
-	    var layer = protomapsL.leafletLayer({url: tile_url});
-	    layer.addTo(map);
-
+	    
 	    // http://localhost:8080/id/1259472055
 	    if (f.geometry.type == "Point"){
 
 		var pt_handler_layer_args = {
-		    pane: centroids_pane_name,
+		    pane: whosonfirst.spelunker.maps.centroids_pane_name,
+		    tooltips_pane: whosonfirst.spelunker.maps.tooltips_pane_name,
 		};
 		
 		var pt_handler = whosonfirst.spelunker.leaflet.handlers.point(pt_handler_layer_args);
@@ -87,7 +72,6 @@ window.addEventListener("load", function load(event){
 		}
 		
 		whosonfirst.spelunker.leaflet.draw_point(map, f, layer_args);
-		
 		return;
 	    }
 
@@ -112,7 +96,8 @@ window.addEventListener("load", function load(event){
 	    var props = f.properties;
 
 	    var pt_handler_layer_args = {
-		pane: centroids_pane_name,
+		pane: whosonfirst.spelunker.maps.centroids_pane_name,
+		tooltips_pane: whosonfirst.spelunker.maps.tooltips_pane_name,
 	    };
 	    
 	    var pt_handler = whosonfirst.spelunker.leaflet.handlers.point(pt_handler_layer_args);
@@ -165,7 +150,7 @@ window.addEventListener("load", function load(event){
 
 	    if ((parent_id) && (parent_id > 0)){
 		
-		console.log("Fetch parent", parent_id);
+		// console.log("Fetch parent", parent_id);
 		
 		whosonfirst.spelunker.feature.fetch(parent_id).then((parent_f) => {
 		    
@@ -183,7 +168,7 @@ window.addEventListener("load", function load(event){
 		    whosonfirst.spelunker.leaflet.draw_poly(map, parent_f, parent_layer_args);
 		    
 		}).catch((err) => {
-		    console.log("Failed to fetch parent record", err);
+		    console.log("Failed to fetch parent record", parent_id, err);
 		})
 	    }
 	    

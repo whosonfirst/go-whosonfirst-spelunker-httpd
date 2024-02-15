@@ -3,18 +3,32 @@
     <div id="map"></div>
 </div>
 
-<ul class="whosonfirst-places-list">
-    {{ range $idx, $spr := .Places -}}
-    <li class="spr-place" data-latitude="{{ $spr.Latitude }}" data-longitude="{{ $spr.Longitude }}" style="margin-bottom:.5rem;">
-	<div>
-	    <code>{{ $spr.Id }}</code> <a href="/id/{{ $spr.Id }}" class="wof-place-name">{{ $spr.Name }}</a> &#8212; <span>this is a {{ $spr.Placetype }}</span>
+<div class="pagination-counts">
+{{ if (IsAvailable "Pagination" .) -}}    
+    <p>There are <span class="hey-look">{{ .Pagination.TotalCount }}</span> places and this is <span class="hey-look">page {{ .Pagination.Page }}</span> of <span class="hey-look">{{ .Pagination.Pages }}</span></p>
+    {{ end -}}
+</div>
+
+<div id="whosonfirst-places">
+    <div>
+	<ul class="whosonfirst-places-list">
+	    {{ range $idx, $spr := .Places -}}
+	    <li class="spr-place" data-latitude="{{ $spr.Latitude }}" data-longitude="{{ $spr.Longitude }}" style="margin-bottom:.5rem;">
+		<div>
+		    <a href="/id/{{ $spr.Id }}" class="wof-place-name hey-look">{{ $spr.Name }}</a> &#8212; <small>this is a <span class="hey-look">{{ $spr.Placetype }}</span></small>
 	</div>
 	<div style="font-size:small;margin-top:.3rem;">
-	    <span style="font-weight:700;">{{ $spr.Repo }}</span>/{{ $spr.Path }}
-	    <br />
-	    It was last modified {{ FormatUnixTime $spr.LastModified "January 02, 2006" }}.
+	    <div><span class="hey-look">{{ $spr.Repo }}</span>/{{ $spr.Path }}</div>
+	    <div>It was last modified <span class="hey-look">{{ FormatUnixTime $spr.LastModified "January 02, 2006" }}</span>.</div>
 	</div>
-    </li>
-    {{ end -}}
-</ul>
+	    </li>
+	    {{ end -}}
+	</ul>
+    </div>
+    <div id="whosonfirst-places-other">
+	FACETS GO HERE
+    </div>
+</div>
+
+{{ template "inc_pagination" . -}}
 {{ end -}}

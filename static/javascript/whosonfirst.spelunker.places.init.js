@@ -48,26 +48,23 @@ window.addEventListener("load", function load(event){
     var map_el = document.querySelector("#map");
     map_el.style.display = "block";
     
-    const map = L.map(map_el);
+    const map = whosonfirst.spelunker.maps.map(map_el);
 
     var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
     map.fitBounds(bounds);
     
-    var tile_url = "https://static.sfomuseum.org/pmtiles/sfomuseum_v3/{z}/{x}/{y}.mvt?key=xxx";
-    var layer = protomapsL.leafletLayer({url: tile_url});
-    layer.addTo(map);
-
     var pt_handler_layer_args = {
-	//pane: centroids_pane_name,
+	pane: whosonfirst.spelunker.maps.centroids_pane_name,
+	tooltips_pane: whosonfirst.spelunker.maps.tooltips_pane_name,	
     };
 		
     var pt_handler = whosonfirst.spelunker.leaflet.handlers.point(pt_handler_layer_args);
-    var lbl_style = whosonfirst.spelunker.leaflet.styles.label_centroid();
+    var lbl_style = whosonfirst.spelunker.leaflet.styles.search_centroid();
 
     var points_layer_args = {
 	style: lbl_style,
 	pointToLayer: pt_handler,
-	//pane: centroids_pane_name,
+	pane: whosonfirst.spelunker.maps.centroids_pane_name,
     }
     
     var points_layer = L.geoJSON(f, points_layer_args);

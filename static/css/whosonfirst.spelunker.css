@@ -22,6 +22,15 @@ p {
 	margin-top:.3rem;
 }
 
+.whosonfirst-places-list {
+	line-height: 1.4rem !important;
+	padding: 0px !important;
+}
+
+.whosonfirst-places-list li {
+	margin-bottom:1.5rem !important;
+}
+
 #whosonfirst-alt-geoms {
 	font-style:italic;
 }
@@ -64,6 +73,12 @@ whosonfirst-map img {
 }
 
 .whosonfirst-record {
+	display:grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 2em;
+}
+
+#whosonfirst-places {
 	display:grid;
 	grid-template-columns: 1fr 1fr;
 	column-gap: 2em;
@@ -113,16 +128,18 @@ q {
 }
 
 #pagination  {
-    text-align:center;
-    color: #ccc;
-    margin-top:4em;
+	text-align:center;
+	margin-top:4em;
+	
+	display:flex;
+	justify-content:center;
 }
 
-#pagination li {
-    display:inline;
-    border:1px solid #ccc;
-    padding:1em;
+#pagination-current {
+	margin-left:.75rem;
+	margin-right:.75rem;	
 }
+
 
 .meta {
     display:block;

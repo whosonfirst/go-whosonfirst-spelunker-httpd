@@ -6,7 +6,6 @@ whosonfirst.spelunker.leaflet = (function(){
     var self = {
 	'draw_point': function(map, geojson, layer_args){
 	    
-	    console.log("POINT", layer_args);
 	    var layer = L.geoJson(geojson, layer_args);
 	    
 	    layer.addTo(map);
@@ -14,8 +13,6 @@ whosonfirst.spelunker.leaflet = (function(){
 	},
 	
 	'draw_poly': function(map, geojson, layer_args){
-	    
-	    console.log("POLY", layer_args);
 	    
 	    var layer = L.geoJson(geojson, layer_args);
 	    

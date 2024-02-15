@@ -27,8 +27,8 @@ whosonfirst.spelunker.leaflet.handlers = (function(){
 				noHide: false,
 			    }
 
-			    if (layer_args.pane){
-				label_args.pane = layer_args.pane;
+			    if (layer_args.tooltips_pane){
+				label_args.pane = layer_args.tooltips_pane;
 			    }
 			    
 			    m.bindTooltip(label, label_args);   
