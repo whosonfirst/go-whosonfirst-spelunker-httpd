@@ -5,9 +5,10 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
-	"path/filepath"
-	"strconv"
-
+	"regexp"
+	"time"
+	
+	"github.com/sfomuseum/iso8601duration"
 	"github.com/aaronland/go-pagination"
 	"github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
@@ -16,29 +17,42 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 )
 
-type DescendantsHandlerOptions struct {
+type RecentHandlerOptions struct {
 	Spelunker     spelunker.Spelunker
 	Authenticator auth.Authenticator
 	Templates     *template.Template
 	URIs          *httpd.URIs
 }
 
-type DescendantsHandlerVars struct {
+type RecentHandlerVars struct {
 	PageTitle     string
 	URIs          *httpd.URIs
 	Places        []spr.StandardPlacesResult
 	Pagination    pagination.Results
 	PaginationURL string
+	Duration time.Duration
 }
 
-func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
+func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 
-	t := opts.Templates.Lookup("descendants")
+	t := opts.Templates.Lookup("recent")
 
 	if t == nil {
-		return nil, fmt.Errorf("Failed to locate 'descendants' template")
+		return nil, fmt.Errorf("Failed to locate 'recent' template")
 	}
 
+	re_full, err := regexp.Compile(`P((?P<year>\d+)Y)?((?P<month>\d+)M)?((?P<day>\d+)D)?(T((?P<hour>\d+)H)?((?P<minute>\d+)M)?((?P<second>\d+)S)?)?`)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to compile ISO8601 duration pattern, %w", err)
+	}
+
+	re_week, err := regexp.Compile(`P((?P<week>\d+)W)`)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to compile ISO8601 duration week pattern, %w", err)
+	}
+	
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
 		ctx := req.Context()
@@ -46,16 +60,32 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
 
-		uri, err, status := httpd.ParseURIFromRequest(req, nil)
+		slog.Info("Get recent")
+
+		str_d := "P30D"
+
+		path := req.URL.Path
+		
+		if re_week.MatchString(path) {
+			m := re_week.FindStringSubmatch(path)
+			str_d = m[0]
+		} else if re_full.MatchString(path) {
+			m := re_full.FindStringSubmatch(path)
+			str_d = m[0]			
+		} else {
+			// pass
+		}
+		
+		logger = logger.With("duration", str_d)
+		
+		d, err := duration.FromString(str_d)
 
 		if err != nil {
-			logger.Error("Failed to parse URI from request", "error", err)
-			http.Error(rsp, spelunker.ErrNotFound.Error(), status)
+			logger.Error("Failed to parse duration", "error", err)
+			http.Error(rsp, "Bad request", http.StatusBadRequest)
 			return
 		}
-
-		logger = logger.With("wofid", uri.Id)
-
+		
 		pg_opts, err := countable.NewCountableOptions()
 
 		if err != nil {
@@ -70,22 +100,22 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 			pg_opts.Pointer(pg)
 		}
 
-		r, pg_r, err := opts.Spelunker.GetDescendants(ctx, pg_opts, uri.Id)
+		r, pg_r, err := opts.Spelunker.GetRecent(ctx, pg_opts, d.ToDuration())
 
 		if err != nil {
-			logger.Error("Failed to get descendants", "error", err)
+			logger.Error("Failed to get recent", "error", err)
 			http.Error(rsp, "womp womp", http.StatusInternalServerError)
 			return
 		}
 
-		str_id := strconv.FormatInt(uri.Id, 10)
-		pagination_url := filepath.Join(opts.URIs.Descendants, str_id) + "?"
+		pagination_url := req.URL.Path
 
-		vars := DescendantsHandlerVars{
+		vars := RecentHandlerVars{
 			Places:        r.Results(),
 			Pagination:    pg_r,
 			URIs:          opts.URIs,
 			PaginationURL: pagination_url,
+			Duration: d.ToDuration(),
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

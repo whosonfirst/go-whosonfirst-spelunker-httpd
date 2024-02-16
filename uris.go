@@ -13,7 +13,8 @@ type URIs struct {
 	IdAlt          []string `json:"id_alt"`
 	Descendants    string   `json:"descendants"`
 	DescendantsAlt []string `json:"descendants_alt"`
-	Index string `json:"index"`	
+	Index string `json:"index"`
+	Recent string `json:"recent"`
 	Search         string   `json:"search"`
 	About          string   `json:"about"`
 
@@ -62,4 +63,35 @@ func (u *URIs) ApplyPrefix(prefix string) error {
 	}
 
 	return nil
+}
+
+func DefaultURIs() *URIs {
+
+	uris_table := &URIs{
+
+		// WWW/human-readable
+		
+		Id:          "/id/",
+		Recent: "/recent/",
+		Descendants: "/descendants/",
+		DescendantsAlt: []string{
+			"/id/{id}/descendants/",
+		},
+		Index: "/",
+		Search: "/search",
+		About:  "/about",
+
+		// Static Assets
+		Static: "/static/",
+
+		// API/machine-readable
+		GeoJSON:   "/geojson/",
+		GeoJSONLD: "/geojsonld/",
+		NavPlace:  "/navplace/",
+		Select:    "/select/",
+		SPR:       "/spr/",
+		SVG:       "/svg/",
+	}
+
+	return uris_table
 }

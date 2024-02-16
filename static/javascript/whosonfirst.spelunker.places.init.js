@@ -9,6 +9,10 @@ window.addEventListener("load", function load(event){
     
     var count_places = places.length;
 
+    if (count_places == 0){
+	return;
+    }
+    
     var coords = [];
     var names = [];
     

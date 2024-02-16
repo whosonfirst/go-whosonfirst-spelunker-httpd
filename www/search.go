@@ -54,7 +54,7 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 		q, err := sanitize.GetString(req, "q")
 
 		if err != nil {
-			slog.Error("Failed to determine query string", "error", err)
+			logger.Error("Failed to determine query string", "error", err)
 			http.Error(rsp, "womp womp", http.StatusInternalServerError)
 			return
 		}
@@ -64,7 +64,7 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 			pg_opts, err := countable.NewCountableOptions()
 
 			if err != nil {
-				slog.Error("Failed to create pagination options", "error", err)
+				logger.Error("Failed to create pagination options", "error", err)
 				http.Error(rsp, "womp womp", http.StatusInternalServerError)
 				return
 			}
@@ -79,10 +79,10 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 				Query: q,
 			}
 
-			r, pg_r, err := opts.Spelunker.Search(ctx, search_opts, pg_opts)
+			r, pg_r, err := opts.Spelunker.Search(ctx, pg_opts, search_opts)
 
 			if err != nil {
-				slog.Error("Failed to get search", "error", err)
+				logger.Error("Failed to get search", "error", err)
 				http.Error(rsp, "womp womp", http.StatusInternalServerError)
 				return
 			}
@@ -102,7 +102,7 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 		err = t.Execute(rsp, vars)
 
 		if err != nil {
-			slog.Error("Failed to return ", "error", err)
+			logger.Error("Failed to return ", "error", err)
 			http.Error(rsp, "womp womp", http.StatusInternalServerError)
 		}
 

@@ -57,30 +57,7 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 		return nil, fmt.Errorf("Failed to assign flags from environment variables, %w", err)
 	}
 
-	uris_table = &httpd.URIs{
-
-		// WWW/human-readable
-
-		Id:          "/id/",
-		Descendants: "/descendants/",
-		DescendantsAlt: []string{
-			"/id/{id}/descendants/",
-		},
-		Index: "/",
-		Search: "/search",
-		About:  "/about",
-
-		// Static Assets
-		Static: "/static/",
-
-		// API/machine-readable
-		GeoJSON:   "/geojson/",
-		GeoJSONLD: "/geojsonld/",
-		NavPlace:  "/navplace/",
-		Select:    "/select/",
-		SPR:       "/spr/",
-		SVG:       "/svg/",
-	}
+	uris_table = httpd.DefaultURIs()
 
 	t_funcs := html_template.FuncMap{
 		"IsAvailable": sfom_funcs.IsAvailable,

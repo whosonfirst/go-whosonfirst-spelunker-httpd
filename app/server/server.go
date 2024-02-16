@@ -50,6 +50,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 	handlers := map[string]handler.RouteHandlerFunc{
 
 		// WWW/human-readable
+		run_options.URIs.Recent: recentHandlerFunc,		
 		run_options.URIs.Descendants: descendantsHandlerFunc,
 		run_options.URIs.Id:          idHandlerFunc,
 		run_options.URIs.Search:      searchHandlerFunc,

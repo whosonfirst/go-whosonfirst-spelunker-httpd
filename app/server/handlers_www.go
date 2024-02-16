@@ -76,6 +76,25 @@ func descendantsHandlerFunc(ctx context.Context) (http.Handler, error) {
 	return www.DescendantsHandler(opts)
 }
 
+func recentHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupWWWOnce.Do(setupWWW)
+
+	if setupWWWError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupWWWError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupWWWError)
+	}
+
+	opts := &www.RecentHandlerOptions{
+		Spelunker:     sp,
+		Authenticator: authenticator,
+		Templates:     html_templates,
+		URIs:          uris_table,
+	}
+
+	return www.RecentHandler(opts)
+}
+
 func idHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	setupWWWOnce.Do(setupWWW)

@@ -11,6 +11,7 @@ require (
 	github.com/sfomuseum/go-geojsonld v1.0.0
 	github.com/sfomuseum/go-http-auth v0.9.0
 	github.com/sfomuseum/go-template v1.9.0
+	github.com/sfomuseum/iso8601duration v1.1.0
 	github.com/tidwall/gjson v1.17.0
 	github.com/whosonfirst/go-reader v1.0.2
 	github.com/whosonfirst/go-sanitize v0.1.0
