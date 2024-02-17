@@ -11,10 +11,12 @@ type URIs struct {
 	// WWW/human-readable
 	Id             string   `json:"id"`
 	IdAlt          []string `json:"id_alt"`
+	Concordances   string   `json:"concordance"`
 	Descendants    string   `json:"descendants"`
 	DescendantsAlt []string `json:"descendants_alt"`
-	Index string `json:"index"`
-	Recent string `json:"recent"`
+	Index          string   `json:"index"`
+	Placetypes     string   `json:"placetypes"`
+	Recent         string   `json:"recent"`
 	Search         string   `json:"search"`
 	About          string   `json:"about"`
 
@@ -70,14 +72,16 @@ func DefaultURIs() *URIs {
 	uris_table := &URIs{
 
 		// WWW/human-readable
-		
-		Id:          "/id/",
-		Recent: "/recent/",
-		Descendants: "/descendants/",
+
+		Id:           "/id/",
+		Concordances: "/concordances/",
+		Recent:       "/recent/",
+		Placetypes:   "/placetypes/",
+		Descendants:  "/descendants/",
 		DescendantsAlt: []string{
 			"/id/{id}/descendants/",
 		},
-		Index: "/",
+		Index:  "/",
 		Search: "/search",
 		About:  "/about",
 
