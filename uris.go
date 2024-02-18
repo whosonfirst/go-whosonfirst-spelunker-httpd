@@ -79,7 +79,7 @@ func DefaultURIs() *URIs {
 		Placetypes:   "/placetypes/",
 		Descendants:  "/descendants/",
 		DescendantsAlt: []string{
-			"/id/{id}/descendants/",
+			"/id/{id}/descendants",
 		},
 		Index:  "/",
 		Search: "/search",
