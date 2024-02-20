@@ -70,7 +70,20 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 			pg_opts.Pointer(pg)
 		}
 
-		r, pg_r, err := opts.Spelunker.GetDescendants(ctx, pg_opts, uri.Id)
+		filter_params := []string{
+			"placetype",
+			"country",
+		}
+		
+		filters, err := FiltersFromRequest(ctx, req, filter_params...)
+
+		if err != nil {
+			logger.Error("Failed to derive filters from request", "error", err)
+			http.Error(rsp, "Bad request", http.StatusBadRequest)
+			return
+		}
+		
+		r, pg_r, err := opts.Spelunker.GetDescendants(ctx, pg_opts, uri.Id, filters...)
 
 		if err != nil {
 			logger.Error("Failed to get descendants", "error", err)
