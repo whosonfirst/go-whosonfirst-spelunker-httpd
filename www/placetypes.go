@@ -21,7 +21,7 @@ type PlacetypesHandlerOptions struct {
 type PlacetypesHandlerVars struct {
 	PageTitle string
 	URIs      *httpd.URIs
-	Facets    []*spelunker.Facet
+	Facets    []*spelunker.FacetCount
 }
 
 func PlacetypesHandler(opts *PlacetypesHandlerOptions) (http.Handler, error) {
@@ -39,7 +39,7 @@ func PlacetypesHandler(opts *PlacetypesHandlerOptions) (http.Handler, error) {
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
 
-		facets, err := opts.Spelunker.GetPlacetypes(ctx)
+		faceting, err := opts.Spelunker.GetPlacetypes(ctx)
 
 		if err != nil {
 			logger.Error("Failed to get placetypes", "error", err)
@@ -50,7 +50,7 @@ func PlacetypesHandler(opts *PlacetypesHandlerOptions) (http.Handler, error) {
 		vars := PlacetypesHandlerVars{
 			PageTitle: "Placetypes",
 			URIs:      opts.URIs,
-			Facets:    facets,
+			Facets:    faceting.Results,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

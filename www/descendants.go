@@ -75,7 +75,7 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 			"country",
 		}
 		
-		filters, err := FiltersFromRequest(ctx, req, filter_params...)
+		filters, err := FiltersFromRequest(ctx, req, filter_params)
 
 		if err != nil {
 			logger.Error("Failed to derive filters from request", "error", err)
@@ -83,7 +83,7 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 			return
 		}
 		
-		r, pg_r, err := opts.Spelunker.GetDescendants(ctx, pg_opts, uri.Id, filters...)
+		r, pg_r, err := opts.Spelunker.GetDescendants(ctx, pg_opts, uri.Id, filters)
 
 		if err != nil {
 			logger.Error("Failed to get descendants", "error", err)

@@ -21,7 +21,7 @@ type ConcordancesHandlerOptions struct {
 type ConcordancesHandlerVars struct {
 	PageTitle string
 	URIs      *httpd.URIs
-	Facets    []*spelunker.Facet
+	Facets    []*spelunker.FacetCount
 }
 
 func ConcordancesHandler(opts *ConcordancesHandlerOptions) (http.Handler, error) {
@@ -39,7 +39,7 @@ func ConcordancesHandler(opts *ConcordancesHandlerOptions) (http.Handler, error)
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
 
-		facets, err := opts.Spelunker.GetConcordances(ctx)
+		faceting, err := opts.Spelunker.GetConcordances(ctx)
 
 		if err != nil {
 			logger.Error("Failed to get concordances", "error", err)
@@ -50,7 +50,7 @@ func ConcordancesHandler(opts *ConcordancesHandlerOptions) (http.Handler, error)
 		vars := ConcordancesHandlerVars{
 			PageTitle: "Concordances",
 			URIs:      opts.URIs,
-			Facets:    facets,
+			Facets:    faceting.Results,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

@@ -58,7 +58,7 @@ func DescendantsFacetHandler(opts *DescendantsFacetHandlerOptions) (http.Handler
 			"country",
 		}
 		
-		filters, err := FiltersFromRequest(ctx, req, filter_params...)
+		filters, err := FiltersFromRequest(ctx, req, filter_params)
 
 		if err != nil {
 			logger.Error("Failed to derive filters from request", "error", err)
@@ -66,7 +66,7 @@ func DescendantsFacetHandler(opts *DescendantsFacetHandlerOptions) (http.Handler
 			return
 		}
 
-		facets, err := FacetsFromRequest(ctx, req, filter_params...)
+		facets, err := FacetsFromRequest(ctx, req, filter_params)
 
 		if err != nil {
 			logger.Error("Failed to derive facets from requrst", "error", err)
@@ -80,7 +80,7 @@ func DescendantsFacetHandler(opts *DescendantsFacetHandlerOptions) (http.Handler
 			return
 		}
 		
-		facets_rsp, err := opts.Spelunker.FacetDescendants(ctx, facets[0], uri.Id, filters...)
+		facets_rsp, err := opts.Spelunker.FacetDescendants(ctx, uri.Id, filters, facets)
 
 		if err != nil {
 			logger.Error("Failed to get facets for descendants", "error", err)

@@ -100,7 +100,9 @@ func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 			pg_opts.Pointer(pg)
 		}
 
-		r, pg_r, err := opts.Spelunker.GetRecent(ctx, pg_opts, d.ToDuration())
+		filters := make([]spelunker.Filter, 0)
+		
+		r, pg_r, err := opts.Spelunker.GetRecent(ctx, pg_opts, d.ToDuration(), filters)
 
 		if err != nil {
 			logger.Error("Failed to get recent", "error", err)

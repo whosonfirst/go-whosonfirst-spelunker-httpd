@@ -9,7 +9,7 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-spelunker"	
 )
 
-func FiltersFromRequest(ctx context.Context, req *http.Request, params ...string) ([]spelunker.Filter, error) {
+func FiltersFromRequest(ctx context.Context, req *http.Request, params []string) ([]spelunker.Filter, error) {
 
 	filters := make([]spelunker.Filter, 0)
 	
