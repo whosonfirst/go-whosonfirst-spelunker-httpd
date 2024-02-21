@@ -14,6 +14,7 @@ type URIs struct {
 	Concordances   string   `json:"concordance"`
 	Descendants    string   `json:"descendants"`
 	DescendantsAlt []string `json:"descendants_alt"`
+	DescendantsFacet    string   `json:"descendants_facet"`	
 	Index          string   `json:"index"`
 	Placetypes     string   `json:"placetypes"`
 	Recent         string   `json:"recent"`
@@ -81,6 +82,7 @@ func DefaultURIs() *URIs {
 		DescendantsAlt: []string{
 			"/id/{id}/descendants",
 		},
+		DescendantsFacet:  "/descendants/facets/",				
 		Index:  "/",
 		Search: "/search",
 		About:  "/about",

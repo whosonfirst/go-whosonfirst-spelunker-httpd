@@ -54,6 +54,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		run_options.URIs.Concordances: concordancesHandlerFunc,
 		run_options.URIs.Recent:       recentHandlerFunc,
 		run_options.URIs.Descendants:  descendantsHandlerFunc,
+		run_options.URIs.DescendantsFacet:  descendantsFacetHandlerFunc,		
 		run_options.URIs.Id:           idHandlerFunc,
 		run_options.URIs.Search:       searchHandlerFunc,
 		run_options.URIs.About:        aboutHandlerFunc,
