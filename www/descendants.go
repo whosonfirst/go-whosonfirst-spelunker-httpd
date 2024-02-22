@@ -29,6 +29,9 @@ type DescendantsHandlerVars struct {
 	Places        []spr.StandardPlacesResult
 	Pagination    pagination.Results
 	PaginationURL string
+
+	// Please find something better than this...
+	FacetsURL string
 }
 
 func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
@@ -92,13 +95,17 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 		}
 
 		str_id := strconv.FormatInt(uri.Id, 10)
+
+		// Seriously no to both of these. Please sort out URIs soon...
 		pagination_url := filepath.Join(opts.URIs.Descendants, str_id) + "?"
+		facets_url := filepath.Join(opts.URIs.Descendants, filepath.Join("facets", str_id))	
 
 		vars := DescendantsHandlerVars{
 			Places:        r.Results(),
 			Pagination:    pg_r,
 			URIs:          opts.URIs,
 			PaginationURL: pagination_url,
+			FacetsURL: facets_url,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

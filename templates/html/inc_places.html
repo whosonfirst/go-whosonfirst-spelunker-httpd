@@ -32,7 +32,10 @@
 	</ul>
     </div>
     <div id="whosonfirst-places-other">
-	FACETS GO HERE
+	{{ if (IsAvailable "FacetsURL" .) -}}
+	<div id="whosonfirst-facets" data-facets-url="{{ .FacetsURL }}" data-facets="country,placetype">	
+	</div>
+	{{ end -}}
     </div>
 </div>
 
