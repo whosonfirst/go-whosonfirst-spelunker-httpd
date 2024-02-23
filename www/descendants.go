@@ -25,6 +25,7 @@ type DescendantsHandlerOptions struct {
 
 type DescendantsHandlerVars struct {
 	PageTitle     string
+	Id int64
 	URIs          *httpd.URIs
 	Places        []spr.StandardPlacesResult
 	Pagination    pagination.Results
@@ -101,6 +102,7 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 		facets_url := filepath.Join(opts.URIs.Descendants, filepath.Join("facets", str_id))	
 
 		vars := DescendantsHandlerVars{
+			Id: uri.Id,
 			Places:        r.Results(),
 			Pagination:    pg_r,
 			URIs:          opts.URIs,

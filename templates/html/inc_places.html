@@ -30,12 +30,10 @@
 	    </li>
 	    {{ end -}}
 	</ul>
-    </div>
+    </div>   
     <div id="whosonfirst-places-other">
-	{{ if (IsAvailable "FacetsURL" .) -}}
-	<div id="whosonfirst-facets" data-facets-url="{{ .FacetsURL }}" data-facets="country,placetype">	
+	<div id="whosonfirst-facets" data-facets-url="{{ URIForId $.URIs.DescendantsFacet $.Id }}" data-facets="country,placetype">	
 	</div>
-	{{ end -}}
     </div>
 </div>
 
