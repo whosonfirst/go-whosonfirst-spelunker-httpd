@@ -8,16 +8,15 @@ window.addEventListener("load", function load(event){
 	return;
     }
 
-    var facets_url = facets_wrapper.getAttribute("data-facets-url");
+    var current_url = facets_wrapper.getAttribute("data-current-url");
+    var facets_url = facets_wrapper.getAttribute("data-facets-url");    
 
-    if (! facets_url){
+    if ((! current_url) || (! facets_url)){
 	return;
     }
 
     var draw_facets = function(rsp){
 
-	console.log("DRAW", rsp);
-	
 	var f = rsp.facet.property;
 	var id = "#whosonfirst-facets-" + f;
 
@@ -32,14 +31,16 @@ window.addEventListener("load", function load(event){
 	label.appendChild(document.createTextNode(f));
 	
 	var ul = document.createElement("ul");
-
+	ul.setAttribute("class", "whosonfirst-facets");
+	
 	var results = rsp.results;
 	var count = results.length;
 
 	for (var i=0; i < count; i++){
 
 	    var a = document.createElement("a");
-	    a.setAttribute("href", "#");
+	    // To do: Use proper query builder methods
+	    a.setAttribute("href", current_url + "?" + encodeURIComponent(f) + "=" + encodeURIComponent(results[i].key));
 	    a.setAttribute("class", "hey-look");
 	    a.appendChild(document.createTextNode(results[i].key));
 
