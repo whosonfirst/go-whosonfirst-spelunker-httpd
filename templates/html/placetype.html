@@ -1,7 +1,7 @@
-{{ define "placetypes" -}}
+{{ define "placetype" -}}
 {{ template "inc_head" . -}}
 
-<h2>{{ .Placetype.Name }}</span></h2>
+<h2 class="hey-look">Place that are a {{ .Placetype.Name }}</span></h2>
 
 {{ template "inc_places" . -}}
 

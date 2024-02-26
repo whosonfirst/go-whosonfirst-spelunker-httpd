@@ -13,7 +13,6 @@ import (
 	sfom_funcs "github.com/sfomuseum/go-template/funcs"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/static"
-	wof_funcs "github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/funcs"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/html"
 )
 
@@ -71,7 +70,7 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 		"FormatStringTime": sfom_funcs.FormatStringTime,
 		"FormatUnixTime":   sfom_funcs.FormatUnixTime,
 		"GjsonGet":         sfom_funcs.GjsonGet,
-		"URIForId":         wof_funcs.URIForId,
+		"URIForId":         httpd.URIForId,
 	}
 
 	opts := &RunOptions{

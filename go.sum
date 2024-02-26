@@ -110,8 +110,8 @@ github.com/whosonfirst/go-whosonfirst-placetypes v0.7.0 h1:hm1dySC23ZZYHDleAE201
 github.com/whosonfirst/go-whosonfirst-placetypes v0.7.0/go.mod h1:d7S4er4OFfFsgzMOnHH8mX8q+iPhXWB+merbrMDx/rk=
 github.com/whosonfirst/go-whosonfirst-sources v0.1.0 h1:JuKLa6KWke22jBfJ1pM9WQHoz1/3pbDv2C+aR+THPPQ=
 github.com/whosonfirst/go-whosonfirst-sources v0.1.0/go.mod h1:EUMHyGzUmqPPxlMmOp+28BFeoBdxxE0HCKRd67lkqGM=
-github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240216071137-8f9d3c319c51 h1:PS8PfD3wqDWHqtsCDEbtSXF9QuXik7pvOIO7LA345XY=
-github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240216071137-8f9d3c319c51/go.mod h1:E4Ho9scPp4+tqLHQwupC3A+kDkKuZpwWQY3YUQV+vY4=
+github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240226163831-83bc7512547d h1:DioulJFVp+N8p4sP4a3S5Dea7JWsi9UtLJtFaqht6WA=
+github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240226163831-83bc7512547d/go.mod h1:E4Ho9scPp4+tqLHQwupC3A+kDkKuZpwWQY3YUQV+vY4=
 github.com/whosonfirst/go-whosonfirst-spr/v2 v2.2.1/go.mod h1:3P6fiSVGtIbM3UcyaVMs4i1N6Hi88GmTsdouuXzlr78=
 github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7 h1:1j4IMuVua4/NhqKm2ke16h2V5Z2XiLoOdXbjDrfZb0E=
 github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7/go.mod h1:I2IqsIutlDrvYp37Xzwk4WGq+m/gLh+gEifiLmH0bac=

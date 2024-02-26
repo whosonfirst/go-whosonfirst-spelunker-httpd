@@ -32,7 +32,11 @@
 	</ul>
     </div>   
     <div id="whosonfirst-places-other">
-	<div id="whosonfirst-facets" data-current-url="{{ URIForId $.URIs.Descendants $.Id }}" data-facets-url="{{ URIForId $.URIs.DescendantsFacet $.Id }}" data-facets="country,placetype">	
+	{{ if (IsAvailable "FacetsURL" .) -}}
+	{{ if (IsAvailable "FacetsContextURL" .) -}}	
+	<div id="whosonfirst-facets" data-current-url="{{ $.FacetsContextURL }}" data-facets-url="{{ $.FacetsURL }}" data-facets="country,placetype">
+	    {{ end -}}
+	{{ end -}}	    
 	</div>
     </div>
 </div>

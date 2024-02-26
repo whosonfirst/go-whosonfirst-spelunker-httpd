@@ -51,6 +51,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 
 		// WWW/human-readable
 		run_options.URIs.Placetypes:       placetypesHandlerFunc,
+		run_options.URIs.Placetype:        hasPlacetypeHandlerFunc,
 		run_options.URIs.Concordances:     concordancesHandlerFunc,
 		run_options.URIs.Recent:           recentHandlerFunc,
 		run_options.URIs.Descendants:      descendantsHandlerFunc,

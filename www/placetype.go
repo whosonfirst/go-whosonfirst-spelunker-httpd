@@ -23,12 +23,14 @@ type HasPlacetypeHandlerOptions struct {
 }
 
 type HasPlacetypeHandlerVars struct {
-	PageTitle     string
-	URIs          *httpd.URIs
-	Placetype     *placetypes.WOFPlacetype
-	Places        []spr.StandardPlacesResult
-	Pagination    pagination.Results
-	PaginationURL string
+	PageTitle        string
+	URIs             *httpd.URIs
+	Placetype        *placetypes.WOFPlacetype
+	Places           []spr.StandardPlacesResult
+	Pagination       pagination.Results
+	PaginationURL    string
+	FacetsURL        string
+	FacetsContextURL string
 }
 
 func HasPlacetypeHandler(opts *HasPlacetypeHandlerOptions) (http.Handler, error) {
@@ -94,11 +96,12 @@ func HasPlacetypeHandler(opts *HasPlacetypeHandlerOptions) (http.Handler, error)
 			return
 		}
 
-		pagination_url := req.URL.Path
+		pagination_url := fmt.Sprintf("%s?", req.URL.Path)
 
 		vars := HasPlacetypeHandlerVars{
-			PageTitle:     "Placetype",
+			PageTitle:     pt.Name,
 			URIs:          opts.URIs,
+			Placetype:     pt,
 			Places:        r.Results(),
 			Pagination:    pg_r,
 			PaginationURL: pagination_url,

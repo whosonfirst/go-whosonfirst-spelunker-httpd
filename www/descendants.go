@@ -5,8 +5,6 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
-	"path/filepath"
-	"strconv"
 
 	"github.com/aaronland/go-pagination"
 	"github.com/aaronland/go-pagination/countable"
@@ -24,12 +22,14 @@ type DescendantsHandlerOptions struct {
 }
 
 type DescendantsHandlerVars struct {
-	PageTitle     string
-	Id            int64
-	URIs          *httpd.URIs
-	Places        []spr.StandardPlacesResult
-	Pagination    pagination.Results
-	PaginationURL string
+	PageTitle        string
+	Id               int64
+	URIs             *httpd.URIs
+	Places           []spr.StandardPlacesResult
+	Pagination       pagination.Results
+	PaginationURL    string
+	FacetsURL        string
+	FacetsContextURL string
 }
 
 func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
@@ -92,17 +92,21 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		str_id := strconv.FormatInt(uri.Id, 10)
+		// This is not ideal but I am not sure what is better yet...
+		pagination_url := fmt.Sprintf("%s?", httpd.URIForId(opts.URIs.Descendants, uri.Id))
 
-		// Seriously no to both of these. Please sort out URIs soon...
-		pagination_url := filepath.Join(opts.URIs.Descendants, str_id) + "?"
+		// This is not ideal but I am not sure what is better yet...
+		facets_url := httpd.URIForId(opts.URIs.DescendantsFacet, uri.Id)
+		facets_context_url := req.URL.Path
 
 		vars := DescendantsHandlerVars{
-			Id:            uri.Id,
-			Places:        r.Results(),
-			Pagination:    pg_r,
-			URIs:          opts.URIs,
-			PaginationURL: pagination_url,
+			Id:               uri.Id,
+			Places:           r.Results(),
+			Pagination:       pg_r,
+			URIs:             opts.URIs,
+			PaginationURL:    pagination_url,
+			FacetsURL:        facets_url,
+			FacetsContextURL: facets_context_url,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")
