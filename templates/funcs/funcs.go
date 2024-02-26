@@ -1,8 +1,8 @@
 package funcs
 
 import (
-	"strings"
 	"fmt"
+	"strings"
 )
 
 // Custom template functions

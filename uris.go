@@ -9,19 +9,19 @@ import (
 
 type URIs struct {
 	// WWW/human-readable
-	Id             string   `json:"id"`
-	IdAlt          []string `json:"id_alt"`
-	Concordances   string   `json:"concordances"`
-	Concordance   string   `json:"concordance"`	
-	Descendants    string   `json:"descendants"`
-	DescendantsAlt []string `json:"descendants_alt"`
-	DescendantsFacet    string   `json:"descendants_facet"`	
-	Index          string   `json:"index"`
-	Placetypes     string   `json:"placetypes"`
-	Placetype     string   `json:"placetype"`	
-	Recent         string   `json:"recent"`
-	Search         string   `json:"search"`
-	About          string   `json:"about"`
+	Id               string   `json:"id"`
+	IdAlt            []string `json:"id_alt"`
+	Concordances     string   `json:"concordances"`
+	Concordance      string   `json:"concordance"`
+	Descendants      string   `json:"descendants"`
+	DescendantsAlt   []string `json:"descendants_alt"`
+	DescendantsFacet string   `json:"descendants_facet"`
+	Index            string   `json:"index"`
+	Placetypes       string   `json:"placetypes"`
+	Placetype        string   `json:"placetype"`
+	Recent           string   `json:"recent"`
+	Search           string   `json:"search"`
+	About            string   `json:"about"`
 
 	// Static assets
 	Static string `json:"static"`
@@ -76,47 +76,46 @@ func DefaultURIs() *URIs {
 
 		// WWW/human-readable
 
-		Index:  "/",
-		Search: "/search",
-		About:  "/about",		
-		Placetypes:   "/placetypes/",
-		Placetype:   "/placetypes/{placetype}",		
-		Concordances: "/concordances/",
-		Concordance: "/concordances/{concordance}",		
-		Recent:       "/recent/",
-		Id:           "/id/{id}",				
-		Descendants:  "/id/{id}/descendants",
-		DescendantsFacet:  "/id/{id}/descendants/facet",				
+		Index:            "/",
+		Search:           "/search",
+		About:            "/about",
+		Placetypes:       "/placetypes",
+		Placetype:        "/placetypes/{placetype}",
+		Concordances:     "/concordances/",
+		Concordance:      "/concordances/{concordance}",
+		Recent:           "/recent/",
+		Id:               "/id/{id}",
+		Descendants:      "/id/{id}/descendants",
+		DescendantsFacet: "/id/{id}/descendants/facet",
 
 		// Static Assets
 		Static: "/static/",
 
 		// API/machine-readable
-		GeoJSON:   "/geojson/",
+		GeoJSON: "/geojson/",
 		GeoJSONAlt: []string{
-		       "/id/{id}/geojson",				
+			"/id/{id}/geojson",
 		},
 		GeoJSONLD: "/geojsonld/",
 		GeoJSONLDAlt: []string{
-		       "/id/{id}/geojsonld",				
-		},		
-		NavPlace:  "/navplace/",
-		NavPlaceAlt: []string{
-		       "/id/{id}/navplace",				
-		},		
-		Select:    "/select/",
-		SelectAlt: []string{
-		       "/id/{id}/select",				
-		},		
-		SPR:       "/spr/",
-		SPRAlt: []string{
-		       "/id/{id}/spr",				
-		},		
-		SVG:       "/svg/",
-		SVGAlt: []string{
-		       "/id/{id}/svg",				
+			"/id/{id}/geojsonld",
 		},
-		
+		NavPlace: "/navplace/",
+		NavPlaceAlt: []string{
+			"/id/{id}/navplace",
+		},
+		Select: "/select/",
+		SelectAlt: []string{
+			"/id/{id}/select",
+		},
+		SPR: "/spr/",
+		SPRAlt: []string{
+			"/id/{id}/spr",
+		},
+		SVG: "/svg/",
+		SVGAlt: []string{
+			"/id/{id}/svg",
+		},
 	}
 
 	return uris_table

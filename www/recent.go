@@ -101,7 +101,7 @@ func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 		}
 
 		filters := make([]spelunker.Filter, 0)
-		
+
 		r, pg_r, err := opts.Spelunker.GetRecent(ctx, pg_opts, d.ToDuration(), filters)
 
 		if err != nil {

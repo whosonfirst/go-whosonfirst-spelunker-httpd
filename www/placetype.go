@@ -5,39 +5,38 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
-	"path/filepath"
-	"strconv"
 
 	"github.com/aaronland/go-pagination"
 	"github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
+	"github.com/whosonfirst/go-whosonfirst-placetypes"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 )
 
-type DescendantsHandlerOptions struct {
+type HasPlacetypeHandlerOptions struct {
 	Spelunker     spelunker.Spelunker
 	Authenticator auth.Authenticator
 	Templates     *template.Template
 	URIs          *httpd.URIs
 }
 
-type DescendantsHandlerVars struct {
+type HasPlacetypeHandlerVars struct {
 	PageTitle     string
-	Id            int64
 	URIs          *httpd.URIs
+	Placetype     *placetypes.WOFPlacetype
 	Places        []spr.StandardPlacesResult
 	Pagination    pagination.Results
 	PaginationURL string
 }
 
-func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
+func HasPlacetypeHandler(opts *HasPlacetypeHandlerOptions) (http.Handler, error) {
 
-	t := opts.Templates.Lookup("descendants")
+	t := opts.Templates.Lookup("placetype")
 
 	if t == nil {
-		return nil, fmt.Errorf("Failed to locate 'descendants' template")
+		return nil, fmt.Errorf("Failed to locate 'placetype' template")
 	}
 
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
@@ -47,27 +46,30 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
 
-		uri, err, status := httpd.ParseURIFromRequest(req, nil)
+		req_pt := req.PathValue("placetype")
+
+		logger = logger.With("request placetype", req_pt)
+
+		pt, err := placetypes.GetPlacetypeByName(req_pt)
 
 		if err != nil {
-			logger.Error("Failed to parse URI from request", "error", err)
-			http.Error(rsp, spelunker.ErrNotFound.Error(), status)
+			logger.Error("Invalid placetype", "error", err)
+			http.Error(rsp, "Bad request", http.StatusBadRequest)
 			return
 		}
-
-		logger = logger.With("wofid", uri.Id)
 
 		pg_opts, err := countable.NewCountableOptions()
 
 		if err != nil {
 			logger.Error("Failed to create pagination options", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 
 		pg, pg_err := httpd.ParsePageNumberFromRequest(req)
 
 		if pg_err == nil {
+			logger = logger.With("page", pg)
 			pg_opts.Pointer(pg)
 		}
 
@@ -84,24 +86,21 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		r, pg_r, err := opts.Spelunker.GetDescendants(ctx, pg_opts, uri.Id, filters)
+		r, pg_r, err := opts.Spelunker.HasPlacetype(ctx, pg_opts, pt, filters)
 
 		if err != nil {
-			logger.Error("Failed to get descendants", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			logger.Error("Failed to get records having placetype", "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 
-		str_id := strconv.FormatInt(uri.Id, 10)
+		pagination_url := req.URL.Path
 
-		// Seriously no to both of these. Please sort out URIs soon...
-		pagination_url := filepath.Join(opts.URIs.Descendants, str_id) + "?"
-
-		vars := DescendantsHandlerVars{
-			Id:            uri.Id,
+		vars := HasPlacetypeHandlerVars{
+			PageTitle:     "Placetype",
+			URIs:          opts.URIs,
 			Places:        r.Results(),
 			Pagination:    pg_r,
-			URIs:          opts.URIs,
 			PaginationURL: pagination_url,
 		}
 
@@ -110,8 +109,8 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 		err = t.Execute(rsp, vars)
 
 		if err != nil {
-			logger.Error("Failed to return ", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			logger.Error("Failed to render template", "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 		}
 
 	}

@@ -5,7 +5,6 @@ import (
 	"log/slog"
 	"net/http"
 
-
 	// "github.com/aaronland/go-pagination"
 	// "github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
@@ -38,26 +37,26 @@ func DescendantsFacetHandler(opts *DescendantsFacetHandlerOptions) (http.Handler
 		logger = logger.With("wofid", uri.Id)
 
 		/*
-		pg_opts, err := countable.NewCountableOptions()
+			pg_opts, err := countable.NewCountableOptions()
 
-		if err != nil {
-			logger.Error("Failed to create pagination options", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
-			return
-		}
+			if err != nil {
+				logger.Error("Failed to create pagination options", "error", err)
+				http.Error(rsp, "womp womp", http.StatusInternalServerError)
+				return
+			}
 
-		pg, pg_err := httpd.ParsePageNumberFromRequest(req)
+			pg, pg_err := httpd.ParsePageNumberFromRequest(req)
 
-		if pg_err == nil {
-			pg_opts.Pointer(pg)
-		}
+			if pg_err == nil {
+				pg_opts.Pointer(pg)
+			}
 		*/
-		
+
 		filter_params := []string{
 			"placetype",
 			"country",
 		}
-		
+
 		filters, err := FiltersFromRequest(ctx, req, filter_params)
 
 		if err != nil {
@@ -79,7 +78,7 @@ func DescendantsFacetHandler(opts *DescendantsFacetHandlerOptions) (http.Handler
 			http.Error(rsp, "Bad request", http.StatusBadRequest)
 			return
 		}
-		
+
 		facets_rsp, err := opts.Spelunker.FacetDescendants(ctx, uri.Id, filters, facets)
 
 		if err != nil {
