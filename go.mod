@@ -17,6 +17,7 @@ require (
 	github.com/whosonfirst/go-sanitize v0.1.0
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.27
 	github.com/whosonfirst/go-whosonfirst-placetypes v0.7.0
+	github.com/whosonfirst/go-whosonfirst-sources v0.1.0
 	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240226163831-83bc7512547d
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
 	github.com/whosonfirst/go-whosonfirst-svg v0.1.0
@@ -42,6 +43,5 @@ require (
 	github.com/whosonfirst/go-geojson-svg v0.0.5 // indirect
 	github.com/whosonfirst/go-ioutil v1.0.2 // indirect
 	github.com/whosonfirst/go-whosonfirst-flags v0.5.1 // indirect
-	github.com/whosonfirst/go-whosonfirst-sources v0.1.0 // indirect
 	go.mongodb.org/mongo-driver v1.11.4 // indirect
 )

@@ -12,7 +12,9 @@ type URIs struct {
 	Id               string   `json:"id"`
 	IdAlt            []string `json:"id_alt"`
 	Concordances     string   `json:"concordances"`
-	Concordance      string   `json:"concordance"`
+	ConcordanceNS      string   `json:"concordance_ns"`
+	ConcordanceNSPred      string   `json:"concordance_ns_pred"`
+	ConcordanceNSPredValue      string   `json:"concordance_ns_pred_value"`		
 	Descendants      string   `json:"descendants"`
 	DescendantsAlt   []string `json:"descendants_alt"`
 	DescendantsFacet string   `json:"descendants_facet"`
@@ -82,7 +84,9 @@ func DefaultURIs() *URIs {
 		Placetypes:       "/placetypes",
 		Placetype:        "/placetypes/{placetype}",
 		Concordances:     "/concordances/",
-		Concordance:      "/concordances/{concordance}",
+		ConcordanceNS:      "/concordances/{namespace}",
+		ConcordanceNSPred:      "/concordances/{namespace}:{predicate}",
+		ConcordanceNSPredValue:      "/concordances/{namespace}:{predicate}={value}",				
 		Recent:           "/recent/",
 		Id:               "/id/{id}",
 		Descendants:      "/id/{id}/descendants",
