@@ -6,14 +6,14 @@ import (
 	"log/slog"
 	"net/http"
 	"strings"
-	
+
 	"github.com/aaronland/go-pagination"
 	"github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
+	"github.com/whosonfirst/go-whosonfirst-sources"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 	"github.com/whosonfirst/go-whosonfirst-spr/v2"
-	"github.com/whosonfirst/go-whosonfirst-sources"	
 )
 
 type HasConcordanceHandlerOptions struct {
@@ -26,13 +26,13 @@ type HasConcordanceHandlerOptions struct {
 type HasConcordanceHandlerVars struct {
 	PageTitle        string
 	URIs             *httpd.URIs
-	Concordance *spelunker.Concordance
+	Concordance      *spelunker.Concordance
 	Places           []spr.StandardPlacesResult
 	Pagination       pagination.Results
 	PaginationURL    string
 	FacetsURL        string
 	FacetsContextURL string
-	Source *sources.WOFSource
+	Source           *sources.WOFSource
 }
 
 func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, error) {
@@ -52,18 +52,18 @@ func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, er
 
 		ns := req.PathValue("namespace")
 		pred := req.PathValue("predicate")
-		value := req.PathValue("value")				
+		value := req.PathValue("value")
 
 		ns = strings.TrimRight(ns, ":")
 		pred = strings.TrimLeft(pred, ":")
-		pred = strings.TrimRight(pred, "=")		
+		pred = strings.TrimRight(pred, "=")
 
 		c := spelunker.NewConcordanceFromTriple(ns, pred, value)
-		
+
 		logger = logger.With("namespace", ns)
 		logger = logger.With("predicate", pred)
-		logger = logger.With("value", value)				
-		
+		logger = logger.With("value", value)
+
 		pg_opts, err := countable.NewCountableOptions()
 
 		if err != nil {
@@ -109,15 +109,15 @@ func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, er
 		if err != nil {
 			logger.Error("Failed to derive source from namespace", "error", err)
 		}
-		
+
 		vars := HasConcordanceHandlerVars{
 			PageTitle:     page_title,
 			URIs:          opts.URIs,
-			Concordance: c,
+			Concordance:   c,
 			Places:        r.Results(),
 			Pagination:    pg_r,
 			PaginationURL: pagination_url,
-			Source: src,
+			Source:        src,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

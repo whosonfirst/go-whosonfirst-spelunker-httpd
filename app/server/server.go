@@ -50,19 +50,19 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 	handlers := map[string]handler.RouteHandlerFunc{
 
 		// WWW/human-readable
-		run_options.URIs.Placetypes:       placetypesHandlerFunc,
-		run_options.URIs.Placetype:        hasPlacetypeHandlerFunc,
-		run_options.URIs.Concordances:     concordancesHandlerFunc,
-		run_options.URIs.ConcordanceNS:    hasConcordanceHandlerFunc,
-		run_options.URIs.ConcordanceNSPred:    hasConcordanceHandlerFunc,
-		run_options.URIs.ConcordanceNSPredValue:    hasConcordanceHandlerFunc,						
-		run_options.URIs.Recent:           recentHandlerFunc,
-		run_options.URIs.Descendants:      descendantsHandlerFunc,
-		run_options.URIs.DescendantsFacet: descendantsFacetHandlerFunc,
-		run_options.URIs.Id:               idHandlerFunc,
-		run_options.URIs.Search:           searchHandlerFunc,
-		run_options.URIs.About:            aboutHandlerFunc,
-		run_options.URIs.Index:            indexHandlerFunc,
+		run_options.URIs.Placetypes:             placetypesHandlerFunc,
+		run_options.URIs.Placetype:              hasPlacetypeHandlerFunc,
+		run_options.URIs.Concordances:           concordancesHandlerFunc,
+		run_options.URIs.ConcordanceNS:          hasConcordanceHandlerFunc,
+		run_options.URIs.ConcordanceNSPred:      hasConcordanceHandlerFunc,
+		run_options.URIs.ConcordanceNSPredValue: hasConcordanceHandlerFunc,
+		run_options.URIs.Recent:                 recentHandlerFunc,
+		run_options.URIs.Descendants:            descendantsHandlerFunc,
+		run_options.URIs.DescendantsFacet:       descendantsFacetHandlerFunc,
+		run_options.URIs.Id:                     idHandlerFunc,
+		run_options.URIs.Search:                 searchHandlerFunc,
+		run_options.URIs.About:                  aboutHandlerFunc,
+		run_options.URIs.Index:                  indexHandlerFunc,
 
 		// Static assets
 		run_options.URIs.Static: staticHandlerFunc,

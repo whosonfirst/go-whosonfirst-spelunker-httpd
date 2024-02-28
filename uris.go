@@ -9,21 +9,21 @@ import (
 
 type URIs struct {
 	// WWW/human-readable
-	Id               string   `json:"id"`
-	IdAlt            []string `json:"id_alt"`
-	Concordances     string   `json:"concordances"`
-	ConcordanceNS      string   `json:"concordance_ns"`
+	Id                     string   `json:"id"`
+	IdAlt                  []string `json:"id_alt"`
+	Concordances           string   `json:"concordances"`
+	ConcordanceNS          string   `json:"concordance_ns"`
 	ConcordanceNSPred      string   `json:"concordance_ns_pred"`
-	ConcordanceNSPredValue      string   `json:"concordance_ns_pred_value"`		
-	Descendants      string   `json:"descendants"`
-	DescendantsAlt   []string `json:"descendants_alt"`
-	DescendantsFacet string   `json:"descendants_facet"`
-	Index            string   `json:"index"`
-	Placetypes       string   `json:"placetypes"`
-	Placetype        string   `json:"placetype"`
-	Recent           string   `json:"recent"`
-	Search           string   `json:"search"`
-	About            string   `json:"about"`
+	ConcordanceNSPredValue string   `json:"concordance_ns_pred_value"`
+	Descendants            string   `json:"descendants"`
+	DescendantsAlt         []string `json:"descendants_alt"`
+	DescendantsFacet       string   `json:"descendants_facet"`
+	Index                  string   `json:"index"`
+	Placetypes             string   `json:"placetypes"`
+	Placetype              string   `json:"placetype"`
+	Recent                 string   `json:"recent"`
+	Search                 string   `json:"search"`
+	About                  string   `json:"about"`
 
 	// Static assets
 	Static string `json:"static"`
@@ -78,19 +78,19 @@ func DefaultURIs() *URIs {
 
 		// WWW/human-readable
 
-		Index:            "/",
-		Search:           "/search",
-		About:            "/about",
-		Placetypes:       "/placetypes",
-		Placetype:        "/placetypes/{placetype}",
-		Concordances:     "/concordances/",
-		ConcordanceNS:      "/concordances/{namespace}",
+		Index:                  "/",
+		Search:                 "/search",
+		About:                  "/about",
+		Placetypes:             "/placetypes",
+		Placetype:              "/placetypes/{placetype}",
+		Concordances:           "/concordances/",
+		ConcordanceNS:          "/concordances/{namespace}",
 		ConcordanceNSPred:      "/concordances/{namespace}:{predicate}",
-		ConcordanceNSPredValue:      "/concordances/{namespace}:{predicate}={value}",				
-		Recent:           "/recent/",
-		Id:               "/id/{id}",
-		Descendants:      "/id/{id}/descendants",
-		DescendantsFacet: "/id/{id}/descendants/facet",
+		ConcordanceNSPredValue: "/concordances/{namespace}:{predicate}={value}",
+		Recent:                 "/recent/",
+		Id:                     "/id/{id}",
+		Descendants:            "/id/{id}/descendants",
+		DescendantsFacet:       "/id/{id}/descendants/facet",
 
 		// Static Assets
 		Static: "/static/",
