@@ -17,7 +17,6 @@ type URIs struct {
 	ConcordanceNSPredValue string   `json:"concordance_ns_pred_value"`
 	Descendants            string   `json:"descendants"`
 	DescendantsAlt         []string `json:"descendants_alt"`
-	DescendantsFacet       string   `json:"descendants_facet"`
 	Index                  string   `json:"index"`
 	Placetypes             string   `json:"placetypes"`
 	Placetype              string   `json:"placetype"`
@@ -29,18 +28,19 @@ type URIs struct {
 	Static string `json:"static"`
 
 	// API/machine-readable
-	GeoJSON      string   `json:"geojson"`
-	GeoJSONAlt   []string `json:"geojson_alt"`
-	GeoJSONLD    string   `json:"geojsonld"`
-	GeoJSONLDAlt []string `json:"geojsonld_alt"`
-	NavPlace     string   `json:"navplace"`
-	NavPlaceAlt  []string `json:"navplace_alt"`
-	Select       string   `json:"select"`
-	SelectAlt    []string `json:"select_alt"`
-	SPR          string   `json:"spr"`
-	SPRAlt       []string `json:"spr_alt"`
-	SVG          string   `json:"svg"`
-	SVGAlt       []string `json:"svg_alt"`
+	DescendantsFaceted string   `json:"descendants_faceted"`
+	GeoJSON            string   `json:"geojson"`
+	GeoJSONAlt         []string `json:"geojson_alt"`
+	GeoJSONLD          string   `json:"geojsonld"`
+	GeoJSONLDAlt       []string `json:"geojsonld_alt"`
+	NavPlace           string   `json:"navplace"`
+	NavPlaceAlt        []string `json:"navplace_alt"`
+	Select             string   `json:"select"`
+	SelectAlt          []string `json:"select_alt"`
+	SPR                string   `json:"spr"`
+	SPRAlt             []string `json:"spr_alt"`
+	SVG                string   `json:"svg"`
+	SVGAlt             []string `json:"svg_alt"`
 }
 
 func (u *URIs) ApplyPrefix(prefix string) error {
@@ -90,12 +90,13 @@ func DefaultURIs() *URIs {
 		Recent:                 "/recent/",
 		Id:                     "/id/{id}",
 		Descendants:            "/id/{id}/descendants",
-		DescendantsFacet:       "/id/{id}/descendants/facet",
 
 		// Static Assets
 		Static: "/static/",
 
 		// API/machine-readable
+		DescendantsFaceted: "/id/{id}/descendants/facets",
+
 		GeoJSON: "/geojson/",
 		GeoJSONAlt: []string{
 			"/id/{id}/geojson",

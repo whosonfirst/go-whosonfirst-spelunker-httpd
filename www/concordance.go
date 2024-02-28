@@ -84,7 +84,7 @@ func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, er
 			"country",
 		}
 
-		filters, err := FiltersFromRequest(ctx, req, filter_params)
+		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
 
 		if err != nil {
 			logger.Error("Failed to derive filters from request", "error", err)

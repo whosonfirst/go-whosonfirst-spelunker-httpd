@@ -80,7 +80,7 @@ func HasPlacetypeHandler(opts *HasPlacetypeHandlerOptions) (http.Handler, error)
 			"country",
 		}
 
-		filters, err := FiltersFromRequest(ctx, req, filter_params)
+		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
 
 		if err != nil {
 			logger.Error("Failed to derive filters from request", "error", err)

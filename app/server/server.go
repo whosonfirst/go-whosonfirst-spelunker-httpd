@@ -58,7 +58,6 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		run_options.URIs.ConcordanceNSPredValue: hasConcordanceHandlerFunc,
 		run_options.URIs.Recent:                 recentHandlerFunc,
 		run_options.URIs.Descendants:            descendantsHandlerFunc,
-		run_options.URIs.DescendantsFacet:       descendantsFacetHandlerFunc,
 		run_options.URIs.Id:                     idHandlerFunc,
 		run_options.URIs.Search:                 searchHandlerFunc,
 		run_options.URIs.About:                  aboutHandlerFunc,
@@ -68,12 +67,13 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		run_options.URIs.Static: staticHandlerFunc,
 
 		// API/machine-readable
-		run_options.URIs.GeoJSON:   geoJSONHandlerFunc,
-		run_options.URIs.GeoJSONLD: geoJSONLDHandlerFunc,
-		run_options.URIs.NavPlace:  navPlaceHandlerFunc,
-		run_options.URIs.Select:    selectHandlerFunc,
-		run_options.URIs.SPR:       sprHandlerFunc,
-		run_options.URIs.SVG:       svgHandlerFunc,
+		run_options.URIs.DescendantsFaceted: descendantsFacetedHandlerFunc,
+		run_options.URIs.GeoJSON:            geoJSONHandlerFunc,
+		run_options.URIs.GeoJSONLD:          geoJSONLDHandlerFunc,
+		run_options.URIs.NavPlace:           navPlaceHandlerFunc,
+		run_options.URIs.Select:             selectHandlerFunc,
+		run_options.URIs.SPR:                sprHandlerFunc,
+		run_options.URIs.SVG:                svgHandlerFunc,
 	}
 
 	assign_handlers := func(handler_map map[string]handler.RouteHandlerFunc, paths []string, handler_func handler.RouteHandlerFunc) {
