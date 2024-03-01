@@ -65,6 +65,8 @@ github.com/sfomuseum/go-geojsonld v1.0.0 h1:BkHMEsmbTpDTQu1DClTT4VrNMXnLMPsSdBq8
 github.com/sfomuseum/go-geojsonld v1.0.0/go.mod h1:hluKfABMpnukBEf8qLwuWdwotdYFelMYKxO1njRmxPU=
 github.com/sfomuseum/go-http-auth v0.9.0 h1:aLkOdbfO5UBNg7HITVMfsizYDB3O3Adxr/Rd7ja17bg=
 github.com/sfomuseum/go-http-auth v0.9.0/go.mod h1:m0I60r/aVlWXia43eoZOp/d0u7M7pURgJEYElvVVe98=
+github.com/sfomuseum/go-placeholder-client v0.0.4 h1:Xl4/EzN5EceIaioAmuyIJX4JeYVphsRU1PtUTl7oD+A=
+github.com/sfomuseum/go-placeholder-client v0.0.4/go.mod h1:YpOxi2qgjCb7agCUMuuv0vZTShHS7n1EJ70bBRr5+hI=
 github.com/sfomuseum/go-template v1.9.0 h1:0RDnOK0n9/JS/zc7claaBsIB7FBo/iGqe0RBrg5H2Yw=
 github.com/sfomuseum/go-template v1.9.0/go.mod h1:8inbmZmMYiBiZPJK/h0Fbkn7p54MrGstlaiVS9IIWvM=
 github.com/sfomuseum/iso8601duration v1.1.0 h1:kMYzbamrZp9dRxi5iFuhjl5CzHXK6s6Bzz/c75wsq8Q=
