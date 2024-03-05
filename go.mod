@@ -7,6 +7,7 @@ require (
 	github.com/aaronland/go-http-server v1.4.0
 	github.com/aaronland/go-pagination v0.2.0
 	github.com/mitchellh/copystructure v1.2.0
+	github.com/sfomuseum/go-edtf v1.1.1
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-geojsonld v1.0.0
 	github.com/sfomuseum/go-http-auth v0.9.0
@@ -17,9 +18,10 @@ require (
 	github.com/whosonfirst/go-reader v1.0.2
 	github.com/whosonfirst/go-sanitize v0.1.0
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.27
+	github.com/whosonfirst/go-whosonfirst-flags v0.5.1
 	github.com/whosonfirst/go-whosonfirst-placetypes v0.7.0
 	github.com/whosonfirst/go-whosonfirst-sources v0.1.0
-	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240226163831-83bc7512547d
+	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240228164604-d1987c2473a1
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
 	github.com/whosonfirst/go-whosonfirst-svg v0.1.0
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
@@ -36,13 +38,11 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/paulmach/go.geojson v1.4.0 // indirect
 	github.com/paulmach/orb v0.10.0 // indirect
-	github.com/sfomuseum/go-edtf v1.1.1 // indirect
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/tidwall/sjson v1.2.2 // indirect
 	github.com/whosonfirst/go-geojson-svg v0.0.5 // indirect
 	github.com/whosonfirst/go-ioutil v1.0.2 // indirect
-	github.com/whosonfirst/go-whosonfirst-flags v0.5.1 // indirect
 	go.mongodb.org/mongo-driver v1.11.4 // indirect
 )
