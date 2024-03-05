@@ -12,13 +12,13 @@ require (
 	github.com/sfomuseum/go-http-auth v0.9.0
 	github.com/sfomuseum/go-template v1.9.0
 	github.com/sfomuseum/iso8601duration v1.1.0
-	github.com/tidwall/gjson v1.17.0
+	github.com/tidwall/gjson v1.17.1
 	github.com/whosonfirst/go-reader v1.0.2
 	github.com/whosonfirst/go-sanitize v0.1.0
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.27
-	github.com/whosonfirst/go-whosonfirst-placetypes v0.7.0
-	github.com/whosonfirst/go-whosonfirst-sources v0.1.0
-	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240226163831-83bc7512547d
+	github.com/whosonfirst/go-whosonfirst-placetypes v0.7.1
+	github.com/whosonfirst/go-whosonfirst-sources v0.1.1
+	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240228164604-d1987c2473a1
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
 	github.com/whosonfirst/go-whosonfirst-svg v0.1.0
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
@@ -28,7 +28,7 @@ require (
 	github.com/aaronland/go-roster v1.0.0 // indirect
 	github.com/akrylysov/algnhsa v1.1.0 // indirect
 	github.com/aws/aws-lambda-go v1.46.0 // indirect
-	github.com/dominikbraun/graph v0.16.1 // indirect
+	github.com/dominikbraun/graph v0.23.0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/jtacoma/uritemplates v1.0.0 // indirect
