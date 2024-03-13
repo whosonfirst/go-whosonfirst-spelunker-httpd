@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"github.com/aaronland/go-pagination"
-	"github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/whosonfirst/go-whosonfirst-placetypes"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
@@ -60,19 +59,12 @@ func HasPlacetypeHandler(opts *HasPlacetypeHandlerOptions) (http.Handler, error)
 			return
 		}
 
-		pg_opts, err := countable.NewCountableOptions()
+		pg_opts, err := httpd.PaginationOptionsFromRequest(req)
 
 		if err != nil {
 			logger.Error("Failed to create pagination options", "error", err)
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
-		}
-
-		pg, pg_err := httpd.ParsePageNumberFromRequest(req)
-
-		if pg_err == nil {
-			logger = logger.With("page", pg)
-			pg_opts.Pointer(pg)
 		}
 
 		filter_params := []string{
