@@ -1,5 +1,8 @@
 {{ define "inc_pagination" -}}
 {{ if (IsAvailable "Pagination" $) -}}
+
+{{ if eq $.Pagination.Method 0 -}}
+
 {{ if gt $.Pagination.Pages 1 }}
 
 <div id="pagination" class="pagination">
@@ -21,7 +24,16 @@
 	{{ end }}	
     </span>
 </div>
+{{ end -}}
+
+{{ else -}}
+<div id="pagination" class="pagination">
+    <div><a href="#">Next</a></div>
+</div>
+
+    <div><small>There are so many results for this query that the Spelunker database can't do <code>page1, page2, page3...</code> style pagination without getting sad. There are actually [NUMBER] pages worth of results for this query but as of this writing there is only the "next page" of results. We all have our limits, right? Speaking of limits, these query results have a pretty short shelf life. As long as you are paging through the results everything will be okay but if left idle for too long (about 5 minutes) they will expire and you'll need to perform a new query. It's good to have constraints to work against, right?</small></div>
 
 {{ end -}}
+
 {{ end -}}
 {{ end -}}

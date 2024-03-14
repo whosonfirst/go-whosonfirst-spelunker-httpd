@@ -9,7 +9,6 @@ import (
 
 	"github.com/aaronland/go-http-sanitize"
 	"github.com/aaronland/go-pagination"
-	"github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
@@ -61,18 +60,12 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 
 		if q != "" {
 
-			pg_opts, err := countable.NewCountableOptions()
+			pg_opts, err := httpd.PaginationOptionsFromRequest(req)
 
 			if err != nil {
 				logger.Error("Failed to create pagination options", "error", err)
 				http.Error(rsp, "womp womp", http.StatusInternalServerError)
 				return
-			}
-
-			pg, pg_err := httpd.ParsePageNumberFromRequest(req)
-
-			if pg_err == nil {
-				pg_opts.Pointer(pg)
 			}
 
 			search_opts := &spelunker.SearchOptions{
