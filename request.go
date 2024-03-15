@@ -132,13 +132,13 @@ func ParseURIFromPath(ctx context.Context, path string, r reader.Reader) (*URI, 
 
 func PaginationOptionsFromRequest(req *go_http.Request) (pagination.Options, error) {
 
-	scroll, err := sanitize.GetString(req, "scroll")
+	q_cursor, err := sanitize.GetString(req, "cursor")
 
 	if err != nil {
-		return nil, fmt.Errorf("Failed to derive ?scroll= parameter, %w", err)
+		return nil, fmt.Errorf("Failed to derive ?cursor= parameter, %w", err)
 	}
 
-	if scroll != "" {
+	if q_cursor != "" {
 
 		pg_opts, err := cursor.NewCursorOptions()
 
@@ -146,7 +146,7 @@ func PaginationOptionsFromRequest(req *go_http.Request) (pagination.Options, err
 			return nil, fmt.Errorf("Failed to create cursor options, %w", err)
 		}
 
-		pg_opts.Pointer(scroll)
+		pg_opts.Pointer(q_cursor)
 		return pg_opts, nil
 	}
 

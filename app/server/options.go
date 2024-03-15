@@ -6,7 +6,7 @@ import (
 	"fmt"
 	html_template "html/template"
 	io_fs "io/fs"
-
+	
 	"github.com/aaronland/go-http-server/handler"
 	"github.com/mitchellh/copystructure"
 	"github.com/sfomuseum/go-flags/flagset"
@@ -73,6 +73,7 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 		"GjsonGet":         sfom_funcs.GjsonGet,
 		"URIForId":         httpd.URIForId,
 		"NameForSource":    wof_funcs.NameForSource,
+		"FormatNumber": wof_funcs.FormatNumber,
 	}
 
 	opts := &RunOptions{

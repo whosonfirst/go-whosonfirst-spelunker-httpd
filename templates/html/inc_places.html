@@ -10,7 +10,7 @@
     {{ else if eq .Pagination.Total 1 -}}
     <p>There is <span class="hey-look">one place</span></p>
     {{ else -}}
-    <p>There are <span class="hey-look">{{ .Pagination.Total }}</span> places{{if gt .Pagination.Pages 0 }} and this is <span class="hey-look">page {{ .Pagination.Page }}</span> of <span class="hey-look">{{ .Pagination.Pages }}{{ end }}</span></p>
+    <p>There are <span class="hey-look">{{ FormatNumber .Pagination.Total }}</span> places{{ if gt .Pagination.Pages 1 }} and this is <span class="hey-look">{{if eq .Pagination.Page -1 }}one page{{ else }}page {{ FormatNumber .Pagination.Page }}{{ end }}</span> of <span class="hey-look">{{ FormatNumber .Pagination.Pages }}{{ end }}</span></p>
     {{ end -}}
     {{ end -}}
 </div>

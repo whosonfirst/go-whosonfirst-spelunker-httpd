@@ -5,7 +5,7 @@ go 1.22
 require (
 	github.com/aaronland/go-http-sanitize v0.0.8
 	github.com/aaronland/go-http-server v1.4.0
-	github.com/aaronland/go-pagination v0.2.0
+	github.com/aaronland/go-pagination v0.3.0
 	github.com/mitchellh/copystructure v1.2.0
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-geojsonld v1.0.0
@@ -22,6 +22,7 @@ require (
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
 	github.com/whosonfirst/go-whosonfirst-svg v0.1.0
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
+	golang.org/x/text v0.3.7
 )
 
 require (

@@ -12,7 +12,6 @@ type CursorResults struct {
 	TotalCount         int64  `json:"total"`
 	PerPageCount       int64  `json:"per_page"`
 	PageCount          int64  `json:"page"`
-	PagesCount         int64  `json:"pages"`
 	NextPageURI        int64  `json:"next_page"`
 	PreviousPageURI    int64  `json:"previous_page"`
 	CursorNext         string `json:"next_cursor"`
@@ -54,7 +53,7 @@ func (p *CursorResults) Page() int64 {
 }
 
 func (p *CursorResults) Pages() int64 {
-	return -1
+	return p.PageCount
 }
 
 func (p *CursorResults) NextURL(t *uritemplates.UriTemplate) (string, error) {
@@ -105,6 +104,7 @@ func NewPaginationFromCursors(previous string, next string) (pagination.Results,
 	pg.CursorPrevious = previous
 	pg.CursorNext = next
 	pg.TotalCount = -1
-
+	pg.PageCount = -1
+	
 	return pg, nil
 }
