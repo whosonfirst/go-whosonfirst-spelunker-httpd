@@ -1,7 +1,7 @@
 github.com/aaronland/go-http-sanitize v0.0.8 h1:RRcwJwZtIb0J6xFPgW8a2OkQhMFG/uXkFFOFkCzMeKY=
 github.com/aaronland/go-http-sanitize v0.0.8/go.mod h1:qUi4rzUPcpMntpUFnHK00yQI5vd/Q7x9MFYwX91/ygI=
-github.com/aaronland/go-http-server v1.4.0 h1:WBFunh4cHRvzUsFWf4h/L8OmI/igAN8/WKorlQKVbjc=
-github.com/aaronland/go-http-server v1.4.0/go.mod h1:R52A7/N3HWHmAf4KjVgkAtsFyUl+VxzICyArko3zMKo=
+github.com/aaronland/go-http-server v1.4.1 h1:GfrGHF9+aurisbPAVv1SbPhxu+PJppX4Eatig/dE8D4=
+github.com/aaronland/go-http-server v1.4.1/go.mod h1:R52A7/N3HWHmAf4KjVgkAtsFyUl+VxzICyArko3zMKo=
 github.com/aaronland/go-json-query v0.1.2/go.mod h1:kkCl5KrO+fVSL2M8b/i3qO5PsnCpmajGXkbJHpEQPY8=
 github.com/aaronland/go-pagination v0.3.0 h1:5YHm2ylZtWj40m+hyncrt4vaZxjZ5v6szi2F4OqkqO4=
 github.com/aaronland/go-pagination v0.3.0/go.mod h1:zrYVkUTBoe6yJ23l6OyTyfSpTyg6s/cNxZxNztXNQpQ=

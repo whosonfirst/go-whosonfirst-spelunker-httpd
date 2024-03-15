@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/aaronland/go-http-sanitize v0.0.8
-	github.com/aaronland/go-http-server v1.4.0
+	github.com/aaronland/go-http-server v1.4.1
 	github.com/aaronland/go-pagination v0.3.0
 	github.com/mitchellh/copystructure v1.2.0
 	github.com/sfomuseum/go-flags v0.10.0
