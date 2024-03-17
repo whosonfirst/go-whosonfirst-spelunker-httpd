@@ -71,6 +71,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		run_options.URIs.GeoJSON:            geoJSONHandlerFunc,
 		run_options.URIs.GeoJSONLD:          geoJSONLDHandlerFunc,
 		run_options.URIs.NavPlace:           navPlaceHandlerFunc,
+		run_options.URIs.PlacetypeFaceted:   placetypeFacetedHandlerFunc,
 		run_options.URIs.Select:             selectHandlerFunc,
 		run_options.URIs.SPR:                sprHandlerFunc,
 		run_options.URIs.SVG:                svgHandlerFunc,

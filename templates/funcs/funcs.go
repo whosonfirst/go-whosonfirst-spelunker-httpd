@@ -3,7 +3,7 @@ package funcs
 import (
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
-	
+
 	"github.com/whosonfirst/go-whosonfirst-sources"
 )
 

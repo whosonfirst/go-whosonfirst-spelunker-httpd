@@ -35,6 +35,7 @@ type URIs struct {
 	GeoJSONLDAlt       []string `json:"geojsonld_alt"`
 	NavPlace           string   `json:"navplace"`
 	NavPlaceAlt        []string `json:"navplace_alt"`
+	PlacetypeFaceted   string   `json:"placetype_faceted"`
 	Select             string   `json:"select"`
 	SelectAlt          []string `json:"select_alt"`
 	SPR                string   `json:"spr"`
@@ -109,7 +110,8 @@ func DefaultURIs() *URIs {
 		NavPlaceAlt: []string{
 			"/id/{id}/navplace",
 		},
-		Select: "/select/",
+		PlacetypeFaceted: "/placetypes/{placetype}/facets",
+		Select:           "/select/",
 		SelectAlt: []string{
 			"/id/{id}/select",
 		},
@@ -128,6 +130,10 @@ func DefaultURIs() *URIs {
 
 func URIForId(uri string, id int64) string {
 	return ReplaceAll(uri, "{id}", id)
+}
+
+func URIForPlacetype(uri string, pt string) string {
+	return ReplaceAll(uri, "{placetype}", pt)
 }
 
 func ReplaceAll(input string, pattern string, value any) string {
