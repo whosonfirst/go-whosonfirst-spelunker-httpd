@@ -63,6 +63,9 @@ func DescendantsFacetedHandler(opts *DescendantsFacetedHandlerOptions) (http.Han
 			return
 		}
 
+		logger.Info("D", "filters", filters)
+		logger.Info("D", "facets", facets)
+
 		facets_rsp, err := opts.Spelunker.GetDescendantsFaceted(ctx, uri.Id, filters, facets)
 
 		if err != nil {

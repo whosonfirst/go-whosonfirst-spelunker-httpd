@@ -39,8 +39,9 @@ window.addEventListener("load", function load(event){
 	for (var i=0; i < count; i++){
 
 	    var a = document.createElement("a");
-	    // To do: Use proper query builder methods
-	    a.setAttribute("href", current_url + "?" + encodeURIComponent(f) + "=" + encodeURIComponent(results[i].key));
+
+	    // To do: Parse current_url and use a proper URI/query builder	    
+	    a.setAttribute("href", current_url + "&" + encodeURIComponent(f) + "=" + encodeURIComponent(results[i].key));
 	    a.setAttribute("class", "hey-look");
 	    a.appendChild(document.createTextNode(results[i].key));
 
@@ -60,7 +61,8 @@ window.addEventListener("load", function load(event){
     
     var fetch_facet = function(f){
 
-	var url = facets_url + "?facet=" + f;
+	// To do: Parse facets_url and use a proper URI/query builder
+	var url = facets_url + "&facet=" + f;
 
 	fetch(url)
 	    .then((rsp) => rsp.json())

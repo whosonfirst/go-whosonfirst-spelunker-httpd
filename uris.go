@@ -2,9 +2,12 @@ package httpd
 
 import (
 	"fmt"
+	"log/slog"
 	"net/url"
 	"reflect"
 	"strings"
+
+	"github.com/whosonfirst/go-whosonfirst-spelunker"
 )
 
 type URIs struct {
@@ -128,12 +131,35 @@ func DefaultURIs() *URIs {
 	return uris_table
 }
 
-func URIForId(uri string, id int64) string {
-	return ReplaceAll(uri, "{id}", id)
+func URIForId(uri string, id int64, filters []spelunker.Filter, facets []spelunker.Facet) string {
+
+	id_uri := ReplaceAll(uri, "{id}", id)
+	return uriWithFilters(id_uri, filters, facets)
 }
 
-func URIForPlacetype(uri string, pt string) string {
-	return ReplaceAll(uri, "{placetype}", pt)
+func URIForPlacetype(uri string, pt string, filters []spelunker.Filter, facets []spelunker.Facet) string {
+
+	pt_uri := ReplaceAll(uri, "{placetype}", pt)
+	return uriWithFilters(pt_uri, filters, facets)
+}
+
+func uriWithFilters(uri string, filters []spelunker.Filter, facets []spelunker.Facet) string {
+
+	u, _ := url.Parse(uri)
+	v := &url.Values{}
+
+	for _, f := range filters {
+		v.Set(f.Scheme(), fmt.Sprintf("%v", f.Value()))
+	}
+
+	for _, f := range facets {
+		v.Set("facet", f.String())
+	}
+
+	u.RawQuery = v.Encode()
+
+	slog.Debug("URI", "with filters and facets", u.String())
+	return u.String()
 }
 
 func ReplaceAll(input string, pattern string, value any) string {
