@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/aaronland/go-pagination"
-	"github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/sfomuseum/iso8601duration"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
@@ -25,12 +24,14 @@ type RecentHandlerOptions struct {
 }
 
 type RecentHandlerVars struct {
-	PageTitle     string
-	URIs          *httpd.URIs
-	Places        []spr.StandardPlacesResult
-	Pagination    pagination.Results
-	PaginationURL string
-	Duration      time.Duration
+	PageTitle        string
+	URIs             *httpd.URIs
+	Places           []spr.StandardPlacesResult
+	Pagination       pagination.Results
+	PaginationURL    string
+	Duration         time.Duration
+	FacetsURL        string
+	FacetsContextURL string
 }
 
 func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
@@ -62,18 +63,32 @@ func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 
 		slog.Info("Get recent")
 
-		str_d := "P30D"
+		str_d := req.PathValue("duration")
 
-		path := req.URL.Path
+		/*
+			str_d := "P30D"
+			path := req.URL.Path
 
-		if re_week.MatchString(path) {
-			m := re_week.FindStringSubmatch(path)
-			str_d = m[0]
-		} else if re_full.MatchString(path) {
-			m := re_full.FindStringSubmatch(path)
-			str_d = m[0]
-		} else {
-			// pass
+			if re_week.MatchString(path) {
+				m := re_week.FindStringSubmatch(path)
+				str_d = m[0]
+			} else if re_full.MatchString(path) {
+				m := re_full.FindStringSubmatch(path)
+				str_d = m[0]
+			} else {
+				// pass
+			}
+		*/
+
+		switch {
+		case re_week.MatchString(str_d):
+			// ok
+		case re_full.MatchString(str_d):
+			// ok
+		default:
+			logger.Error("Invalid duration", "duration", str_d)
+			http.Error(rsp, "Bad request", http.StatusBadRequest)
+			return
 		}
 
 		logger = logger.With("duration", str_d)
@@ -86,21 +101,26 @@ func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		pg_opts, err := countable.NewCountableOptions()
+		pg_opts, err := httpd.PaginationOptionsFromRequest(req)
 
 		if err != nil {
 			logger.Error("Failed to create pagination options", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 
-		pg, pg_err := httpd.ParsePageNumberFromRequest(req)
-
-		if pg_err == nil {
-			pg_opts.Pointer(pg)
+		filter_params := []string{
+			"placetype",
+			"country",
 		}
 
-		filters := make([]spelunker.Filter, 0)
+		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
+
+		if err != nil {
+			logger.Error("Failed to derive filters from request", "error", err)
+			http.Error(rsp, "Bad request", http.StatusBadRequest)
+			return
+		}
 
 		r, pg_r, err := opts.Spelunker.GetRecent(ctx, pg_opts, d.ToDuration(), filters)
 
@@ -110,14 +130,29 @@ func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		pagination_url := req.URL.Path
+		// This is not ideal but I am not sure what is better yet...
+		pagination_url := httpd.URIForRecent(opts.URIs.Recent, str_d, filters, nil)
+
+		// This is not ideal but I am not sure what is better yet...
+		facets_url := httpd.URIForRecent(opts.URIs.RecentFaceted, str_d, filters, nil)
+		facets_context_url := req.URL.Path
+
+		/*
+			pagination_url := req.URL.Path
+
+			// This is not ideal but I am not sure what is better yet...
+			facets_url := httpd.URIForRecent(req.URL.Path, str_d, filters, nil)
+			facets_context_url := req.URL.Path
+		*/
 
 		vars := RecentHandlerVars{
-			Places:        r.Results(),
-			Pagination:    pg_r,
-			URIs:          opts.URIs,
-			PaginationURL: pagination_url,
-			Duration:      d.ToDuration(),
+			Places:           r.Results(),
+			Pagination:       pg_r,
+			URIs:             opts.URIs,
+			PaginationURL:    pagination_url,
+			Duration:         d.ToDuration(),
+			FacetsURL:        facets_url,
+			FacetsContextURL: facets_context_url,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")

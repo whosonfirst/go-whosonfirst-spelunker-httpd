@@ -39,6 +39,8 @@ type URIs struct {
 	NavPlace           string   `json:"navplace"`
 	NavPlaceAlt        []string `json:"navplace_alt"`
 	PlacetypeFaceted   string   `json:"placetype_faceted"`
+	RecentFaceted      string   `json:"recent_faceted"`
+	SearchFaceted      string   `json:"search_faceted"`
 	Select             string   `json:"select"`
 	SelectAlt          []string `json:"select_alt"`
 	SPR                string   `json:"spr"`
@@ -91,7 +93,7 @@ func DefaultURIs() *URIs {
 		ConcordanceNS:          "/concordances/{namespace}",
 		ConcordanceNSPred:      "/concordances/{namespace}:{predicate}",
 		ConcordanceNSPredValue: "/concordances/{namespace}:{predicate}={value}",
-		Recent:                 "/recent/",
+		Recent:                 "/recent/{duration}",
 		Id:                     "/id/{id}",
 		Descendants:            "/id/{id}/descendants",
 
@@ -114,6 +116,7 @@ func DefaultURIs() *URIs {
 			"/id/{id}/navplace",
 		},
 		PlacetypeFaceted: "/placetypes/{placetype}/facets",
+		RecentFaceted:    "/recent/{duration}/facets",
 		Select:           "/select/",
 		SelectAlt: []string{
 			"/id/{id}/select",
@@ -141,6 +144,12 @@ func URIForPlacetype(uri string, pt string, filters []spelunker.Filter, facets [
 
 	pt_uri := ReplaceAll(uri, "{placetype}", pt)
 	return uriWithFilters(pt_uri, filters, facets)
+}
+
+func URIForRecent(uri string, d string, filters []spelunker.Filter, facets []spelunker.Facet) string {
+
+	r_uri := ReplaceAll(uri, "{duration}", d)
+	return uriWithFilters(r_uri, filters, facets)
 }
 
 func uriWithFilters(uri string, filters []spelunker.Filter, facets []spelunker.Facet) string {
