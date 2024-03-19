@@ -38,20 +38,43 @@ window.addEventListener("load", function load(event){
 
 	for (var i=0; i < count; i++){
 
-	    var a = document.createElement("a");
+	    var k = results[i].key;
 
-	    // To do: Parse current_url and use a proper URI/query builder	    
-	    a.setAttribute("href", current_url + "&" + encodeURIComponent(f) + "=" + encodeURIComponent(results[i].key));
-	    a.setAttribute("class", "hey-look");
-	    a.appendChild(document.createTextNode(results[i].key));
+	    if (k == ""){
 
-	    var sm = document.createElement("small");
-	    sm.appendChild(document.createTextNode(results[i].count));
+		var sp = document.createElement("span");
+		sp.setAttribute("class", "hey-look");
+		sp.appendChild(document.createTextNode("undefined"));
+
+		var sm = document.createElement("small");
+		sm.appendChild(document.createTextNode(results[i].count));
 		
-	    var item = document.createElement("li");
-	    item.appendChild(a);
-	    item.appendChild(sm);
+		var item = document.createElement("li");
+		item.appendChild(sp);
+		item.appendChild(sm);
 
+	    } else {
+
+		// Something something something is location.href really safe?
+		// https://developer.mozilla.org/en-US/docs/Web/API/URL/URL
+		
+		var u = new URL(current_url, location.href);
+		u.searchParams.set(f, k)
+		
+		var a = document.createElement("a");
+		
+		a.setAttribute("href", u.toString());
+		a.setAttribute("class", "hey-look");
+		a.appendChild(document.createTextNode(k));
+		
+		var sm = document.createElement("small");
+		sm.appendChild(document.createTextNode(results[i].count));
+		
+		var item = document.createElement("li");
+		item.appendChild(a);
+		item.appendChild(sm);
+	    }
+	    
 	    ul.appendChild(item);
 	}
 
@@ -61,9 +84,15 @@ window.addEventListener("load", function load(event){
     
     var fetch_facet = function(f){
 
-	// To do: Parse facets_url and use a proper URI/query builder
-	var url = facets_url + "&facet=" + f;
+	// var url = facets_url + "?&facet=" + f;
 
+	// Something something something is location.href really safe?
+	// https://developer.mozilla.org/en-US/docs/Web/API/URL/URL
+	
+	var u = new URL(facets_url, location.href)
+	u.searchParams.set("facet", f);
+	var url = u.toString();
+	
 	fetch(url)
 	    .then((rsp) => rsp.json())
 	    .then((data) => {
