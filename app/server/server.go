@@ -92,6 +92,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 	assign_handlers(handlers, run_options.URIs.GeoJSONLDAlt, geoJSONLDHandlerFunc)
 	assign_handlers(handlers, run_options.URIs.NavPlaceAlt, navPlaceHandlerFunc)
 	assign_handlers(handlers, run_options.URIs.SelectAlt, selectHandlerFunc)
+	assign_handlers(handlers, run_options.URIs.RecentAlt, recentHandlerFunc)
 	assign_handlers(handlers, run_options.URIs.SPRAlt, sprHandlerFunc)
 	assign_handlers(handlers, run_options.URIs.SVGAlt, svgHandlerFunc)
 

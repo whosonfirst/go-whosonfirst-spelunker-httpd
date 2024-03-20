@@ -65,30 +65,13 @@ func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 
 		str_d := req.PathValue("duration")
 
-		/*
-			str_d := "P30D"
-			path := req.URL.Path
-
-			if re_week.MatchString(path) {
-				m := re_week.FindStringSubmatch(path)
-				str_d = m[0]
-			} else if re_full.MatchString(path) {
-				m := re_full.FindStringSubmatch(path)
-				str_d = m[0]
-			} else {
-				// pass
-			}
-		*/
-
 		switch {
 		case re_week.MatchString(str_d):
 			// ok
 		case re_full.MatchString(str_d):
 			// ok
 		default:
-			logger.Error("Invalid duration", "duration", str_d)
-			http.Error(rsp, "Bad request", http.StatusBadRequest)
-			return
+			str_d = "P30D"
 		}
 
 		logger = logger.With("duration", str_d)
@@ -136,14 +119,6 @@ func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 		// This is not ideal but I am not sure what is better yet...
 		facets_url := httpd.URIForRecent(opts.URIs.RecentFaceted, str_d, filters, nil)
 		facets_context_url := req.URL.Path
-
-		/*
-			pagination_url := req.URL.Path
-
-			// This is not ideal but I am not sure what is better yet...
-			facets_url := httpd.URIForRecent(req.URL.Path, str_d, filters, nil)
-			facets_context_url := req.URL.Path
-		*/
 
 		vars := RecentHandlerVars{
 			Places:           r.Results(),

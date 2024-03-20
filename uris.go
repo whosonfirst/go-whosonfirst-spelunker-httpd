@@ -24,6 +24,7 @@ type URIs struct {
 	Placetypes             string   `json:"placetypes"`
 	Placetype              string   `json:"placetype"`
 	Recent                 string   `json:"recent"`
+	RecentAlt              []string `json:"recent_alt"`
 	Search                 string   `json:"search"`
 	About                  string   `json:"about"`
 
@@ -94,8 +95,11 @@ func DefaultURIs() *URIs {
 		ConcordanceNSPred:      "/concordances/{namespace}:{predicate}",
 		ConcordanceNSPredValue: "/concordances/{namespace}:{predicate}={value}",
 		Recent:                 "/recent/{duration}",
-		Id:                     "/id/{id}",
-		Descendants:            "/id/{id}/descendants",
+		RecentAlt: []string{
+			"/recent",
+		},
+		Id:          "/id/{id}",
+		Descendants: "/id/{id}/descendants",
 
 		// Static Assets
 		Static: "/static/",
