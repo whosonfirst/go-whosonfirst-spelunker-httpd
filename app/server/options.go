@@ -71,9 +71,11 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 		"FormatStringTime": sfom_funcs.FormatStringTime,
 		"FormatUnixTime":   sfom_funcs.FormatUnixTime,
 		"GjsonGet":         sfom_funcs.GjsonGet,
-		"URIForId":         httpd.URIForId,
+		// https://github.com/golang/go/issues/57773
+		"URIForId":         httpd.URIForIdSimple,
 		"NameForSource":    wof_funcs.NameForSource,
 		"FormatNumber":     wof_funcs.FormatNumber,
+		"AppendPagination": wof_funcs.AppendPagination,
 	}
 
 	opts := &RunOptions{

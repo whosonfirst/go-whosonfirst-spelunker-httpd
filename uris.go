@@ -138,6 +138,11 @@ func DefaultURIs() *URIs {
 	return uris_table
 }
 
+func URIForIdSimple(uri string, id int64) string {
+	id_uri := ReplaceAll(uri, "{id}", id)
+	return uriWithFilters(id_uri, nil, nil)
+}
+
 func URIForId(uri string, id int64, filters []spelunker.Filter, facets []spelunker.Facet) string {
 
 	id_uri := ReplaceAll(uri, "{id}", id)
