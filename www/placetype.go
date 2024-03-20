@@ -88,7 +88,7 @@ func HasPlacetypeHandler(opts *HasPlacetypeHandlerOptions) (http.Handler, error)
 			return
 		}
 
-		pagination_url := fmt.Sprintf("%s?", req.URL.Path)
+		pagination_url := httpd.URIForPlacetype(opts.URIs.Placetype, pt.Name, filters, nil)
 
 		// This is not ideal but I am not sure what is better yet...
 		facets_url := httpd.URIForPlacetype(opts.URIs.PlacetypeFaceted, pt.Name, filters, nil)

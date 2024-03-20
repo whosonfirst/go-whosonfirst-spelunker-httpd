@@ -93,7 +93,7 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 		}
 
 		// This is not ideal but I am not sure what is better yet...
-		pagination_url := fmt.Sprintf("%s?", httpd.URIForId(opts.URIs.Descendants, uri.Id, filters, nil))
+		pagination_url := httpd.URIForId(opts.URIs.Descendants, uri.Id, filters, nil)
 
 		// This is not ideal but I am not sure what is better yet...
 		facets_url := httpd.URIForId(opts.URIs.DescendantsFaceted, uri.Id, filters, nil)
