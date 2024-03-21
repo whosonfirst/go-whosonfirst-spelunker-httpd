@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/aaronland/go-pagination"
-	"github.com/aaronland/go-pagination/countable"
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/whosonfirst/go-whosonfirst-sources"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
@@ -58,25 +57,30 @@ func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, er
 		pred = strings.TrimLeft(pred, ":")
 		pred = strings.TrimRight(pred, "=")
 
+		if ns == "*" {
+			ns = ""
+		}
+
+		if pred == "*" {
+			pred = ""
+		}
+
+		if value == "*" {
+			value = ""
+		}
+		
 		c := spelunker.NewConcordanceFromTriple(ns, pred, value)
 
 		logger = logger.With("namespace", ns)
 		logger = logger.With("predicate", pred)
 		logger = logger.With("value", value)
 
-		pg_opts, err := countable.NewCountableOptions()
+		pg_opts, err := httpd.PaginationOptionsFromRequest(req)
 
 		if err != nil {
 			logger.Error("Failed to create pagination options", "error", err)
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
-		}
-
-		pg, pg_err := httpd.ParsePageNumberFromRequest(req)
-
-		if pg_err == nil {
-			logger = logger.With("page", pg)
-			pg_opts.Pointer(pg)
 		}
 
 		filter_params := []string{
@@ -107,7 +111,7 @@ func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, er
 		src, err := sources.GetSourceByName(ns)
 
 		if err != nil {
-			logger.Error("Failed to derive source from namespace", "error", err)
+			logger.Warn("Failed to derive source from namespace", "error", err)
 		}
 
 		vars := HasConcordanceHandlerVars{
