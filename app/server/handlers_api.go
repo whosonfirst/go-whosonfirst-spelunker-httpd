@@ -171,3 +171,20 @@ func recentFacetedHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	return api.RecentFacetedHandler(opts)
 }
+
+func hasConcordanceFacetedHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupCommonOnce.Do(setupCommon)
+
+	if setupCommonError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupCommonError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	}
+
+	opts := &api.HasConcordanceFacetedHandlerOptions{
+		Spelunker: sp,
+		// Authenticator: authenticator,
+	}
+
+	return api.HasConcordanceFacetedHandler(opts)
+}

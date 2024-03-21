@@ -108,10 +108,17 @@ func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, er
 
 		page_title := fmt.Sprintf("Concordances for %s", c)
 
-		src, err := sources.GetSourceByName(ns)
+		var src *sources.WOFSource
 
-		if err != nil {
-			logger.Warn("Failed to derive source from namespace", "error", err)
+		if ns != "" {
+			
+			v, err := sources.GetSourceByName(ns)
+
+			if err != nil {
+				logger.Warn("Failed to derive source from namespace", "error", err)
+			} else {
+				src = v
+			}
 		}
 
 		vars := HasConcordanceHandlerVars{

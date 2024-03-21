@@ -1,23 +1,22 @@
 package api
 
 import (
-	"encoding/json"
 	"log/slog"
 	"net/http"
-
-	// TBD...
+	"strings"
+	"encoding/json"
+	
 	// "github.com/sfomuseum/go-http-auth"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 )
 
-type DescendantsFacetedHandlerOptions struct {
-	Spelunker spelunker.Spelunker
-	// TBD...
+type HasConcordanceFacetedHandlerOptions struct {
+	Spelunker     spelunker.Spelunker
 	// Authenticator auth.Authenticator
 }
 
-func DescendantsFacetedHandler(opts *DescendantsFacetedHandlerOptions) (http.Handler, error) {
+func HasConcordanceFacetedHandler(opts *HasConcordanceFacetedHandlerOptions) (http.Handler, error) {
 
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
@@ -26,15 +25,31 @@ func DescendantsFacetedHandler(opts *DescendantsFacetedHandlerOptions) (http.Han
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
 
-		uri, err, status := httpd.ParseURIFromRequest(req, nil)
+		ns := req.PathValue("namespace")
+		pred := req.PathValue("predicate")
+		value := req.PathValue("value")
 
-		if err != nil {
-			logger.Error("Failed to parse URI from request", "error", err)
-			http.Error(rsp, spelunker.ErrNotFound.Error(), status)
-			return
+		ns = strings.TrimRight(ns, ":")
+		pred = strings.TrimLeft(pred, ":")
+		pred = strings.TrimRight(pred, "=")
+
+		if ns == "*" {
+			ns = ""
 		}
 
-		logger = logger.With("wofid", uri.Id)
+		if pred == "*" {
+			pred = ""
+		}
+
+		if value == "*" {
+			value = ""
+		}
+		
+		// c := spelunker.NewConcordanceFromTriple(ns, pred, value)
+
+		logger = logger.With("namespace", ns)
+		logger = logger.With("predicate", pred)
+		logger = logger.With("value", value)
 
 		filter_params := []string{
 			"placetype",
@@ -63,10 +78,10 @@ func DescendantsFacetedHandler(opts *DescendantsFacetedHandlerOptions) (http.Han
 			return
 		}
 
-		facets_rsp, err := opts.Spelunker.GetDescendantsFaceted(ctx, uri.Id, filters, facets)
+		facets_rsp, err := opts.Spelunker.HasConcordanceFaceted(ctx, ns, pred, value, filters, facets)
 
 		if err != nil {
-			logger.Error("Failed to get facets for descendants", "error", err)
+			logger.Error("Failed to get facets for concordance", "error", err)
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
@@ -81,7 +96,6 @@ func DescendantsFacetedHandler(opts *DescendantsFacetedHandlerOptions) (http.Han
 			http.Error(rsp, "womp womp", http.StatusInternalServerError)
 			return
 		}
-
 	}
 
 	h := http.HandlerFunc(fn)

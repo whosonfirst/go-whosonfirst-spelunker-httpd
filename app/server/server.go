@@ -55,7 +55,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		run_options.URIs.Concordances:           concordancesHandlerFunc,
 		run_options.URIs.ConcordanceNS:          hasConcordanceHandlerFunc,
 		run_options.URIs.ConcordanceNSPred:      hasConcordanceHandlerFunc,
-		run_options.URIs.ConcordanceNSPredValue: hasConcordanceHandlerFunc,
+		run_options.URIs.ConcordanceTriple: hasConcordanceHandlerFunc,
 		run_options.URIs.Recent:                 recentHandlerFunc,
 		run_options.URIs.Descendants:            descendantsHandlerFunc,
 		run_options.URIs.Id:                     idHandlerFunc,
@@ -67,6 +67,9 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		run_options.URIs.Static: staticHandlerFunc,
 
 		// API/machine-readable
+		run_options.URIs.ConcordanceNSFaceted: hasConcordanceFacetedHandlerFunc,
+		run_options.URIs.ConcordanceNSPredFaceted: hasConcordanceFacetedHandlerFunc,
+		run_options.URIs.ConcordanceTripleFaceted: hasConcordanceFacetedHandlerFunc,				
 		run_options.URIs.DescendantsFaceted: descendantsFacetedHandlerFunc,
 		run_options.URIs.GeoJSON:            geoJSONHandlerFunc,
 		run_options.URIs.GeoJSONLD:          geoJSONLDHandlerFunc,

@@ -54,7 +54,7 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 
 		if err != nil {
 			logger.Error("Failed to determine query string", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 
@@ -64,7 +64,7 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 
 			if err != nil {
 				logger.Error("Failed to create pagination options", "error", err)
-				http.Error(rsp, "womp womp", http.StatusInternalServerError)
+				http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 				return
 			}
 
@@ -72,11 +72,24 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 				Query: q,
 			}
 
-			r, pg_r, err := opts.Spelunker.Search(ctx, pg_opts, search_opts)
+		filter_params := []string{
+			"placetype",
+			"country",
+		}
+
+		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
+
+		if err != nil {
+			logger.Error("Failed to derive filters from request", "error", err)
+			http.Error(rsp, "Bad request", http.StatusBadRequest)
+			return
+		}
+			
+			r, pg_r, err := opts.Spelunker.Search(ctx, pg_opts, search_opts, filters)
 
 			if err != nil {
 				logger.Error("Failed to get search", "error", err)
-				http.Error(rsp, "womp womp", http.StatusInternalServerError)
+				http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 				return
 			}
 
@@ -96,7 +109,7 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 
 		if err != nil {
 			logger.Error("Failed to return ", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 		}
 
 	}

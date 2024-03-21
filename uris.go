@@ -17,7 +17,7 @@ type URIs struct {
 	Concordances           string   `json:"concordances"`
 	ConcordanceNS          string   `json:"concordance_ns"`
 	ConcordanceNSPred      string   `json:"concordance_ns_pred"`
-	ConcordanceNSPredValue string   `json:"concordance_ns_pred_value"`
+	ConcordanceTriple string   `json:"concordance_triple"`
 	Descendants            string   `json:"descendants"`
 	DescendantsAlt         []string `json:"descendants_alt"`
 	Index                  string   `json:"index"`
@@ -32,6 +32,9 @@ type URIs struct {
 	Static string `json:"static"`
 
 	// API/machine-readable
+	ConcordanceNSFaceted string   `json:"concordance_ns"`
+	ConcordanceNSPredFaceted string   `json:"concordance_ns_pred"`		
+	ConcordanceTripleFaceted string   `json:"concordance_triple_faceted"`	
 	DescendantsFaceted string   `json:"descendants_faceted"`
 	GeoJSON            string   `json:"geojson"`
 	GeoJSONAlt         []string `json:"geojson_alt"`
@@ -93,7 +96,7 @@ func DefaultURIs() *URIs {
 		Concordances:           "/concordances/",
 		ConcordanceNS:          "/concordances/{namespace}",
 		ConcordanceNSPred:      "/concordances/{namespace}:{predicate}",
-		ConcordanceNSPredValue: "/concordances/{namespace}:{predicate}={value}",
+		ConcordanceTriple: "/concordances/{namespace}:{predicate}={value}",
 		Recent:                 "/recent/{duration}",
 		RecentAlt: []string{
 			"/recent",
@@ -105,6 +108,9 @@ func DefaultURIs() *URIs {
 		Static: "/static/",
 
 		// API/machine-readable
+		ConcordanceNSFaceted: "/id/{id}/concordance/{namespace}/facets",
+		ConcordanceNSPredFaceted: "/id/{id}/concordance/{namespace}:{predicate}/facets",				
+		ConcordanceTripleFaceted: "/id/{id}/concordance/{namespace}:{predicate}={value}/facets",		
 		DescendantsFaceted: "/id/{id}/descendants/facets",
 
 		GeoJSON: "/geojson/",
@@ -160,6 +166,14 @@ func URIForRecent(uri string, d string, filters []spelunker.Filter, facets []spe
 	r_uri := ReplaceAll(uri, "{duration}", d)
 	return uriWithFilters(r_uri, filters, facets)
 }
+
+/*
+func URIForConcordance(uri string, ns string, pred string, value any, filters []spelunker.Filter, facets []spelunker.Facet) string {
+
+	r_uri := ReplaceAll(uri, "{duration}", d)
+	return uriWithFilters(r_uri, filters, facets)
+}
+*/
 
 func uriWithFilters(uri string, filters []spelunker.Filter, facets []spelunker.Facet) string {
 
