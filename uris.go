@@ -108,9 +108,9 @@ func DefaultURIs() *URIs {
 		Static: "/static/",
 
 		// API/machine-readable
-		ConcordanceNSFaceted: "/id/{id}/concordance/{namespace}/facets",
-		ConcordanceNSPredFaceted: "/id/{id}/concordance/{namespace}:{predicate}/facets",				
-		ConcordanceTripleFaceted: "/id/{id}/concordance/{namespace}:{predicate}={value}/facets",		
+		ConcordanceNSFaceted: "/concordances/{namespace}/facets",
+		ConcordanceNSPredFaceted: "/concordances/{namespace}:{predicate}/facets",				
+		ConcordanceTripleFaceted: "/concordances/{namespace}:{predicate}={value}/facets",		
 		DescendantsFaceted: "/id/{id}/descendants/facets",
 
 		GeoJSON: "/geojson/",
@@ -175,16 +175,20 @@ func URIForConcordanceNS(uri string, ns string, filters []spelunker.Filter, face
 
 func URIForConcordanceNSPred(uri string, ns string, pred string, filters []spelunker.Filter, facets []spelunker.Facet) string {
 
-	c_uri := ReplaceAll(uri, "{namespace}", ns)
-	c_uri = ReplaceAll(uri, "{predicate}", pred)
+	c_uri := uri
+
+	c_uri = ReplaceAll(c_uri, "{namespace}", ns)
+	c_uri = ReplaceAll(c_uri, "{predicate}", pred)
 	return uriWithFilters(c_uri, filters, facets)
 }
 
 func URIForConcordanceTriple(uri string, ns string, pred string, value any, filters []spelunker.Filter, facets []spelunker.Facet) string {
 
-	c_uri := ReplaceAll(uri, "{namespace}", ns)
-	c_uri = ReplaceAll(uri, "{predicate}", pred)
-	c_uri = ReplaceAll(uri, "{value}", value)		
+	c_uri := uri
+	
+	c_uri = ReplaceAll(c_uri, "{namespace}", ns)
+	c_uri = ReplaceAll(c_uri, "{predicate}", pred)
+	c_uri = ReplaceAll(c_uri, "{value}", value)		
 	return uriWithFilters(c_uri, filters, facets)
 }
 
