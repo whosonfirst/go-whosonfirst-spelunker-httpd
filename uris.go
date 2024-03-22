@@ -93,7 +93,7 @@ func DefaultURIs() *URIs {
 		About:                  "/about",
 		Placetypes:             "/placetypes",
 		Placetype:              "/placetypes/{placetype}",
-		Concordances:           "/concordances/",
+		Concordances:           "/concordances",
 		ConcordanceNS:          "/concordances/{namespace}",
 		ConcordanceNSPred:      "/concordances/{namespace}:{predicate}",
 		ConcordanceTriple: "/concordances/{namespace}:{predicate}={value}",
@@ -167,13 +167,26 @@ func URIForRecent(uri string, d string, filters []spelunker.Filter, facets []spe
 	return uriWithFilters(r_uri, filters, facets)
 }
 
-/*
-func URIForConcordance(uri string, ns string, pred string, value any, filters []spelunker.Filter, facets []spelunker.Facet) string {
+func URIForConcordanceNS(uri string, ns string, filters []spelunker.Filter, facets []spelunker.Facet) string {
 
-	r_uri := ReplaceAll(uri, "{duration}", d)
-	return uriWithFilters(r_uri, filters, facets)
+	c_uri := ReplaceAll(uri, "{namespace}", ns)
+	return uriWithFilters(c_uri, filters, facets)
 }
-*/
+
+func URIForConcordanceNSPred(uri string, ns string, pred string, filters []spelunker.Filter, facets []spelunker.Facet) string {
+
+	c_uri := ReplaceAll(uri, "{namespace}", ns)
+	c_uri = ReplaceAll(uri, "{predicate}", pred)
+	return uriWithFilters(c_uri, filters, facets)
+}
+
+func URIForConcordanceTriple(uri string, ns string, pred string, value any, filters []spelunker.Filter, facets []spelunker.Facet) string {
+
+	c_uri := ReplaceAll(uri, "{namespace}", ns)
+	c_uri = ReplaceAll(uri, "{predicate}", pred)
+	c_uri = ReplaceAll(uri, "{value}", value)		
+	return uriWithFilters(c_uri, filters, facets)
+}
 
 func uriWithFilters(uri string, filters []spelunker.Filter, facets []spelunker.Facet) string {
 
