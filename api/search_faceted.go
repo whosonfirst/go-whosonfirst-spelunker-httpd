@@ -2,35 +2,21 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"log/slog"
 	"net/http"
-	"regexp"
 
+	"github.com/aaronland/go-http-sanitize"
 	// "github.com/sfomuseum/go-http-auth"
-	"github.com/sfomuseum/iso8601duration"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 )
 
-type RecentFacetedHandlerOptions struct {
-	Spelunker spelunker.Spelunker
+type SearchFacetedHandlerOptions struct {
+	Spelunker     spelunker.Spelunker
 	// Authenticator auth.Authenticator
 }
 
-func RecentFacetedHandler(opts *RecentFacetedHandlerOptions) (http.Handler, error) {
-
-	re_full, err := regexp.Compile(`P((?P<year>\d+)Y)?((?P<month>\d+)M)?((?P<day>\d+)D)?(T((?P<hour>\d+)H)?((?P<minute>\d+)M)?((?P<second>\d+)S)?)?`)
-
-	if err != nil {
-		return nil, fmt.Errorf("Failed to compile ISO8601 duration pattern, %w", err)
-	}
-
-	re_week, err := regexp.Compile(`P((?P<week>\d+)W)`)
-
-	if err != nil {
-		return nil, fmt.Errorf("Failed to compile ISO8601 duration week pattern, %w", err)
-	}
+func SearchFacetedHandler(opts *SearchFacetedHandlerOptions) (http.Handler, error) {
 
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
@@ -39,32 +25,27 @@ func RecentFacetedHandler(opts *RecentFacetedHandlerOptions) (http.Handler, erro
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
 
-		slog.Info("Get recent")
-
-		str_d := req.PathValue("duration")
-
-		switch {
-		case re_week.MatchString(str_d):
-			// ok
-		case re_full.MatchString(str_d):
-			// ok
-		default:
-			str_d = "P30D"
-		}
-
-		logger = logger.With("duration", str_d)
-
-		d, err := duration.FromString(str_d)
+		q, err := sanitize.GetString(req, "q")
 
 		if err != nil {
-			logger.Error("Failed to parse duration", "error", err)
+			logger.Error("Failed to determine query string", "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		if q == "" {
 			http.Error(rsp, "Bad request", http.StatusBadRequest)
 			return
+		}
+				
+		search_opts := &spelunker.SearchOptions{
+			Query: q,
 		}
 
 		filter_params := []string{
 			"placetype",
 			"country",
+			"is_current",
 		}
 
 		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
@@ -89,11 +70,17 @@ func RecentFacetedHandler(opts *RecentFacetedHandlerOptions) (http.Handler, erro
 			return
 		}
 
-		facets_rsp, err := opts.Spelunker.GetRecentFaceted(ctx, d.ToDuration(), filters, facets)
+		facets_rsp, err := opts.Spelunker.SearchFaceted(ctx, search_opts, filters, facets)
 
 		if err != nil {
-			logger.Error("Failed to get recent", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			logger.Error("Failed to get search", "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+		
+		if err != nil {
+			logger.Error("Failed to get facets for search", "error", err)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 
@@ -104,9 +91,10 @@ func RecentFacetedHandler(opts *RecentFacetedHandlerOptions) (http.Handler, erro
 
 		if err != nil {
 			logger.Error("Failed to encode facets response", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
+		
 	}
 
 	h := http.HandlerFunc(fn)

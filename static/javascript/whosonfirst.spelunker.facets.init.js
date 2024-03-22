@@ -55,6 +55,25 @@ window.addEventListener("load", function load(event){
 
 	    } else {
 
+		var k_label = k;
+
+		if (f == "is_current"){
+
+		    console.log("WYF", f, k)
+		    switch (parseInt(k)){
+			case 0:
+			    k_label = "not current";
+			    break;
+			case -1:
+			    k_label = "unknown";
+			    break;
+			default:
+			    k_label = "current";
+			    break;
+		    }
+			    
+		}
+		
 		// Something something something is location.href really safe?
 		// https://developer.mozilla.org/en-US/docs/Web/API/URL/URL
 		
@@ -65,7 +84,7 @@ window.addEventListener("load", function load(event){
 		
 		a.setAttribute("href", u.toString());
 		a.setAttribute("class", "hey-look");
-		a.appendChild(document.createTextNode(k));
+		a.appendChild(document.createTextNode(k_label));
 		
 		var sm = document.createElement("small");
 		sm.appendChild(document.createTextNode(results[i].count));

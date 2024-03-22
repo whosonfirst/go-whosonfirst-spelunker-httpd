@@ -127,6 +127,7 @@ func DefaultURIs() *URIs {
 		},
 		PlacetypeFaceted: "/placetypes/{placetype}/facets",
 		RecentFaceted:    "/recent/{duration}/facets",
+		SearchFaceted:           "/search/facets",		
 		Select:           "/select/",
 		SelectAlt: []string{
 			"/id/{id}/select",

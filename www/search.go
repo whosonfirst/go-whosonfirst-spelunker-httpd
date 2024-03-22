@@ -28,16 +28,25 @@ type SearchHandlerVars struct {
 	Places        []spr.StandardPlacesResult
 	Pagination    pagination.Results
 	PaginationURL string
+	FacetsURL        string
+	FacetsContextURL string
+	SearchOptions *spelunker.SearchOptions
 }
 
 func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 
-	t := opts.Templates.Lookup("search")
-
-	if t == nil {
+	form_t := opts.Templates.Lookup("search")
+	
+	if form_t == nil {
 		return nil, fmt.Errorf("Failed to locate 'search' template")
 	}
 
+	results_t := opts.Templates.Lookup("search_results")
+	
+	if results_t == nil {
+		return nil, fmt.Errorf("Failed to locate 'search_results' template")
+	}
+	
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
 		ctx := req.Context()
@@ -58,8 +67,20 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		if q != "" {
+		if q == "" {
 
+			rsp.Header().Set("Content-Type", "text/html")
+			
+			err = form_t.Execute(rsp, vars)
+			
+			if err != nil {
+				logger.Error("Failed to return ", "error", err)
+				http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			}
+
+			return
+		}
+		
 			pg_opts, err := httpd.PaginationOptionsFromRequest(req)
 
 			if err != nil {
@@ -72,10 +93,7 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 				Query: q,
 			}
 
-		filter_params := []string{
-			"placetype",
-			"country",
-		}
+		filter_params := httpd.DefaultFilterParams()
 
 		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
 
@@ -100,13 +118,17 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 			pagination_q.Set("q", q)
 
 			pagination_url := opts.URIs.Search + "?" + pagination_q.Encode()
+			facets_url := opts.URIs.SearchFaceted + "?" + pagination_q.Encode()
+			
 			vars.PaginationURL = pagination_url
-		}
+			vars.FacetsURL = facets_url
+			vars.FacetsContextURL = req.URL.Path
+			vars.SearchOptions = search_opts
 
 		rsp.Header().Set("Content-Type", "text/html")
 
-		err = t.Execute(rsp, vars)
-
+		err = results_t.Execute(rsp, vars)
+		
 		if err != nil {
 			logger.Error("Failed to return ", "error", err)
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)

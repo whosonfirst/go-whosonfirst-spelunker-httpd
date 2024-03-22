@@ -71,11 +71,8 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 			pg_opts.Pointer(pg)
 		}
 
-		filter_params := []string{
-			"placetype",
-			"country",
-		}
-
+		filter_params := httpd.DefaultFilterParams()
+		
 		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
 
 		if err != nil {
