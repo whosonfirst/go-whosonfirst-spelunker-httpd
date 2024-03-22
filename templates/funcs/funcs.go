@@ -4,15 +4,19 @@ import (
 	"fmt"
 	"log/slog"
 	"net/url"
-
+	"strings"
+	
 	"github.com/whosonfirst/go-whosonfirst-sources"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 )
 
-func NameForSource(prefix string) string {
+func NameForSource(source string) string {
 
-	src, err := sources.GetSourceByName(prefix)
+	nspred := strings.Split(source, ":")
+	prefix := nspred[0]
+	
+	src, err := sources.GetSourceByPrefix(prefix)
 
 	if err != nil {
 		return prefix

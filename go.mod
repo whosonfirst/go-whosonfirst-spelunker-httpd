@@ -17,7 +17,7 @@ require (
 	github.com/whosonfirst/go-sanitize v0.1.0
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.27
 	github.com/whosonfirst/go-whosonfirst-placetypes v0.7.1
-	github.com/whosonfirst/go-whosonfirst-sources v0.1.1
+	github.com/whosonfirst/go-whosonfirst-sources v0.2.0
 	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240228164604-d1987c2473a1
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
 	github.com/whosonfirst/go-whosonfirst-svg v0.1.0

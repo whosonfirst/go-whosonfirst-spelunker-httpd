@@ -112,7 +112,7 @@ func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, er
 
 		if ns != "" {
 			
-			v, err := sources.GetSourceByName(ns)
+			v, err := sources.GetSourceByPrefix(ns)
 
 			if err != nil {
 				logger.Warn("Failed to derive source from namespace", "error", err)
