@@ -23,10 +23,12 @@ type URIs struct {
 	Index                  string   `json:"index"`
 	Placetypes             string   `json:"placetypes"`
 	Placetype              string   `json:"placetype"`
+	NullIsland string `json:"nullisland"`
 	Recent                 string   `json:"recent"`
 	RecentAlt              []string `json:"recent_alt"`
 	Search                 string   `json:"search"`
 	About                  string   `json:"about"`
+	Code                  string   `json:"code"`	
 
 	// Static assets
 	Static string `json:"static"`
@@ -42,6 +44,7 @@ type URIs struct {
 	GeoJSONLDAlt       []string `json:"geojsonld_alt"`
 	NavPlace           string   `json:"navplace"`
 	NavPlaceAlt        []string `json:"navplace_alt"`
+	NullIslandFaceted string `json:"nullisland_faceted"`	
 	PlacetypeFaceted   string   `json:"placetype_faceted"`
 	RecentFaceted      string   `json:"recent_faceted"`
 	SearchFaceted      string   `json:"search_faceted"`
@@ -91,6 +94,8 @@ func DefaultURIs() *URIs {
 		Index:                  "/",
 		Search:                 "/search",
 		About:                  "/about",
+		Code:                  "/code",
+		NullIsland:                  "/nullisland",				
 		Placetypes:             "/placetypes",
 		Placetype:              "/placetypes/{placetype}",
 		Concordances:           "/concordances",
@@ -125,6 +130,7 @@ func DefaultURIs() *URIs {
 		NavPlaceAlt: []string{
 			"/id/{id}/navplace",
 		},
+		NullIslandFaceted:    "/nullisland/facets",		
 		PlacetypeFaceted: "/placetypes/{placetype}/facets",
 		RecentFaceted:    "/recent/{duration}/facets",
 		SearchFaceted:           "/search/facets",		
@@ -202,6 +208,11 @@ func URIForSearch(uri string, query string, filters []spelunker.Filter, facets [
 	u.RawQuery = q.Encode()
 
 	return uriWithFilters(u.String(), filters, facets)
+}
+
+func URIForNullIsland(uri string, filters []spelunker.Filter, facets []spelunker.Facet) string {
+
+	return uriWithFilters(uri, filters, facets)
 }
 
 func uriWithFilters(uri string, filters []spelunker.Filter, facets []spelunker.Facet) string {

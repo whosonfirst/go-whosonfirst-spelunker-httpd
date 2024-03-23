@@ -51,10 +51,7 @@ func HasConcordanceFacetedHandler(opts *HasConcordanceFacetedHandlerOptions) (ht
 		logger = logger.With("predicate", pred)
 		logger = logger.With("value", value)
 
-		filter_params := []string{
-			"placetype",
-			"country",
-		}
+		filter_params := httpd.DefaultFilterParams()
 
 		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
 

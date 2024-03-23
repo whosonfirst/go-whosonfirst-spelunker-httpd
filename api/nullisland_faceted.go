@@ -5,20 +5,17 @@ import (
 	"log/slog"
 	"net/http"
 
-	// TBD...
 	// "github.com/sfomuseum/go-http-auth"
-	"github.com/whosonfirst/go-whosonfirst-placetypes"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 )
 
-type PlacetypeFacetedHandlerOptions struct {
+type NullIslandFacetedHandlerOptions struct {
 	Spelunker spelunker.Spelunker
-	// TBD...
 	// Authenticator auth.Authenticator
 }
 
-func PlacetypeFacetedHandler(opts *PlacetypeFacetedHandlerOptions) (http.Handler, error) {
+func NullIslandFacetedHandler(opts *NullIslandFacetedHandlerOptions) (http.Handler, error) {
 
 	fn := func(rsp http.ResponseWriter, req *http.Request) {
 
@@ -26,18 +23,6 @@ func PlacetypeFacetedHandler(opts *PlacetypeFacetedHandlerOptions) (http.Handler
 
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
-
-		req_pt := req.PathValue("placetype")
-
-		logger = logger.With("request placetype", req_pt)
-
-		pt, err := placetypes.GetPlacetypeByName(req_pt)
-
-		if err != nil {
-			logger.Error("Invalid placetype", "error", err)
-			http.Error(rsp, "Bad request", http.StatusBadRequest)
-			return
-		}
 
 		filter_params := httpd.DefaultFilterParams()
 
@@ -63,11 +48,11 @@ func PlacetypeFacetedHandler(opts *PlacetypeFacetedHandlerOptions) (http.Handler
 			return
 		}
 
-		facets_rsp, err := opts.Spelunker.HasPlacetypeFaceted(ctx, pt, filters, facets)
+		facets_rsp, err := opts.Spelunker.VisitingNullIslandFaceted(ctx, filters, facets)
 
 		if err != nil {
-			logger.Error("Failed to get facets for placetype", "error", err)
-			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
+			logger.Error("Failed to get recent", "error", err)
+			http.Error(rsp, "womp womp", http.StatusInternalServerError)
 			return
 		}
 
@@ -81,7 +66,6 @@ func PlacetypeFacetedHandler(opts *PlacetypeFacetedHandlerOptions) (http.Handler
 			http.Error(rsp, "womp womp", http.StatusInternalServerError)
 			return
 		}
-
 	}
 
 	h := http.HandlerFunc(fn)

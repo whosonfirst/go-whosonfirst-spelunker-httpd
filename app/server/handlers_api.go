@@ -205,3 +205,20 @@ func searchFacetedHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	return api.SearchFacetedHandler(opts)
 }
+
+func nullIslandFacetedHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupCommonOnce.Do(setupCommon)
+
+	if setupCommonError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupCommonError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupCommonError)
+	}
+
+	opts := &api.NullIslandFacetedHandlerOptions{
+		Spelunker: sp,
+		// Authenticator: authenticator,
+	}
+
+	return api.NullIslandFacetedHandler(opts)
+}
