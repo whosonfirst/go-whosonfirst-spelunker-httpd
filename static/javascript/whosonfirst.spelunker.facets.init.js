@@ -63,7 +63,7 @@ window.addEventListener("load", function load(event){
 
 		var k_label = k;
 
-		if (f == "current"){
+		if (f == "iscurrent"){
 
 		    switch (parseInt(k)){
 			case 0:
