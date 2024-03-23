@@ -73,6 +73,7 @@ func RunOptionsFromFlagSet(ctx context.Context, fs *flag.FlagSet) (*RunOptions, 
 		"GjsonGet":         sfom_funcs.GjsonGet,
 		// https://github.com/golang/go/issues/57773
 		"URIForId":         httpd.URIForIdSimple,
+		"URIForRecent":         httpd.URIForRecentSimple,		
 		"NameForSource":    wof_funcs.NameForSource,
 		"FormatNumber":     wof_funcs.FormatNumber,
 		"AppendPagination": wof_funcs.AppendPagination,

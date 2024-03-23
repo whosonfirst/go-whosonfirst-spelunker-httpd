@@ -168,6 +168,11 @@ func URIForPlacetype(uri string, pt string, filters []spelunker.Filter, facets [
 	return uriWithFilters(pt_uri, filters, facets)
 }
 
+func URIForRecentSimple(uri string, d string) string {
+	r_uri := ReplaceAll(uri, "{duration}", d)
+	return uriWithFilters(r_uri, nil, nil)
+}
+
 func URIForRecent(uri string, d string, filters []spelunker.Filter, facets []spelunker.Facet) string {
 
 	r_uri := ReplaceAll(uri, "{duration}", d)

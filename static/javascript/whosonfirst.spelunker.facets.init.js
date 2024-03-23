@@ -11,9 +11,6 @@ window.addEventListener("load", function load(event){
     var current_url = facets_wrapper.getAttribute("data-current-url");
     var facets_url = facets_wrapper.getAttribute("data-facets-url");    
 
-    console.log("CURRENT", current_url);
-    console.log("FACETS", facets_url);
-    
     if ((! current_url) || (! facets_url)){
 	return;
     }

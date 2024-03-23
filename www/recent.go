@@ -14,6 +14,7 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 	"github.com/whosonfirst/go-whosonfirst-spr/v2"
+	"github.com/dustin/go-humanize"
 )
 
 type RecentHandlerOptions struct {
@@ -29,7 +30,9 @@ type RecentHandlerVars struct {
 	Places           []spr.StandardPlacesResult
 	Pagination       pagination.Results
 	PaginationURL    string
-	Duration         time.Duration
+	// Duration         time.Duration
+	Duration *duration.Duration
+	Since string
 	FacetsURL        string
 	FacetsContextURL string
 }
@@ -60,8 +63,6 @@ func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
-
-		slog.Info("Get recent")
 
 		str_d := req.PathValue("duration")
 
@@ -117,12 +118,22 @@ func RecentHandler(opts *RecentHandlerOptions) (http.Handler, error) {
 		facets_url := httpd.URIForRecent(opts.URIs.RecentFaceted, str_d, filters, nil)
 		facets_context_url := req.URL.Path
 
+		now := time.Now()
+		now_ts := now.Unix()
+
+		then_ts := now_ts - int64(d.ToDuration().Seconds())
+		then := time.Unix(then_ts, 0)
+
+		since := humanize.RelTime(now, then, "", "")
+		
 		vars := RecentHandlerVars{
 			Places:           r.Results(),
 			Pagination:       pg_r,
 			URIs:             opts.URIs,
 			PaginationURL:    pagination_url,
-			Duration:         d.ToDuration(),
+			// Duration:         d.ToDuration(),
+			Duration: d,
+			Since: since,
 			FacetsURL:        facets_url,
 			FacetsContextURL: facets_context_url,
 		}
