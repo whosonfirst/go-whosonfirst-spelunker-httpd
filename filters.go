@@ -14,7 +14,7 @@ func DefaultFilterParams() []string {
 	return []string{
 		"placetype",
 		"country",
-		"is_current",
+		"iscurrent",
 	}
 }
 
@@ -25,9 +25,9 @@ func FiltersFromRequest(ctx context.Context, req *http.Request, params []string)
 	for _, p := range params {
 
 		switch p {
-		case "is_current":
+		case "iscurrent":
 
-			str_fl, err := sanitize.GetString(req, "is_current")
+			str_fl, err := sanitize.GetString(req, "iscurrent")
 
 			if err != nil {
 				return nil, fmt.Errorf("Failed to derive ?is_current= query parameter, %w", err)
@@ -39,7 +39,7 @@ func FiltersFromRequest(ctx context.Context, req *http.Request, params []string)
 				case "-1", "0", "1":
 					// ok
 				default:
-					return nil, fmt.Errorf("Invalid ?is_current= query parameter")					
+					return nil, fmt.Errorf("Invalid ?iscurrent= query parameter")					
 				}
 
 				is_current_f, err := spelunker.NewIsCurrentFilterFromString(ctx, str_fl)

@@ -11,6 +11,9 @@ window.addEventListener("load", function load(event){
     var current_url = facets_wrapper.getAttribute("data-current-url");
     var facets_url = facets_wrapper.getAttribute("data-facets-url");    
 
+    console.log("CURRENT", current_url);
+    console.log("FACETS", facets_url);
+    
     if ((! current_url) || (! facets_url)){
 	return;
     }
@@ -27,6 +30,12 @@ window.addEventListener("load", function load(event){
 	    return;
 	}
 
+	var f_label = f;
+
+	if (f == "current") {
+	    f_label = "is current";
+	}
+	
 	var label = document.createElement("h3");
 	label.appendChild(document.createTextNode(f));
 	
@@ -57,9 +66,8 @@ window.addEventListener("load", function load(event){
 
 		var k_label = k;
 
-		if (f == "is_current"){
+		if (f == "current"){
 
-		    console.log("WYF", f, k)
 		    switch (parseInt(k)){
 			case 0:
 			    k_label = "not current";
@@ -76,10 +84,10 @@ window.addEventListener("load", function load(event){
 		
 		// Something something something is location.href really safe?
 		// https://developer.mozilla.org/en-US/docs/Web/API/URL/URL
-		
+
 		var u = new URL(current_url, location.href);
 		u.searchParams.set(f, k)
-		
+
 		var a = document.createElement("a");
 		
 		a.setAttribute("href", u.toString());

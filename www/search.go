@@ -5,7 +5,6 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
-	"net/url"
 
 	"github.com/aaronland/go-http-sanitize"
 	"github.com/aaronland/go-pagination"
@@ -114,16 +113,15 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 			vars.Places = r.Results()
 			vars.Pagination = pg_r
 
-			pagination_q := &url.Values{}
-			pagination_q.Set("q", q)
-
-			pagination_url := opts.URIs.Search + "?" + pagination_q.Encode()
-			facets_url := opts.URIs.SearchFaceted + "?" + pagination_q.Encode()
-			
-			vars.PaginationURL = pagination_url
-			vars.FacetsURL = facets_url
-			vars.FacetsContextURL = req.URL.Path
-			vars.SearchOptions = search_opts
+		
+		pagination_url := httpd.URIForSearch(opts.URIs.Search, q, filters, nil)
+		facets_url := httpd.URIForSearch(opts.URIs.SearchFaceted, q, filters, nil)
+		facets_context_url := httpd.URIForSearch(opts.URIs.Search, q, filters, nil)
+		
+		vars.PaginationURL = pagination_url
+		vars.FacetsURL = facets_url
+		vars.FacetsContextURL = facets_context_url
+		vars.SearchOptions = search_opts
 
 		rsp.Header().Set("Content-Type", "text/html")
 

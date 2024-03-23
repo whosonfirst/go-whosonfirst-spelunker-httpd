@@ -193,20 +193,31 @@ func URIForConcordanceTriple(uri string, ns string, pred string, value any, filt
 	return uriWithFilters(c_uri, filters, facets)
 }
 
+func URIForSearch(uri string, query string, filters []spelunker.Filter, facets []spelunker.Facet) string {
+
+	u, _ := url.Parse(uri)
+	q := u.Query()
+
+	q.Set("q", query)
+	u.RawQuery = q.Encode()
+
+	return uriWithFilters(u.String(), filters, facets)
+}
+
 func uriWithFilters(uri string, filters []spelunker.Filter, facets []spelunker.Facet) string {
 
 	u, _ := url.Parse(uri)
-	v := &url.Values{}
+	q := u.Query()
 
 	for _, f := range filters {
-		v.Set(f.Scheme(), fmt.Sprintf("%v", f.Value()))
+		q.Set(f.Scheme(), fmt.Sprintf("%v", f.Value()))
 	}
 
 	for _, f := range facets {
-		v.Set("facet", f.String())
+		q.Set("facet", f.String())
 	}
 
-	u.RawQuery = v.Encode()
+	u.RawQuery = q.Encode()
 
 	slog.Debug("URI", "with filters and facets", u.String())
 	return u.String()

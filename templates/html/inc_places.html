@@ -34,7 +34,7 @@
     <div id="whosonfirst-places-other">
 	{{ if (IsAvailable "FacetsURL" .) -}}
 	{{ if (IsAvailable "FacetsContextURL" .) -}}	
-	<div id="whosonfirst-facets" data-current-url="{{ $.FacetsContextURL }}" data-facets-url="{{ $.FacetsURL }}" data-facets="country,placetype,is_current">
+	<div id="whosonfirst-facets" data-current-url="{{ $.FacetsContextURL }}" data-facets-url="{{ $.FacetsURL }}" data-facets="country,placetype,iscurrent">
 	    {{ end -}}
 	{{ end -}}	    
 	</div>

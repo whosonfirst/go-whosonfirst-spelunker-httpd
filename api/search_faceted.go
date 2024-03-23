@@ -42,11 +42,7 @@ func SearchFacetedHandler(opts *SearchFacetedHandlerOptions) (http.Handler, erro
 			Query: q,
 		}
 
-		filter_params := []string{
-			"placetype",
-			"country",
-			"is_current",
-		}
+		filter_params := httpd.DefaultFilterParams()
 
 		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
 
