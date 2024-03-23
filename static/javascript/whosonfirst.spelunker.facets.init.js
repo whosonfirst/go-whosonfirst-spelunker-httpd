@@ -29,12 +29,12 @@ window.addEventListener("load", function load(event){
 
 	var f_label = f;
 
-	if (f == "current") {
+	if (f == "iscurrent") {
 	    f_label = "is current";
 	}
 	
 	var label = document.createElement("h3");
-	label.appendChild(document.createTextNode(f));
+	label.appendChild(document.createTextNode(f_label));
 	
 	var ul = document.createElement("ul");
 	ul.setAttribute("class", "whosonfirst-facets");
