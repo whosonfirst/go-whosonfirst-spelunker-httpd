@@ -39,8 +39,6 @@ func RecentFacetedHandler(opts *RecentFacetedHandlerOptions) (http.Handler, erro
 		logger := slog.Default()
 		logger = logger.With("request", req.URL)
 
-		slog.Info("Get recent")
-
 		str_d := req.PathValue("duration")
 
 		switch {
