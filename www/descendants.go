@@ -72,7 +72,7 @@ func DescendantsHandler(opts *DescendantsHandlerOptions) (http.Handler, error) {
 		}
 
 		filter_params := httpd.DefaultFilterParams()
-		
+
 		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
 
 		if err != nil {

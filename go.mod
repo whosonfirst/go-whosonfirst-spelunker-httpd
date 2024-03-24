@@ -7,6 +7,7 @@ require (
 	github.com/aaronland/go-http-server v1.4.1
 	github.com/aaronland/go-pagination v0.3.0
 	github.com/dustin/go-humanize v1.0.1
+	github.com/jtacoma/uritemplates v1.0.0
 	github.com/mitchellh/copystructure v1.2.0
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-geojsonld v1.0.0
@@ -33,7 +34,6 @@ require (
 	github.com/dominikbraun/graph v0.23.0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/jtacoma/uritemplates v1.0.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/paulmach/go.geojson v1.4.0 // indirect
 	github.com/paulmach/orb v0.10.0 // indirect

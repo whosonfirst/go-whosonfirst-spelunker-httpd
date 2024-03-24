@@ -247,3 +247,12 @@ func nullIslandHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	return www.NullIslandHandler(opts)
 }
+
+func tilesHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	opts := &www.TilesAPIHandlerOptions{
+		ProtomapsApiKey: protomaps_api_key,
+	}
+
+	return www.TilesAPIHandler(opts)
+}

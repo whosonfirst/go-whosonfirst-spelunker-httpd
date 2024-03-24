@@ -53,7 +53,7 @@ func NullIslandHandler(opts *NullIslandHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		filter_params := httpd.DefaultFilterParams()		
+		filter_params := httpd.DefaultFilterParams()
 
 		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)
 
