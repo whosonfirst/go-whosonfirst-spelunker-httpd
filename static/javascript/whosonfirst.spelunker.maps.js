@@ -48,7 +48,7 @@ whosonfirst.spelunker.maps = (function(){
 	    tooltips_pane.style.zIndex = tooltips_pane_zindex;
 	    
 	    var tile_url = "https://static.sfomuseum.org/pmtiles/sfomuseum_v3/{z}/{x}/{y}.mvt?key=xxx";
-	    var layer = protomapsL.leafletLayer({url: tile_url});
+	    var layer = protomapsL.leafletLayer({url: tile_url, theme: 'white'});
 	    layer.addTo(map);
 
 	    _maps[map_id] = map;	    
