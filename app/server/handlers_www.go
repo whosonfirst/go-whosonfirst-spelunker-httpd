@@ -57,6 +57,26 @@ func aboutHandlerFunc(ctx context.Context) (http.Handler, error) {
 	return www.TemplateHandler(opts)
 }
 
+func howtoHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupWWWOnce.Do(setupWWW)
+
+	if setupWWWError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupWWWError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupWWWError)
+	}
+
+	opts := &www.TemplateHandlerOptions{
+		Authenticator: authenticator,
+		Templates:     html_templates,
+		TemplateName:  "howto",
+		PageTitle:     "How To",
+		URIs:          uris_table,
+	}
+
+	return www.TemplateHandler(opts)
+}
+
 func codeHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	setupWWWOnce.Do(setupWWW)

@@ -29,6 +29,7 @@ type URIs struct {
 	Search            string   `json:"search"`
 	About             string   `json:"about"`
 	Code              string   `json:"code"`
+	HowTo              string   `json:"how_to"`	
 	Tiles             string   `json:"tiles"`
 
 	// Static assets
@@ -96,6 +97,7 @@ func DefaultURIs() *URIs {
 		Search:            "/search",
 		About:             "/about",
 		Code:              "/code",
+		HowTo:              "/howto",		
 		NullIsland:        "/nullisland",
 		Placetypes:        "/placetypes",
 		Placetype:         "/placetypes/{placetype}",
