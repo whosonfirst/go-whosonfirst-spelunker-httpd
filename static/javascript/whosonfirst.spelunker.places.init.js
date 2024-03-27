@@ -19,6 +19,8 @@ window.addEventListener("load", function load(event){
     for (var i=0; i < count_places; i++) {
 
 	var el = places[i];
+	// console.log(el);
+	
 	var lat = parseFloat(el.getAttribute("data-latitude"));
 	var lon = parseFloat(el.getAttribute("data-longitude"));	
 
@@ -34,7 +36,7 @@ window.addEventListener("load", function load(event){
 	    continue;
 	}
 
-	coords[i] = [ lon, lat ];
+	coords.push([ lon, lat ]);
 	names[ JSON.stringify(coords[i]) ] = n.innerText;
     }
 
