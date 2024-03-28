@@ -84,13 +84,8 @@ window.addEventListener("load", function load(event){
 		// Something something something is location.href really safe?
 		// https://developer.mozilla.org/en-US/docs/Web/API/URL/URL
 
-		console.log("CURRENT", current_url);
 		var u = new URL(current_url, location.href);
-
-		console.log("OMG", u.searchParams);		
 		u.searchParams.set(f, k)
-
-		console.log("WTF", u.searchParams);
 
 		var a = document.createElement("a");
 		
