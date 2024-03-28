@@ -56,12 +56,21 @@ window.addEventListener("load", function load(event){
     
     const map = whosonfirst.spelunker.maps.map(map_el);
 
-    if (coords.length == 1) {
-	// TO DO: set zoom based on placetype or mz:min/max_zoom (requires fetching the record...)
-	map.setView([coords[0][1], coords[0][0]], 12);
-    } else {
-	var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
-	map.fitBounds(bounds);
+    switch (coords.length){
+	case 0:
+	    // Null Island
+	    coords.push([ 0.0, 0.0 ]);
+	    f.geometry.coords = coords;
+	    map.setView([coords[0][1], coords[0][0]], 3);
+	    break;
+	case 1:
+	    // TO DO: set zoom based on placetype or mz:min/max_zoom (requires fetching the record...)
+	    map.setView([coords[0][1], coords[0][0]], 12);
+	    break;
+	default:
+	    var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
+	    map.fitBounds(bounds);
+	    break;
     }
     
     var pt_handler_layer_args = {
