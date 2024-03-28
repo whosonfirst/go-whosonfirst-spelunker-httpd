@@ -11,6 +11,8 @@ window.addEventListener("load", function load(event){
     var current_url = facets_wrapper.getAttribute("data-current-url");
     var facets_url = facets_wrapper.getAttribute("data-facets-url");    
 
+    console.log("FACETS", facets_url);
+    
     if ((! current_url) || (! facets_url)){
 	return;
     }
@@ -82,8 +84,13 @@ window.addEventListener("load", function load(event){
 		// Something something something is location.href really safe?
 		// https://developer.mozilla.org/en-US/docs/Web/API/URL/URL
 
+		console.log("CURRENT", current_url);
 		var u = new URL(current_url, location.href);
+
+		console.log("OMG", u.searchParams);		
 		u.searchParams.set(f, k)
+
+		console.log("WTF", u.searchParams);
 
 		var a = document.createElement("a");
 		
@@ -116,7 +123,7 @@ window.addEventListener("load", function load(event){
 	var u = new URL(facets_url, location.href)
 	u.searchParams.set("facet", f);
 	var url = u.toString();
-	
+
 	fetch(url)
 	    .then((rsp) => rsp.json())
 	    .then((data) => {
