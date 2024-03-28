@@ -50,14 +50,19 @@ window.addEventListener("load", function load(event){
 	    "coordinates": coords,
 	},
     };
-	    
+
     var map_el = document.querySelector("#map");
     map_el.style.display = "block";
     
     const map = whosonfirst.spelunker.maps.map(map_el);
 
-    var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
-    map.fitBounds(bounds);
+    if (coords.length == 1) {
+	// TO DO: set zoom based on placetype or mz:min/max_zoom (requires fetching the record...)
+	map.setView([coords[0][1], coords[0][0]], 12);
+    } else {
+	var bounds = whosonfirst.spelunker.geojson.derive_bounds(f);
+	map.fitBounds(bounds);
+    }
     
     var pt_handler_layer_args = {
 	pane: whosonfirst.spelunker.maps.centroids_pane_name,
