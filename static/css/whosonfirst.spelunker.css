@@ -20,6 +20,10 @@ p {
 	display:none;
 }
 
+.deprecated {
+	color: red;
+}
+
 #map-wrapper:after {
 	display: flex;
 	justify-content: right;
