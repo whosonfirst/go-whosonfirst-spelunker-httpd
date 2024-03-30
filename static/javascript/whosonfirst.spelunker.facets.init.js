@@ -31,8 +31,38 @@ window.addEventListener("load", function load(event){
 
 	var f_label = f;
 
-	if (f == "iscurrent") {
-	    f_label = "is current";
+	switch (f) {
+	    case "iscurrent":
+		f_label = "is current";
+		break;
+	    case "isdeprecated":
+		f_label = "is deprecated";
+
+		var results = rsp.results;
+		var count = results.length;
+
+		deprecated = 0;
+		not_deprecated = 0;
+		
+		for (var i=0; i < count; i++){
+		    
+		    switch (results[i].key){
+			case "1":
+			    deprecated = results[i].count;
+			default:
+			    not_deprecated += results[0].count;
+		    }
+		}
+
+		rsp.results = [
+		    { key: "0", count: not_deprecated },
+		    { key: "1", count: deprecated },		    
+		];
+		
+		break;
+		
+	    default:
+		break;
 	}
 	
 	var label = document.createElement("h3");
@@ -65,20 +95,37 @@ window.addEventListener("load", function load(event){
 
 		var k_label = k;
 
-		if (f == "iscurrent"){
-
-		    switch (parseInt(k)){
-			case 0:
-			    k_label = "not current";
-			    break;
-			case -1:
-			    k_label = "unknown";
-			    break;
-			default:
-			    k_label = "current";
-			    break;
-		    }
-			    
+		switch(f){
+		    case "iscurrent":
+			
+			switch (parseInt(k)){
+			    case 0:
+				k_label = "not current";
+				break;
+			    case -1:
+				k_label = "unknown";
+				break;
+			    default:
+				k_label = "current";
+				break;
+			}
+			
+			break;
+			
+		    case "isdeprecated":
+			
+			switch (parseInt(k)){
+			    case 0:
+				k_label = "not deprecated";
+				break;
+			    default:
+				k_label = "deprecated";
+				break;
+			}
+			
+			break;
+		default:
+			//
 		}
 		
 		// Something something something is location.href really safe?
