@@ -148,8 +148,6 @@ func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, er
 
 		facets_context_url = req.URL.Path
 
-		logger.Info("SPORK", "f", facets_url)
-		
 		vars := HasConcordanceHandlerVars{
 			PageTitle:        page_title,
 			URIs:             opts.URIs,
