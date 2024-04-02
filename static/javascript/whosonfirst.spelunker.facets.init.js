@@ -45,12 +45,14 @@ window.addEventListener("load", function load(event){
 		not_deprecated = 0;
 		
 		for (var i=0; i < count; i++){
-		    
-		    switch (results[i].key){
-			case "1":
+
+		    switch (parseInt(results[i].key)){
+			case 1:
 			    deprecated = results[i].count;
+			    break;
 			default:
-			    not_deprecated += results[0].count;
+			    not_deprecated += results[i].count;	
+			    break;
 		    }
 		}
 
@@ -58,7 +60,7 @@ window.addEventListener("load", function load(event){
 		    { key: "0", count: not_deprecated },
 		    { key: "1", count: deprecated },		    
 		];
-		
+
 		break;
 		
 	    default:
@@ -116,7 +118,7 @@ window.addEventListener("load", function load(event){
 			
 			switch (parseInt(k)){
 			    case 0:
-				k_label = "not deprecated";
+				k_label = "valid";
 				break;
 			    default:
 				k_label = "deprecated";
@@ -138,6 +140,11 @@ window.addEventListener("load", function load(event){
 		
 		a.setAttribute("href", u.toString());
 		a.setAttribute("class", "hey-look");
+
+		if (k_label == "deprecated"){
+		    a.setAttribute("class", "hey-look deprecated");
+		}
+		
 		a.appendChild(document.createTextNode(k_label));
 		
 		var sm = document.createElement("small");
@@ -151,8 +158,19 @@ window.addEventListener("load", function load(event){
 	    ul.appendChild(item);
 	}
 
-	el.appendChild(label);
-	el.appendChild(ul);
+	var summary = document.createElement("summary");
+	summary.appendChild(document.createTextNode(f_label));
+	
+	var details = document.createElement("details");
+	details.setAttribute("open", "open");
+	
+	details.appendChild(summary);
+	details.appendChild(ul);
+
+	el.appendChild(details);
+	
+	// el.appendChild(label);
+	// el.appendChild(ul);
     };
     
     var fetch_facet = function(f){
