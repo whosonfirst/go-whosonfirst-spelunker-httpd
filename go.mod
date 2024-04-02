@@ -11,16 +11,15 @@ require (
 	github.com/mitchellh/copystructure v1.2.0
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-geojsonld v1.0.0
-	github.com/sfomuseum/go-http-auth v0.9.0
+	github.com/sfomuseum/go-http-auth v0.11.0
 	github.com/sfomuseum/go-template v1.9.0
 	github.com/sfomuseum/iso8601duration v1.1.0
 	github.com/tidwall/gjson v1.17.1
 	github.com/whosonfirst/go-reader v1.0.2
 	github.com/whosonfirst/go-sanitize v0.1.0
-	github.com/whosonfirst/go-whosonfirst-feature v0.0.27
 	github.com/whosonfirst/go-whosonfirst-placetypes v0.7.2
 	github.com/whosonfirst/go-whosonfirst-sources v0.2.0
-	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240323061722-72cffe1d81d3
+	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240402155952-8bcf14040388
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
 	github.com/whosonfirst/go-whosonfirst-svg v0.1.0
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
@@ -44,6 +43,7 @@ require (
 	github.com/tidwall/sjson v1.2.5 // indirect
 	github.com/whosonfirst/go-geojson-svg v0.0.5 // indirect
 	github.com/whosonfirst/go-ioutil v1.0.2 // indirect
+	github.com/whosonfirst/go-whosonfirst-feature v0.0.27 // indirect
 	github.com/whosonfirst/go-whosonfirst-flags v0.5.1 // indirect
 	go.mongodb.org/mongo-driver v1.11.4 // indirect
 )
