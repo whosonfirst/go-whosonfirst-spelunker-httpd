@@ -16,7 +16,7 @@ func DefaultFilterParams() []string {
 		"country",
 		"tag",
 		"iscurrent",
-		"isdeprecated",		
+		"isdeprecated",
 	}
 }
 
@@ -78,7 +78,7 @@ func FiltersFromRequest(ctx context.Context, req *http.Request, params []string)
 
 				filters = append(filters, is_deprecated_f)
 			}
-			
+
 		case "country":
 
 			country, err := sanitize.GetString(req, "country")
@@ -116,7 +116,7 @@ func FiltersFromRequest(ctx context.Context, req *http.Request, params []string)
 
 				filters = append(filters, tag_f)
 			}
-			
+
 		case "placetype":
 
 			placetype, err := sanitize.GetString(req, "placetype")
