@@ -7,7 +7,7 @@ import (
 
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
-	// "github.com/whosonfirst/go-whosonfirst-spr/v2"
+	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 )
 
 type SPRHandlerOptions struct {
@@ -33,6 +33,7 @@ func SPRHandler(opts *SPRHandlerOptions) (http.Handler, error) {
 			return
 		}
 
+		/*
 		spr, err := httpd.SPRFromRequestURI(ctx, opts.Spelunker, req_uri)
 
 		if err != nil {
@@ -40,8 +41,8 @@ func SPRHandler(opts *SPRHandlerOptions) (http.Handler, error) {
 			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
 			return
 		}
+		*/
 
-		/*
 			r, err := httpd.FeatureFromRequestURI(ctx, opts.Spelunker, req_uri)
 
 			if err != nil {
@@ -56,12 +57,11 @@ func SPRHandler(opts *SPRHandlerOptions) (http.Handler, error) {
 				http.Error(rsp, err.Error(), http.StatusInternalServerError)
 				return
 			}
-		*/
 
 		rsp.Header().Set("Content-Type", "application/json")
 
 		enc := json.NewEncoder(rsp)
-		err = enc.Encode(spr)
+		err = enc.Encode(s)
 
 		if err != nil {
 			http.Error(rsp, err.Error(), http.StatusInternalServerError)
