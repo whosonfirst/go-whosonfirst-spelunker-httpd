@@ -27,7 +27,11 @@ func NewNullSpelunker(ctx context.Context, uri string) (Spelunker, error) {
 	return s, nil
 }
 
-func (s *NullSpelunker) GetRecordForId(ctx context.Context, id int64) ([]byte, error) {
+func (s *NullSpelunker) GetRecordForId(ctx context.Context, id int64, uri_args *uri.URIArgs) ([]byte, error) {
+	return nil, ErrNotImplemented
+}
+
+func (s *NullSpelunker) GetSPRForId(ctx context.Context, id int64, uri_args *uri.URIArgs) (spr.StandardPlacesResult, error) {
 	return nil, ErrNotImplemented
 }
 

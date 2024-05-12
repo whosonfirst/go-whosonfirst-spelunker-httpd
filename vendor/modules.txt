@@ -73,7 +73,7 @@ github.com/sfomuseum/go-geojsonld
 # github.com/sfomuseum/go-http-auth v0.11.0
 ## explicit; go 1.18
 github.com/sfomuseum/go-http-auth
-# github.com/sfomuseum/go-template v1.9.0
+# github.com/sfomuseum/go-template v1.10.0
 ## explicit; go 1.18
 github.com/sfomuseum/go-template/funcs
 github.com/sfomuseum/go-template/html
@@ -125,7 +125,7 @@ github.com/whosonfirst/go-whosonfirst-placetypes
 ## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-sources
 github.com/whosonfirst/go-whosonfirst-sources/sources
-# github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240403155511-721fd45c0717
+# github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240503161612-eef4568c21df
 ## explicit; go 1.22
 github.com/whosonfirst/go-whosonfirst-spelunker
 # github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
@@ -147,7 +147,7 @@ go.mongodb.org/mongo-driver/bson/bsonrw
 go.mongodb.org/mongo-driver/bson/bsontype
 go.mongodb.org/mongo-driver/bson/primitive
 go.mongodb.org/mongo-driver/x/bsonx/bsoncore
-# golang.org/x/text v0.14.0
+# golang.org/x/text v0.15.0
 ## explicit; go 1.18
 golang.org/x/text/feature/plural
 golang.org/x/text/internal

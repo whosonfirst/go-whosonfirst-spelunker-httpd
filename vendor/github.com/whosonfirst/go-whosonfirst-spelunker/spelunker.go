@@ -25,7 +25,8 @@ type SpelunkerInitializationFunc func(ctx context.Context, uri string) (Spelunke
 type Spelunker interface {
 
 	// Retrieve properties (or more specifically the "document") for...
-	GetRecordForId(context.Context, int64) ([]byte, error)
+	GetRecordForId(context.Context, int64, *uri.URIArgs) ([]byte, error)
+	GetSPRForId(context.Context, int64, *uri.URIArgs) (spr.StandardPlacesResult, error)
 	// Retrive GeoJSON Feature for...
 	GetFeatureForId(context.Context, int64, *uri.URIArgs) ([]byte, error)
 

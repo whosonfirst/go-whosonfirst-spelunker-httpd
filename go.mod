@@ -12,18 +12,18 @@ require (
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-geojsonld v1.0.0
 	github.com/sfomuseum/go-http-auth v0.11.0
-	github.com/sfomuseum/go-template v1.9.0
+	github.com/sfomuseum/go-template v1.10.0
 	github.com/sfomuseum/iso8601duration v1.1.0
 	github.com/tidwall/gjson v1.17.1
 	github.com/whosonfirst/go-reader v1.0.2
 	github.com/whosonfirst/go-sanitize v0.1.0
 	github.com/whosonfirst/go-whosonfirst-placetypes v0.7.2
 	github.com/whosonfirst/go-whosonfirst-sources v0.2.0
-	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240403155511-721fd45c0717
+	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.0-20240503161612-eef4568c21df
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.7
 	github.com/whosonfirst/go-whosonfirst-svg v0.1.0
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
-	golang.org/x/text v0.14.0
+	golang.org/x/text v0.15.0
 )
 
 require (
