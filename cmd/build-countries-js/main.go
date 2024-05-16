@@ -1,10 +1,9 @@
 package main
 
-/*
+// Meta file can be found here:
+// https://data.geocode.earth/wof/dist/legacy/whosonfirst-data-country-latest.tar.bz2
 
-go run cmd/build-countries-js/main.go -metafile ~/Downloads/whosonfirst-data-country-latest/meta/whosonfirst-data-country-latest.csv > static/javascript/whosonfirst.spelunker.countries.js
-
-*/
+// go run cmd/build-countries-js/main.go -metafile ~/Downloads/whosonfirst-data-country-latest/meta/whosonfirst-data-country-latest.csv > static/javascript/whosonfirst.spelunker.countries.js
 
 import (
 	"context"
@@ -28,6 +27,7 @@ type Country struct {
 type TemplateVars struct {
 	Lookup  string
 	Created time.Time
+	CreatedBy string
 }
 
 func main() {
@@ -117,9 +117,16 @@ func main() {
 
 	created := time.Now()
 
+	// There are all kinds of ways to do this but because we might just
+	// be running this from "go -run" it all starts to get fiddly and
+	// complicated and kind of a waste of time. So just be explicit.
+	
+	created_by := "build-countries-js"
+	
 	vars := TemplateVars{
 		Lookup:  string(enc_lookup),
 		Created: created,
+		CreatedBy: created_by,
 	}
 
 	err = countries_t.Execute(os.Stdout, vars)
