@@ -112,6 +112,9 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 			return
 		}
 
+		// TBD - Do this concurrently in Go routines? It kind of feels like yak-shaving
+		// at this stage...
+		
 		r, pg_r, err := opts.Spelunker.Search(ctx, pg_opts, search_opts, filters)
 
 		if err != nil {
