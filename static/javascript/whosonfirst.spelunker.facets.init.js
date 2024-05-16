@@ -130,7 +130,17 @@ window.addEventListener("load", function load(event){
 			
 			break;
 		default:
-			//
+
+			if (f_label == "country"){
+
+			    var country = whosonfirst.spelunker.countries.by_code(k);
+
+			    if (country){
+				k_label = country["wof:name"];
+			    } else {
+				console.log("Unable to determine country name for " + k);
+			    }
+			}
 		}
 		
 		// Something something something is location.href really safe?

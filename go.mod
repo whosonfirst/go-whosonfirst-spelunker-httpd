@@ -10,6 +10,7 @@ require (
 	github.com/jtacoma/uritemplates v1.0.0
 	github.com/mitchellh/copystructure v1.2.0
 	github.com/rs/cors v1.11.0
+	github.com/sfomuseum/go-csvdict v1.0.0
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-geojsonld v1.0.0
 	github.com/sfomuseum/go-http-auth v0.11.0
