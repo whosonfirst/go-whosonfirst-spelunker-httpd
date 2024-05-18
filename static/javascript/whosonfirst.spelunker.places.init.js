@@ -9,6 +9,8 @@ window.addEventListener("load", function load(event){
     
     var count_places = places.length;
 
+    // console.log("Count", count_places);
+    
     if (count_places == 0){
 	return;
     }
@@ -40,6 +42,9 @@ window.addEventListener("load", function load(event){
 	names[ JSON.stringify(coords[i]) ] = n.innerText;
     }
 
+    // console.log("Coords", coords);
+    // console.log("Names", names);
+    
     var f = {
 	"type": "Feature",
 	"properties": {
@@ -51,6 +56,8 @@ window.addEventListener("load", function load(event){
 	},
     };
 
+    // console.log("Feature", f);
+    
     var map_el = document.querySelector("#map");
     map_el.style.display = "block";
     
@@ -58,7 +65,9 @@ window.addEventListener("load", function load(event){
 
     switch (coords.length){
 	case 0:
-	    // Null Island
+	// Null Island
+
+	console.log("Null Island");
 	    coords.push([ 0.0, 0.0 ]);
 	    f.geometry.coords = coords;
 	    map.setView([coords[0][1], coords[0][0]], 3);
