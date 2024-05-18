@@ -25,7 +25,7 @@
 	    {{ if and (IsAvailable "Feature" .) .Feature -}}
 	    <li class="spr-place" data-latitude="{{ .Feature.Latitude }}" data-longitude="{{ .Feature.Longitude }}" style="margin-bottom:.5rem;">
 		<div>
-		    <a href="/id/{{ .Feature.Id }}">{{ .Feature.Name }}</a> &#8212; <small>this is a <span class="hey-look">{{ .Feature.Placetype }}</span></small>
+		    <a href="/id/{{ .Feature.Id }}" class="wof-place-name hey-look">{{ .Feature.Name }}</a> &#8212; <small>this is a <span class="hey-look">{{ .Feature.Placetype }}</span></small>
 		</div>
 		<div style="font-size:small;margin-top:.3rem;">
 		    <div style="font-style:italic;">This record is included because its <code>wof:id</code> value matches your query string.</div>
