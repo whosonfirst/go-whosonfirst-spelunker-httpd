@@ -17,6 +17,7 @@ window.addEventListener("load", function load(event){
     
     var coords = [];
     var names = [];
+    var links = [];
     
     for (var i=0; i < count_places; i++) {
 
@@ -24,13 +25,18 @@ window.addEventListener("load", function load(event){
 	// console.log(el);
 	
 	var lat = parseFloat(el.getAttribute("data-latitude"));
-	var lon = parseFloat(el.getAttribute("data-longitude"));	
+	var lon = parseFloat(el.getAttribute("data-longitude"));
+	var id = parseInt(el.getAttribute("data-id"));		
 
 	if ((! lat) || (!lon)){
 	    console.log("Invalid coordinates", i, lat, lon);
 	    continue;
 	}
 
+	if (! id){
+	    console.log("Invalid ID", i, id);
+	}
+	
 	var n = el.querySelector(".wof-place-name");
 
 	if ((! n) || (n.innerText == "")){
@@ -39,7 +45,8 @@ window.addEventListener("load", function load(event){
 	}
 
 	coords.push([ lon, lat ]);
-	names[ JSON.stringify(coords[i]) ] = n.innerText;
+	names[ JSON.stringify(coords[i]) ] = n.innerText + " (" + id + ")";
+	links[ JSON.stringify(coords[i]) ] = n.getAttribute("href");	
     }
 
     // console.log("Coords", coords);
@@ -47,8 +54,10 @@ window.addEventListener("load", function load(event){
     
     var f = {
 	"type": "Feature",
+	// These get handled in whosonfirst.spelunker.leaflet.handlers.js (point)
 	"properties": {
 	    "lflt:label_names": names,
+	    "lflt:label_links": links,
 	},
 	"geometry": {
 	    "type": "MultiPoint",
@@ -66,8 +75,6 @@ window.addEventListener("load", function load(event){
     switch (coords.length){
 	case 0:
 	// Null Island
-
-	console.log("Null Island");
 	    coords.push([ 0.0, 0.0 ]);
 	    f.geometry.coords = coords;
 	    map.setView([coords[0][1], coords[0][0]], 3);
