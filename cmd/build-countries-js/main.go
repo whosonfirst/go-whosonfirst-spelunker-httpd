@@ -25,8 +25,8 @@ type Country struct {
 }
 
 type TemplateVars struct {
-	Lookup  string
-	Created time.Time
+	Lookup    string
+	Created   time.Time
 	CreatedBy string
 }
 
@@ -120,12 +120,12 @@ func main() {
 	// There are all kinds of ways to do this but because we might just
 	// be running this from "go -run" it all starts to get fiddly and
 	// complicated and kind of a waste of time. So just be explicit.
-	
+
 	created_by := "build-countries-js"
-	
+
 	vars := TemplateVars{
-		Lookup:  string(enc_lookup),
-		Created: created,
+		Lookup:    string(enc_lookup),
+		Created:   created,
 		CreatedBy: created_by,
 	}
 
