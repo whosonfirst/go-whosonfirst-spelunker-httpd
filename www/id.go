@@ -236,7 +236,18 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		vars.Hierarchies = handler_hierarchies
 		vars.WriteFieldURL = writefield_url
 
-		og_desc := fmt.Sprintf("%s (%d) is a %s in %s :flag-%s:", wof_name, wof_id, str_pt.String(), country_name, strings.ToLower(wof_country))
+		var og_desc string
+
+		switch str_pt.String() {
+		case "continent", "planet":
+			og_desc = fmt.Sprintf("%s (%d) is a %s", wof_name, wof_id, str_pt.String())
+		case "empire", "ocean":
+			og_desc = fmt.Sprintf("%s (%d) is an %s", wof_name, wof_id, str_pt.String())					
+		case "country":
+			og_desc = fmt.Sprintf("%s (%d) is a %s :flag-%s:", wof_name, wof_id, str_pt.String(), strings.ToLower(wof_country))
+		default:
+			og_desc = fmt.Sprintf("%s (%d) is a %s in %s :flag-%s:", wof_name, wof_id, str_pt.String(), country_name, strings.ToLower(wof_country))				     }
+			
 		og_image := httpd.URIForIdSimple(opts.URIs.SVG, wof_id)
 
 		vars.OpenGraph = &OpenGraph{
