@@ -40,6 +40,7 @@ type IdHandlerVars struct {
 	RelPath          string
 	GitHubURL        string
 	WriteFieldURL    string
+	OpenGraph        *OpenGraph
 }
 
 func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
@@ -96,7 +97,8 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		page_title := gjson.GetBytes(f, "wof:name")
+		wof_name := gjson.GetBytes(f, "wof:name")
+		page_title := wof_name
 
 		rel_path, err := uri.Id2RelPath(wof_id, req_uri.URIArgs)
 
@@ -224,6 +226,17 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		vars.CountDescendants = count_descendants
 		vars.Hierarchies = handler_hierarchies
 		vars.WriteFieldURL = writefield_url
+
+		og_desc := fmt.Sprintf("%s (%d) is a %s in {COUNTRY}.", wof_name.String(), wof_id, str_pt.String())
+		og_image := httpd.URIForIdSimple(opts.URIs.SVG, wof_id)
+
+		vars.OpenGraph = &OpenGraph{
+			Type:        "Article",
+			SiteName:    "Who's On First Spelunker",
+			Title:       wof_name.String(),
+			Description: og_desc,
+			Image:       og_image,
+		}
 
 		rsp.Header().Set("Content-Type", "text/html")
 
