@@ -97,8 +97,17 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		wof_name := gjson.GetBytes(f, "wof:name")
-		page_title := wof_name
+		name_rsp := gjson.GetBytes(f, "wof:name")
+		wof_name := name_rsp.String()
+
+		country_rsp := gjson.GetBytes(f, "wof:country")
+		wof_country := country_rsp.String()
+
+		country_name, country_exists := httpd.CountryCodeLookup[wof_country]
+
+		if !country_exists {
+			country_name = wof_country
+		}
 
 		rel_path, err := uri.Id2RelPath(wof_id, req_uri.URIArgs)
 
@@ -117,7 +126,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			RequestId:  req_id,
 			URIArgs:    req_uri.URIArgs,
 			Properties: string(f),
-			PageTitle:  page_title.String(),
+			PageTitle:  wof_name,
 			GitHubURL:  github_url,
 			URIs:       opts.URIs,
 			RelPath:    rel_path,
@@ -227,13 +236,13 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		vars.Hierarchies = handler_hierarchies
 		vars.WriteFieldURL = writefield_url
 
-		og_desc := fmt.Sprintf("%s (%d) is a %s in {COUNTRY}.", wof_name.String(), wof_id, str_pt.String())
+		og_desc := fmt.Sprintf("%s (%d) is a %s in %s :flag-%s:", wof_name, wof_id, str_pt.String(), country_name, strings.ToLower(wof_country))
 		og_image := httpd.URIForIdSimple(opts.URIs.SVG, wof_id)
 
 		vars.OpenGraph = &OpenGraph{
 			Type:        "Article",
 			SiteName:    "Who's On First Spelunker",
-			Title:       wof_name.String(),
+			Title:       wof_name,
 			Description: og_desc,
 			Image:       og_image,
 		}

@@ -28,6 +28,7 @@ type NullIslandHandlerVars struct {
 	PaginationURL    string
 	FacetsURL        string
 	FacetsContextURL string
+	OpenGraph        *OpenGraph
 }
 
 func NullIslandHandler(opts *NullIslandHandlerOptions) (http.Handler, error) {
@@ -85,6 +86,14 @@ func NullIslandHandler(opts *NullIslandHandlerOptions) (http.Handler, error) {
 			PaginationURL:    pagination_url,
 			FacetsURL:        facets_url,
 			FacetsContextURL: facets_context_url,
+		}
+
+		vars.OpenGraph = &OpenGraph{
+			Type:        "Article",
+			SiteName:    "Who's On First Spelunker",
+			Title:       `Who's On First records that are "visiting" Null Island`,
+			Description: "Who's On First records with missing or undetermined geographies",
+			Image:       "",
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")
