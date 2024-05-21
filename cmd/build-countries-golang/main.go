@@ -3,11 +3,10 @@ package main
 // Meta file can be found here:
 // https://data.geocode.earth/wof/dist/legacy/whosonfirst-data-country-latest.tar.bz2
 
-// go run cmd/build-countries-js/main.go -metafile ~/Downloads/whosonfirst-data-country-latest/meta/whosonfirst-data-country-latest.csv > static/javascript/whosonfirst.spelunker.countries.js
+// go run cmd/build-countries-go/main.go -metafile ~/Downloads/whosonfirst-data-country-latest/meta/whosonfirst-data-country-latest.csv > countries.go
 
 import (
 	"context"
-	"encoding/json"
 	"flag"
 	"io"
 	"log"
@@ -16,7 +15,7 @@ import (
 	"time"
 
 	"github.com/sfomuseum/go-csvdict"
-	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/javascript"
+	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/golang"
 )
 
 type Country struct {
@@ -25,7 +24,7 @@ type Country struct {
 }
 
 type TemplateVars struct {
-	Lookup    string
+	Lookup    map[string]*Country
 	Created   time.Time
 	CreatedBy string
 }
@@ -40,7 +39,7 @@ func main() {
 
 	ctx := context.Background()
 
-	t, err := javascript.LoadTemplates(ctx)
+	t, err := golang.LoadTemplates(ctx)
 
 	if err != nil {
 		log.Fatalf("Failed to load templates, %v", err)
@@ -109,22 +108,16 @@ func main() {
 		}
 	}
 
-	enc_lookup, err := json.Marshal(lookup)
-
-	if err != nil {
-		log.Fatalf("Failed to encode lookup, %v", err)
-	}
-
 	created := time.Now()
 
 	// There are all kinds of ways to do this but because we might just
 	// be running this from "go -run" it all starts to get fiddly and
 	// complicated and kind of a waste of time. So just be explicit.
 
-	created_by := "build-countries-js"
+	created_by := "build-countries-golang"
 
 	vars := TemplateVars{
-		Lookup:    string(enc_lookup),
+		Lookup:    lookup,
 		Created:   created,
 		CreatedBy: created_by,
 	}
