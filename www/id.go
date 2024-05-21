@@ -263,7 +263,10 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 
 		// END OF put me in a function or something...
 
-		og_image := req.URL.Host + httpd.URIForIdSimple(opts.URIs.SVG, wof_id)
+		// To do: Fix me – why doesn't req.URL.Host work?
+		og_host := "https://spelunker.whosonfirst.org"
+
+		og_image := og_host + httpd.URIForIdSimple(opts.URIs.SVG, wof_id)
 
 		vars.OpenGraph = &OpenGraph{
 			Type:        "Article",

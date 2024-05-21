@@ -88,7 +88,10 @@ func NullIslandHandler(opts *NullIslandHandlerOptions) (http.Handler, error) {
 			FacetsContextURL: facets_context_url,
 		}
 
-		og_image := req.URL.Host + httpd.URIForIdSimple(opts.URIs.SVG, 0)
+		// To do: Fix me – why doesn't req.URL.Host work?
+		og_host := "https://spelunker.whosonfirst.org"
+
+		og_image := og_host + httpd.URIForIdSimple(opts.URIs.SVG, 0)
 
 		vars.OpenGraph = &OpenGraph{
 			Type:        "Article",
