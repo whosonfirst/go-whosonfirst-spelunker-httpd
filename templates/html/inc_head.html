@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="x-ua-compatible" content="ie=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	{{ if (IsAvailable "OpenGraph" .) -}}
+	{{ if and (IsAvailable "OpenGraph" .) .OpenGraph -}}
 	<meta property="og:type" content="{{ .OpenGraph.Type }}" />
 	<meta property="og:site_name" content="{{ .OpenGraph.SiteName}} " />
 	<meta property="og:title" content="{{ .OpenGraph.Title }}" />

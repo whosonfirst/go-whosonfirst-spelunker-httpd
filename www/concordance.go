@@ -165,7 +165,7 @@ func HasConcordanceHandler(opts *HasConcordanceHandlerOptions) (http.Handler, er
 			Type:        "Article",
 			SiteName:    "Who's On First Spelunker",
 			Title:       fmt.Sprintf(`Who's On First concordances for \"%s\"`, c),
-			Description: fmt.Sprintf(`Who's On First records that "hold hands" with records from %s`, src.Name),
+			Description: fmt.Sprintf(`Who's On First records that "hold hands" with records from %s`, src.Fullname),
 			Image:       "",
 		}
 

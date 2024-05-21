@@ -133,7 +133,7 @@ func SearchHandler(opts *SearchHandlerOptions) (http.Handler, error) {
 		}
 
 		vars.OpenGraph.Title = fmt.Sprintf(`Search results for \"%s\"`, q)
-		vars.OpenGraph.Description = fmt.Sprintf(`Who's On First record matching the query term \"%s\"`, q)
+		vars.OpenGraph.Description = fmt.Sprintf(`Who's On First records matching the query term \"%s\"`, q)
 
 		vars.Places = r.Results()
 		vars.Pagination = pg_r
