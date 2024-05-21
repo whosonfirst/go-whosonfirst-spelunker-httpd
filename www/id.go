@@ -236,20 +236,35 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		vars.Hierarchies = handler_hierarchies
 		vars.WriteFieldURL = writefield_url
 
+		// START OF put me in a function or something...
+				
 		var og_desc string
 
 		switch str_pt.String() {
 		case "continent", "planet":
 			og_desc = fmt.Sprintf("%s (%d) is a %s", wof_name, wof_id, str_pt.String())
 		case "empire", "ocean":
-			og_desc = fmt.Sprintf("%s (%d) is an %s", wof_name, wof_id, str_pt.String())					
+			og_desc = fmt.Sprintf("%s (%d) is an %s", wof_name, wof_id, str_pt.String())
 		case "country":
 			og_desc = fmt.Sprintf("%s (%d) is a %s :flag-%s:", wof_name, wof_id, str_pt.String(), strings.ToLower(wof_country))
 		default:
-			og_desc = fmt.Sprintf("%s (%d) is a %s in %s :flag-%s:", wof_name, wof_id, str_pt.String(), country_name, strings.ToLower(wof_country))				     }
-			
-		og_image := httpd.URIForIdSimple(opts.URIs.SVG, wof_id)
 
+			var og_country string
+			
+			switch wof_country {
+			case "US":
+				og_country = fmt.Sprintf("the %s", country_name)
+			default:
+				og_country = country_name
+			}
+			
+			og_desc = fmt.Sprintf("%s (%d) is a %s in %s :flag-%s:", wof_name, wof_id, str_pt.String(), og_country, strings.ToLower(wof_country))
+		}
+
+		// END OF put me in a function or something...
+		
+		og_image := req.URL.Host + httpd.URIForIdSimple(opts.URIs.SVG, wof_id)
+		
 		vars.OpenGraph = &OpenGraph{
 			Type:        "Article",
 			SiteName:    "Who's On First Spelunker",

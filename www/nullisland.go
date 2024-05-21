@@ -88,12 +88,14 @@ func NullIslandHandler(opts *NullIslandHandlerOptions) (http.Handler, error) {
 			FacetsContextURL: facets_context_url,
 		}
 
+		og_image := req.URL.Host + httpd.URIForIdSimple(opts.URIs.SVG, 0)
+
 		vars.OpenGraph = &OpenGraph{
 			Type:        "Article",
 			SiteName:    "Who's On First Spelunker",
 			Title:       `Who's On First records that are "visiting" Null Island`,
 			Description: "Who's On First records with missing or undetermined geographies",
-			Image:       "",
+			Image:       og_image,
 		}
 
 		rsp.Header().Set("Content-Type", "text/html")
