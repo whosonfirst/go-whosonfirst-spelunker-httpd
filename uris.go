@@ -58,6 +58,8 @@ type URIs struct {
 	SPRAlt                   []string `json:"spr_alt"`
 	SVG                      string   `json:"svg"`
 	SVGAlt                   []string `json:"svg_alt"`
+
+	Root *url.URL
 }
 
 func (u *URIs) ApplyPrefix(prefix string) error {
@@ -164,6 +166,20 @@ func DefaultURIs() *URIs {
 	}
 
 	return uris_table
+}
+
+func (uris_table *URIs) Abs(path string) (string, error) {
+
+	if uris_table.Root == nil {
+		return "#", fmt.Errorf("Root URL has not been assigned")
+	}
+
+	u := url.URL{}
+	u.Host = uris_table.Root.Host
+	u.Scheme = uris_table.Root.Scheme
+	u.Path = path
+
+	return u.String(), nil
 }
 
 func URIForIdSimple(uri string, id int64) string {
