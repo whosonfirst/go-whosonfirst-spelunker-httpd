@@ -9,7 +9,14 @@ whosonfirst.spelunker.uris = (function(){
     var self = {
 	
 	abs_root_url: function(){
-	    return "/";
+
+	    var root = _table.root_url;
+
+	    if (! root.endsWith("/")){
+		root += "/";
+	    }
+	    
+	    return root;
 	},
 	
 	table: function(){
