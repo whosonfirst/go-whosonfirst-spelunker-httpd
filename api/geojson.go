@@ -32,7 +32,7 @@ func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
 		r, err := httpd.FeatureFromRequestURI(ctx, opts.Spelunker, req_uri)
 
 		if err != nil {
-			logger.Error("Failed to get by ID", "id", wof_id, "error", err)
+			logger.Error("Failed to get by ID", "error", err)
 			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
 			return
 		}
