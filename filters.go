@@ -13,6 +13,7 @@ func DefaultFilterParams() []string {
 
 	return []string{
 		"placetype",
+		"placetype_alt",
 		"country",
 		"tag",
 		"iscurrent",
@@ -84,7 +85,7 @@ func FiltersFromRequest(ctx context.Context, req *http.Request, params []string)
 			country, err := sanitize.GetString(req, "country")
 
 			if err != nil {
-				return nil, fmt.Errorf("Failed to derive ?placetype= query parameter, %w", err)
+				return nil, fmt.Errorf("Failed to derive ?country= query parameter, %w", err)
 			}
 
 			if country != "" {
@@ -103,7 +104,7 @@ func FiltersFromRequest(ctx context.Context, req *http.Request, params []string)
 			tag, err := sanitize.GetString(req, "tag")
 
 			if err != nil {
-				return nil, fmt.Errorf("Failed to derive ?placetype= query parameter, %w", err)
+				return nil, fmt.Errorf("Failed to derive ?tag= query parameter, %w", err)
 			}
 
 			if tag != "" {
@@ -134,6 +135,25 @@ func FiltersFromRequest(ctx context.Context, req *http.Request, params []string)
 				}
 
 				filters = append(filters, placetype_f)
+			}
+
+		case "placetype_alt":
+
+			placetype_alt, err := sanitize.GetString(req, "placetype_alt")
+
+			if err != nil {
+				return nil, fmt.Errorf("Failed to derive ?placetype_alt= query parameter, %w", err)
+			}
+
+			if placetype_alt != "" {
+
+				placetype_alt_f, err := spelunker.NewPlacetypeAltFilterFromString(ctx, placetype_alt)
+
+				if err != nil {
+					return nil, fmt.Errorf("Failed to create placetype_alt filter from string '%s', %w", placetype_alt, err)
+				}
+
+				filters = append(filters, placetype_alt_f)
 			}
 
 		default:
