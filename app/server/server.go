@@ -70,6 +70,8 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 
 		// Static assets
 		run_options.URIs.Static: staticHandlerFunc,
+		// Run-time static assets
+		"/javascript/whosonfirst.spelunker.uris.js": urisJSHandlerFunc,
 
 		// API/machine-readable
 		run_options.URIs.ConcordanceNSFaceted:     hasConcordanceFacetedHandlerFunc,

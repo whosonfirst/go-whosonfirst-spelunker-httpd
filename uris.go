@@ -59,7 +59,7 @@ type URIs struct {
 	SVG                      string   `json:"svg"`
 	SVGAlt                   []string `json:"svg_alt"`
 
-	Root *url.URL
+	Root *url.URL `json:"root_url"`
 }
 
 func (u *URIs) ApplyPrefix(prefix string) error {
