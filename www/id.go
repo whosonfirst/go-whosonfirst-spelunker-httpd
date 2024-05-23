@@ -168,6 +168,20 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			"common_optional",
 		}
 
+		// If custom placetype assume the most granular placetype for constructing
+		// ordered list from hierarchy.
+
+		if pt.Name == "custom" {
+
+			v, err := placetypes.GetPlacetypeByName("installation")
+
+			if err != nil {
+				logger.Warn("Failed to instantiate 'installation' placetype, %w", err)
+			} else {
+				pt = v
+			}
+		}
+
 		ancestors := placetypes.AncestorsForRoles(pt, roles)
 		count_ancestors := len(ancestors)
 
@@ -177,8 +191,6 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			n := ancestors[i]
 			sorted = append(sorted, n.String())
 		}
-
-		// hierarchies := properties.Hierarchies(f)
 
 		hierarchies := make([]map[string]int64, 0)
 
