@@ -6,6 +6,8 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/sfomuseum/go-http-opensearch"
+	opensearch_http "github.com/sfomuseum/go-http-opensearch/http"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/www"
 )
 
@@ -15,6 +17,37 @@ func staticHandlerFunc(ctx context.Context) (http.Handler, error) {
 	fs_handler := http.FileServer(http_fs)
 
 	return http.StripPrefix(run_options.URIs.Static, fs_handler), nil
+}
+
+func openSearchHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupWWWOnce.Do(setupWWW)
+
+	if setupWWWError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupWWWError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupWWWError)
+	}
+
+	desc_opts := &opensearch.BasicDescriptionOptions{
+		Name:           "Who's On First Spelunker Search",
+		Description:    "Search for places in the Who's On First Spelunker",
+		QueryParameter: "q",
+		ImageURI:       opensearch.DEFAULT_IMAGE_URI,
+		SearchTemplate: uris_table.Search,
+		SearchForm:     uris_table.Search,
+	}
+
+	desc, err := opensearch.BasicDescription(desc_opts)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create basic OpenSearch description, %w", err)
+	}
+
+	opensearch_opts := &opensearch_http.OpenSearchHandlerOptions{
+		Description: desc,
+	}
+
+	return opensearch_http.OpenSearchHandler(opensearch_opts)
 }
 
 func indexHandlerFunc(ctx context.Context) (http.Handler, error) {

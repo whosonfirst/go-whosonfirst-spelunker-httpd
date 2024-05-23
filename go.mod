@@ -14,6 +14,7 @@ require (
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-geojsonld v1.0.0
 	github.com/sfomuseum/go-http-auth v0.11.0
+	github.com/sfomuseum/go-http-opensearch v0.0.2
 	github.com/sfomuseum/go-template v1.10.0
 	github.com/sfomuseum/iso8601duration v1.1.0
 	github.com/tidwall/gjson v1.17.1
@@ -29,6 +30,7 @@ require (
 )
 
 require (
+	github.com/aaronland/go-http-rewrite v1.1.0 // indirect
 	github.com/aaronland/go-roster v1.0.0 // indirect
 	github.com/akrylysov/algnhsa v1.1.0 // indirect
 	github.com/aws/aws-lambda-go v1.46.0 // indirect
@@ -48,4 +50,5 @@ require (
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.27 // indirect
 	github.com/whosonfirst/go-whosonfirst-flags v0.5.1 // indirect
 	go.mongodb.org/mongo-driver v1.11.4 // indirect
+	golang.org/x/net v0.25.0 // indirect
 )
