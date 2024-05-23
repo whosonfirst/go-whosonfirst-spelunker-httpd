@@ -27,6 +27,12 @@ func GeoJSONHandler(opts *GeoJSONHandlerOptions) (http.Handler, error) {
 		}
 
 		wof_id := req_uri.Id
+
+		if wof_id <= -1 {
+			http.Error(rsp, "Not found", http.StatusNotFound)
+			return
+		}
+
 		logger = logger.With("wof id", wof_id)
 
 		r, err := httpd.FeatureFromRequestURI(ctx, opts.Spelunker, req_uri)

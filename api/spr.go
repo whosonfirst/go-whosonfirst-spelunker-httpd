@@ -28,6 +28,13 @@ func SPRHandler(opts *SPRHandlerOptions) (http.Handler, error) {
 			return
 		}
 
+		if req_uri.Id <= -1 {
+			http.Error(rsp, "Not found", http.StatusNotFound)
+			return
+		}
+
+		logger = logger.With("id", req_uri.Id)
+
 		/*
 			spr, err := httpd.SPRFromRequestURI(ctx, opts.Spelunker, req_uri)
 
@@ -41,7 +48,7 @@ func SPRHandler(opts *SPRHandlerOptions) (http.Handler, error) {
 		r, err := httpd.FeatureFromRequestURI(ctx, opts.Spelunker, req_uri)
 
 		if err != nil {
-			logger.Error("Failed to get by ID", "id", req_uri.Id, "error", err)
+			logger.Error("Failed to get by ID", "error", err)
 			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
 			return
 		}
@@ -59,10 +66,12 @@ func SPRHandler(opts *SPRHandlerOptions) (http.Handler, error) {
 		err = enc.Encode(s)
 
 		if err != nil {
+			logger.Error("Failed to marshal response", "error", err)
 			http.Error(rsp, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
+		return
 	}
 
 	h := http.HandlerFunc(fn)

@@ -68,7 +68,12 @@ func SVGHandler(opts *SVGHandlerOptions) (http.Handler, error) {
 			return
 		}
 
-		logger = logger.With("wofid", req_uri.Id)
+		if req_uri.Id <= -1 {
+			http.Error(rsp, "Not found", http.StatusNotFound)
+			return
+		}
+
+		logger = logger.With("id", req_uri.Id)
 
 		f, err := httpd.FeatureFromRequestURI(ctx, opts.Spelunker, req_uri)
 

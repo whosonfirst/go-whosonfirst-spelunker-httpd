@@ -48,10 +48,17 @@ func SelectHandler(opts *SelectHandlerOptions) (http.Handler, error) {
 			return
 		}
 
+		if req_uri.Id <= -1 {
+			http.Error(rsp, "Not found", http.StatusNotFound)
+			return
+		}
+
+		logger = logger.With("id", req_uri.Id)
+
 		r, err := httpd.FeatureFromRequestURI(ctx, opts.Spelunker, req_uri)
 
 		if err != nil {
-			logger.Error("Failed to get by ID", "id", req_uri.Id, "error", err)
+			logger.Error("Failed to get by ID", "error", err)
 			http.Error(rsp, spelunker.ErrNotFound.Error(), http.StatusNotFound)
 			return
 		}
@@ -65,6 +72,7 @@ func SelectHandler(opts *SelectHandlerOptions) (http.Handler, error) {
 			enc, err := json.Marshal(query_rsp.Value())
 
 			if err != nil {
+				logger.Error("Failed to marshal response", "error", err)
 				http.Error(rsp, err.Error(), http.StatusInternalServerError)
 				return
 			}
