@@ -106,8 +106,8 @@ func DefaultURIs() *URIs {
 
 		// WWW/human-readable
 
-		AlternatePlacetypes: "/placetypes/alternate",
-		AlternatePlacetype:  "/placetypes/alternate/{placetype}",
+		AlternatePlacetypes: "/placetypes-alt",
+		AlternatePlacetype:  "/placetypes-alt/{placetype}",
 		Index:               "/",
 		Search:              "/search",
 		About:               "/about",
@@ -133,7 +133,7 @@ func DefaultURIs() *URIs {
 		Static: "/static/",
 
 		// API/machine-readable
-		AlternatePlacetypeFaceted: "/placetypes/alternate/{placetype}/facets",
+		AlternatePlacetypeFaceted: "/placetypes-alt/{placetype}/facets",
 		ConcordanceNSFaceted:      "/concordances/{namespace}/facets",
 		ConcordanceNSPredFaceted:  "/concordances/{namespace}:{predicate}/facets",
 		ConcordanceTripleFaceted:  "/concordances/{namespace}:{predicate}={value}/facets",

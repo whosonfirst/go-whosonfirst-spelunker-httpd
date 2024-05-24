@@ -261,6 +261,44 @@ func hasPlacetypeHandlerFunc(ctx context.Context) (http.Handler, error) {
 	return www.HasPlacetypeHandler(opts)
 }
 
+func alternatePlacetypesHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupWWWOnce.Do(setupWWW)
+
+	if setupWWWError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupWWWError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupWWWError)
+	}
+
+	opts := &www.AlternatePlacetypesHandlerOptions{
+		Spelunker:     sp,
+		Authenticator: authenticator,
+		Templates:     html_templates,
+		URIs:          uris_table,
+	}
+
+	return www.AlternatePlacetypesHandler(opts)
+}
+
+func hasAlternatePlacetypeHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupWWWOnce.Do(setupWWW)
+
+	if setupWWWError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupWWWError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupWWWError)
+	}
+
+	opts := &www.HasAlternatePlacetypeHandlerOptions{
+		Spelunker:     sp,
+		Authenticator: authenticator,
+		Templates:     html_templates,
+		URIs:          uris_table,
+	}
+
+	return www.HasAlternatePlacetypeHandler(opts)
+}
+
 func hasConcordanceHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	setupWWWOnce.Do(setupWWW)
