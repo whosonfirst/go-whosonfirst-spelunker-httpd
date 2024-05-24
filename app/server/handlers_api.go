@@ -207,6 +207,23 @@ func placetypeFacetedHandlerFunc(ctx context.Context) (http.Handler, error) {
 	return api.PlacetypeFacetedHandler(opts)
 }
 
+func alternatePlacetypeFacetedHandlerFunc(ctx context.Context) (http.Handler, error) {
+
+	setupAPIOnce.Do(setupAPI)
+
+	if setupAPIError != nil {
+		slog.Error("Failed to set up common configuration", "error", setupAPIError)
+		return nil, fmt.Errorf("Failed to set up common configuration, %w", setupAPIError)
+	}
+
+	opts := &api.AlternatePlacetypeFacetedHandlerOptions{
+		Spelunker: sp,
+		// Authenticator: authenticator,
+	}
+
+	return api.AlternatePlacetypeFacetedHandler(opts)
+}
+
 func recentFacetedHandlerFunc(ctx context.Context) (http.Handler, error) {
 
 	setupAPIOnce.Do(setupAPI)

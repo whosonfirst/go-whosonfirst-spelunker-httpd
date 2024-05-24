@@ -49,7 +49,7 @@ func NullIslandFacetedHandler(opts *NullIslandFacetedHandlerOptions) (http.Handl
 
 		if err != nil {
 			logger.Error("Failed to get recent", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 
@@ -60,7 +60,7 @@ func NullIslandFacetedHandler(opts *NullIslandFacetedHandlerOptions) (http.Handl
 
 		if err != nil {
 			logger.Error("Failed to encode facets response", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 	}

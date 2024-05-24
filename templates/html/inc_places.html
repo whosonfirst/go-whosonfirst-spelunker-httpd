@@ -52,7 +52,7 @@
 	{{ if gt (len .Places) 0 -}}
 	{{ if (IsAvailable "FacetsURL" .) -}}
 	{{ if (IsAvailable "FacetsContextURL" .) -}}
-	<div id="whosonfirst-facets" data-current-url="{{ $.FacetsContextURL }}" data-facets-url="{{ $.FacetsURL }}" data-facets="country,placetype,iscurrent,isdeprecated">
+	<div id="whosonfirst-facets" data-current-url="{{ $.FacetsContextURL }}" data-facets-url="{{ $.FacetsURL }}" data-facets="country,placetype,placetype-alt,iscurrent,isdeprecated">
 	    {{ end -}}
 	{{ end -}}	    
 	</div>

@@ -87,7 +87,7 @@ func HasConcordanceFacetedHandler(opts *HasConcordanceFacetedHandlerOptions) (ht
 
 		if err != nil {
 			logger.Error("Failed to encode facets response", "error", err)
-			http.Error(rsp, "womp womp", http.StatusInternalServerError)
+			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}
 	}

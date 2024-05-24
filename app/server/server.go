@@ -83,6 +83,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions, logger *slog.Logger) 
 		path_urisjs: urisJSHandlerFunc,
 
 		// API/machine-readable
+		run_options.URIs.AlternatePlacetypeFaceted:         alternatePlacetypeFacetedHandlerFunc,		
 		run_options.URIs.ConcordanceNSFaceted:     hasConcordanceFacetedHandlerFunc,
 		run_options.URIs.ConcordanceNSPredFaceted: hasConcordanceFacetedHandlerFunc,
 		run_options.URIs.ConcordanceTripleFaceted: hasConcordanceFacetedHandlerFunc,
