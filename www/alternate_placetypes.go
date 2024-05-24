@@ -26,7 +26,7 @@ type AlternatePlacetypesHandlerVars struct {
 
 func AlternatePlacetypesHandler(opts *AlternatePlacetypesHandlerOptions) (http.Handler, error) {
 
-	t_name := "alternative_placetypes"
+	t_name := "alternate_placetypes"
 	t := opts.Templates.Lookup(t_name)
 
 	if t == nil {
@@ -41,7 +41,7 @@ func AlternatePlacetypesHandler(opts *AlternatePlacetypesHandlerOptions) (http.H
 		faceting, err := opts.Spelunker.GetAlternatePlacetypes(ctx)
 
 		if err != nil {
-			logger.Error("Failed to get alternative placetypes", "error", err)
+			logger.Error("Failed to get alternate placetypes", "error", err)
 			http.Error(rsp, "Internal server error", http.StatusInternalServerError)
 			return
 		}

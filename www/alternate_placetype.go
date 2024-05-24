@@ -12,28 +12,28 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 )
 
-type HasAlternativePlacetypeHandlerOptions struct {
+type HasAlternatePlacetypeHandlerOptions struct {
 	Spelunker     spelunker.Spelunker
 	Authenticator auth.Authenticator
 	Templates     *template.Template
 	URIs          *httpd.URIs
 }
 
-type HasAlternativePlacetypeHandlerVars struct {
-	PageTitle            string
-	URIs                 *httpd.URIs
-	AlternativePlacetype string
-	Places               []spr.StandardPlacesResult
-	Pagination           pagination.Results
-	PaginationURL        string
-	FacetsURL            string
-	FacetsContextURL     string
-	OpenGraph            *OpenGraph
+type HasAlternatePlacetypeHandlerVars struct {
+	PageTitle          string
+	URIs               *httpd.URIs
+	AlternatePlacetype string
+	Places             []spr.StandardPlacesResult
+	Pagination         pagination.Results
+	PaginationURL      string
+	FacetsURL          string
+	FacetsContextURL   string
+	OpenGraph          *OpenGraph
 }
 
-func HasAlternativePlacetypeHandler(opts *HasAlternativePlacetypeHandlerOptions) (http.Handler, error) {
+func HasAlternatePlacetypeHandler(opts *HasAlternatePlacetypeHandlerOptions) (http.Handler, error) {
 
-	t_name := "alternative_placetype"
+	t_name := "alternate_placetype"
 	t := opts.Templates.Lookup(t_name)
 
 	if t == nil {
@@ -69,7 +69,7 @@ func HasAlternativePlacetypeHandler(opts *HasAlternativePlacetypeHandlerOptions)
 			return
 		}
 
-		r, pg_r, err := opts.Spelunker.HasAlternativePlacetype(ctx, pg_opts, alt_pt, filters)
+		r, pg_r, err := opts.Spelunker.HasAlternatePlacetype(ctx, pg_opts, alt_pt, filters)
 
 		if err != nil {
 			logger.Error("Failed to get records having placetype", "error", err)
@@ -77,21 +77,21 @@ func HasAlternativePlacetypeHandler(opts *HasAlternativePlacetypeHandlerOptions)
 			return
 		}
 
-		pagination_url := httpd.URIForPlacetype(opts.URIs.AlternativePlacetype, alt_pt, filters, nil)
+		pagination_url := httpd.URIForPlacetype(opts.URIs.AlternatePlacetype, alt_pt, filters, nil)
 
 		// This is not ideal but I am not sure what is better yet...
-		facets_url := httpd.URIForPlacetype(opts.URIs.AlternativePlacetypeFaceted, alt_pt, filters, nil)
+		facets_url := httpd.URIForPlacetype(opts.URIs.AlternatePlacetypeFaceted, alt_pt, filters, nil)
 		facets_context_url := req.URL.Path
 
-		vars := HasAlternativePlacetypeHandlerVars{
-			PageTitle:            alt_pt,
-			URIs:                 opts.URIs,
-			AlternativePlacetype: alt_pt,
-			Places:               r.Results(),
-			Pagination:           pg_r,
-			PaginationURL:        pagination_url,
-			FacetsURL:            facets_url,
-			FacetsContextURL:     facets_context_url,
+		vars := HasAlternatePlacetypeHandlerVars{
+			PageTitle:          alt_pt,
+			URIs:               opts.URIs,
+			AlternatePlacetype: alt_pt,
+			Places:             r.Results(),
+			Pagination:         pg_r,
+			PaginationURL:      pagination_url,
+			FacetsURL:          facets_url,
+			FacetsContextURL:   facets_context_url,
 		}
 
 		og_label := alt_pt

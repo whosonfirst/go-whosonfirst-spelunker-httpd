@@ -12,55 +12,55 @@ import (
 
 type URIs struct {
 	// WWW/human-readable
-	AlternativePlacetype  string   `json:"alternative_placetype"`
-	AlternativePlacetypes string   `json:"alternative_placetypes"`
-	Concordances          string   `json:"concordances"`
-	ConcordanceNS         string   `json:"concordance_ns"`
-	ConcordanceNSPred     string   `json:"concordance_ns_pred"`
-	ConcordanceTriple     string   `json:"concordance_triple"`
-	Descendants           string   `json:"descendants"`
-	DescendantsAlt        []string `json:"descendants_alt"`
-	Id                    string   `json:"id"`
-	IdAlt                 []string `json:"id_alt"`
-	Index                 string   `json:"index"`
-	Placetypes            string   `json:"placetypes"`
-	Placetype             string   `json:"placetype"`
-	NullIsland            string   `json:"nullisland"`
-	Recent                string   `json:"recent"`
-	RecentAlt             []string `json:"recent_alt"`
-	Search                string   `json:"search"`
-	About                 string   `json:"about"`
-	Code                  string   `json:"code"`
-	HowTo                 string   `json:"how_to"`
-	Tiles                 string   `json:"tiles"`
-	OpenSearch            string   `json:"opensearch"`
+	AlternatePlacetype  string   `json:"alternate_placetype"`
+	AlternatePlacetypes string   `json:"alternate_placetypes"`
+	Concordances        string   `json:"concordances"`
+	ConcordanceNS       string   `json:"concordance_ns"`
+	ConcordanceNSPred   string   `json:"concordance_ns_pred"`
+	ConcordanceTriple   string   `json:"concordance_triple"`
+	Descendants         string   `json:"descendants"`
+	DescendantsAlt      []string `json:"descendants_alt"`
+	Id                  string   `json:"id"`
+	IdAlt               []string `json:"id_alt"`
+	Index               string   `json:"index"`
+	Placetypes          string   `json:"placetypes"`
+	Placetype           string   `json:"placetype"`
+	NullIsland          string   `json:"nullisland"`
+	Recent              string   `json:"recent"`
+	RecentAlt           []string `json:"recent_alt"`
+	Search              string   `json:"search"`
+	About               string   `json:"about"`
+	Code                string   `json:"code"`
+	HowTo               string   `json:"how_to"`
+	Tiles               string   `json:"tiles"`
+	OpenSearch          string   `json:"opensearch"`
 
 	// Static assets
 	Static string `json:"static"`
 
 	// API/machine-readable
-	AlternativePlacetypeFaceted string   `json:"alternative_placetype_faceted"`
-	ConcordanceNSFaceted        string   `json:"concordance_ns"`
-	ConcordanceNSPredFaceted    string   `json:"concordance_ns_pred"`
-	ConcordanceTripleFaceted    string   `json:"concordance_triple_faceted"`
-	DescendantsFaceted          string   `json:"descendants_faceted"`
-	FindingAid                  string   `json:"finding_aid"`
-	GeoJSON                     string   `json:"geojson"`
-	GeoJSONAlt                  []string `json:"geojson_alt"`
-	GeoJSONLD                   string   `json:"geojsonld"`
-	GeoJSONLDAlt                []string `json:"geojsonld_alt"`
-	NavPlace                    string   `json:"navplace"`
-	NavPlaceAlt                 []string `json:"navplace_alt"`
-	NullIslandFaceted           string   `json:"nullisland_faceted"`
-	PlacetypeFaceted            string   `json:"placetype_faceted"`
-	RecentFaceted               string   `json:"recent_faceted"`
-	SearchFaceted               string   `json:"search_faceted"`
-	Select                      string   `json:"select"`
-	SelectAlt                   []string `json:"select_alt"`
-	SPR                         string   `json:"spr"`
-	SPRAlt                      []string `json:"spr_alt"`
-	SVG                         string   `json:"svg"`
-	SVGAlt                      []string `json:"svg_alt"`
+	AlternatePlacetypeFaceted string   `json:"alternate_placetype_faceted"`
+	ConcordanceNSFaceted      string   `json:"concordance_ns"`
+	ConcordanceNSPredFaceted  string   `json:"concordance_ns_pred"`
+	ConcordanceTripleFaceted  string   `json:"concordance_triple_faceted"`
+	DescendantsFaceted        string   `json:"descendants_faceted"`
+	FindingAid                string   `json:"finding_aid"`
+	GeoJSON                   string   `json:"geojson"`
+	GeoJSONAlt                []string `json:"geojson_alt"`
+	GeoJSONLD                 string   `json:"geojsonld"`
+	GeoJSONLDAlt              []string `json:"geojsonld_alt"`
+	NavPlace                  string   `json:"navplace"`
+	NavPlaceAlt               []string `json:"navplace_alt"`
+	NullIslandFaceted         string   `json:"nullisland_faceted"`
+	PlacetypeFaceted          string   `json:"placetype_faceted"`
+	RecentFaceted             string   `json:"recent_faceted"`
+	SearchFaceted             string   `json:"search_faceted"`
+	Select                    string   `json:"select"`
+	SelectAlt                 []string `json:"select_alt"`
+	SPR                       string   `json:"spr"`
+	SPRAlt                    []string `json:"spr_alt"`
+	SVG                       string   `json:"svg"`
+	SVGAlt                    []string `json:"svg_alt"`
 
 	RootURL string `json:"root_url"`
 }
@@ -106,21 +106,21 @@ func DefaultURIs() *URIs {
 
 		// WWW/human-readable
 
-		AlternativePlacetypes: "/placetypes/alternative",
-		AlternativePlacetype:  "/placetypes/alternative/{placetype}",
-		Index:                 "/",
-		Search:                "/search",
-		About:                 "/about",
-		Code:                  "/code",
-		HowTo:                 "/howto",
-		NullIsland:            "/nullisland",
-		Placetypes:            "/placetypes",
-		Placetype:             "/placetypes/{placetype}",
-		Concordances:          "/concordances",
-		ConcordanceNS:         "/concordances/{namespace}",
-		ConcordanceNSPred:     "/concordances/{namespace}:{predicate}",
-		ConcordanceTriple:     "/concordances/{namespace}:{predicate}={value}",
-		Recent:                "/recent/{duration}",
+		AlternatePlacetypes: "/placetypes/alternate",
+		AlternatePlacetype:  "/placetypes/alternate/{placetype}",
+		Index:               "/",
+		Search:              "/search",
+		About:               "/about",
+		Code:                "/code",
+		HowTo:               "/howto",
+		NullIsland:          "/nullisland",
+		Placetypes:          "/placetypes",
+		Placetype:           "/placetypes/{placetype}",
+		Concordances:        "/concordances",
+		ConcordanceNS:       "/concordances/{namespace}",
+		ConcordanceNSPred:   "/concordances/{namespace}:{predicate}",
+		ConcordanceTriple:   "/concordances/{namespace}:{predicate}={value}",
+		Recent:              "/recent/{duration}",
 		RecentAlt: []string{
 			"/recent",
 		},
@@ -133,11 +133,11 @@ func DefaultURIs() *URIs {
 		Static: "/static/",
 
 		// API/machine-readable
-		AlternativePlacetypeFaceted: "/placetypes/alternative/{placetype}/facets",
-		ConcordanceNSFaceted:        "/concordances/{namespace}/facets",
-		ConcordanceNSPredFaceted:    "/concordances/{namespace}:{predicate}/facets",
-		ConcordanceTripleFaceted:    "/concordances/{namespace}:{predicate}={value}/facets",
-		DescendantsFaceted:          "/id/{id}/descendants/facets",
+		AlternatePlacetypeFaceted: "/placetypes/alternate/{placetype}/facets",
+		ConcordanceNSFaceted:      "/concordances/{namespace}/facets",
+		ConcordanceNSPredFaceted:  "/concordances/{namespace}:{predicate}/facets",
+		ConcordanceTripleFaceted:  "/concordances/{namespace}:{predicate}={value}/facets",
+		DescendantsFaceted:        "/id/{id}/descendants/facets",
 
 		FindingAid: "/findingaid/",
 
