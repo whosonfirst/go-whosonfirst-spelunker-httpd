@@ -27,7 +27,7 @@ func AlternatePlacetypeFacetedHandler(opts *AlternatePlacetypeFacetedHandlerOpti
 		logger = logger.With("request placetype", req_pt)
 
 		alt_pt := req_pt
-		
+
 		filter_params := httpd.DefaultFilterParams()
 
 		filters, err := httpd.FiltersFromRequest(ctx, req, filter_params)

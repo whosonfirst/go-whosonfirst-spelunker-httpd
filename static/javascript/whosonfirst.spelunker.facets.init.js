@@ -32,7 +32,7 @@ window.addEventListener("load", function load(event){
 	var f_label = f;
 
 	switch (f) {
-	    case "placetype_alt":
+	    case "placetypealt":
 		f_label = "alternate placetype";
 		break;
 	    case "iscurrent":

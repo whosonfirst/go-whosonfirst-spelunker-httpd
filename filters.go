@@ -13,7 +13,7 @@ func DefaultFilterParams() []string {
 
 	return []string{
 		"placetype",
-		"placetype_alt",
+		"placetypealt",
 		"country",
 		"tag",
 		"iscurrent",
@@ -137,23 +137,23 @@ func FiltersFromRequest(ctx context.Context, req *http.Request, params []string)
 				filters = append(filters, placetype_f)
 			}
 
-		case "placetype_alt":
+		case "placetypealt":
 
-			placetype_alt, err := sanitize.GetString(req, "placetype_alt")
+			placetypealt, err := sanitize.GetString(req, "placetypealt")
 
 			if err != nil {
-				return nil, fmt.Errorf("Failed to derive ?placetype_alt= query parameter, %w", err)
+				return nil, fmt.Errorf("Failed to derive ?placetypealt= query parameter, %w", err)
 			}
 
-			if placetype_alt != "" {
+			if placetypealt != "" {
 
-				placetype_alt_f, err := spelunker.NewPlacetypeAltFilterFromString(ctx, placetype_alt)
+				placetypealt_f, err := spelunker.NewPlacetypeAltFilterFromString(ctx, placetypealt)
 
 				if err != nil {
-					return nil, fmt.Errorf("Failed to create placetype_alt filter from string '%s', %w", placetype_alt, err)
+					return nil, fmt.Errorf("Failed to create placetypealt filter from string '%s', %w", placetypealt, err)
 				}
 
-				filters = append(filters, placetype_alt_f)
+				filters = append(filters, placetypealt_f)
 			}
 
 		default:
