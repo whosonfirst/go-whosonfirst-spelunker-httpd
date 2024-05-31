@@ -48,6 +48,11 @@ func AppendPagination(uri string, k string, v any) string {
 }
 
 func IsAPlacetype(pt string) string {
+
+	if pt == "custom" {
+		return "a custom placetype"
+	}
+
 	// https://github.com/whosonfirst/go-whosonfirst-spelunker-httpd/issues/46
 
 	vowels := []string{

@@ -37,6 +37,8 @@ func TestIsAPlacetype(t *testing.T) {
 		"region":        "a region",
 		"island":        "an island",
 		"neighbourhood": "a neighbourhood",
+		"custom":        "a custom placetype",
+		"empire":        "an empire",
 	}
 
 	for pt, expected := range tests {
