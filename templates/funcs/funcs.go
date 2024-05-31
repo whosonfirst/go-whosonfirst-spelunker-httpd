@@ -45,3 +45,8 @@ func AppendPagination(uri string, k string, v any) string {
 	u.RawQuery = q.Encode()
 	return u.String()
 }
+
+func IsAPlacetype(pt string) string {
+	// https://github.com/whosonfirst/go-whosonfirst-spelunker-httpd/issues/46
+	return pt
+}
