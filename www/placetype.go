@@ -9,8 +9,8 @@ import (
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/whosonfirst/go-whosonfirst-placetypes"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
-	wof_funcs "github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/funcs"		
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
+	wof_funcs "github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/funcs"
 	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 )
 
@@ -102,7 +102,7 @@ func HasPlacetypeHandler(opts *HasPlacetypeHandlerOptions) (http.Handler, error)
 		}
 
 		is_pt := wof_funcs.IsAPlacetype(pt.Name)
-		
+
 		og_title := fmt.Sprintf(`Who's On First \"%s\" records`, pt.Name)
 		og_desc := fmt.Sprintf("Who's On First records that are %s", is_pt)
 

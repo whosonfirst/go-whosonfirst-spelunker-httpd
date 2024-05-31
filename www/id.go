@@ -11,8 +11,8 @@ import (
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-placetypes"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
-	wof_funcs "github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/funcs"	
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
+	wof_funcs "github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/funcs"
 	"github.com/whosonfirst/go-whosonfirst-uri"
 )
 
@@ -248,7 +248,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 		// START OF put me in a function or something...
 
 		is_pt := wof_funcs.IsAPlacetype(str_pt.String())
-		
+
 		var og_desc string
 
 		switch str_pt.String() {
