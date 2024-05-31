@@ -9,6 +9,7 @@ import (
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
+	wof_funcs "github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/funcs"
 	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 )
 
@@ -94,10 +95,10 @@ func HasAlternatePlacetypeHandler(opts *HasAlternatePlacetypeHandlerOptions) (ht
 			FacetsContextURL:   facets_context_url,
 		}
 
-		og_label := alt_pt
+		is_pt := wof_funcs.IsAPlacetype(alt_pt)
 
 		og_title := fmt.Sprintf(`Who's On First \"%s\" records`, alt_pt)
-		og_desc := fmt.Sprintf("Who's On First records that are %s", og_label)
+		og_desc := fmt.Sprintf("Who's On First records that are %s", is_pt)
 
 		vars.OpenGraph = &OpenGraph{
 			Type:        "Article",
