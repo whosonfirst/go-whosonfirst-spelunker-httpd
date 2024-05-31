@@ -9,7 +9,7 @@ import (
 	"github.com/sfomuseum/go-http-auth"
 	"github.com/whosonfirst/go-whosonfirst-placetypes"
 	"github.com/whosonfirst/go-whosonfirst-spelunker"
-	wof_funcs "github.com/whosonfirst/go-whosonfirst-spelunker/templates/funcs"		
+	wof_funcs "github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/funcs"		
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd"
 	"github.com/whosonfirst/go-whosonfirst-spr/v2"
 )
