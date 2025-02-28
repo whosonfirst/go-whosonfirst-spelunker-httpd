@@ -50,5 +50,5 @@ require (
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.27 // indirect
 	github.com/whosonfirst/go-whosonfirst-flags v0.5.1 // indirect
 	go.mongodb.org/mongo-driver v1.11.4 // indirect
-	golang.org/x/net v0.25.0 // indirect
+	golang.org/x/net v0.33.0 // indirect
 )
