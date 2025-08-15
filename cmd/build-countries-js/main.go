@@ -15,7 +15,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sfomuseum/go-csvdict"
+	"github.com/sfomuseum/go-csvdict/v2"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/javascript"
 )
 
