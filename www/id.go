@@ -177,7 +177,7 @@ func IdHandler(opts *IdHandlerOptions) (http.Handler, error) {
 			v, err := placetypes.GetPlacetypeByName("installation")
 
 			if err != nil {
-				logger.Warn("Failed to instantiate 'installation' placetype, %w", err)
+				logger.Warn("Failed to instantiate 'installation' placetype", "error", err)
 			} else {
 				pt = v
 			}
