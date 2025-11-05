@@ -192,8 +192,8 @@ github.com/sfomuseum/go-edtf v1.0.0/go.mod h1:1rP0EJZ/84j3HO80vGcnG2T9MFBDAFyTNt
 github.com/sfomuseum/go-edtf v1.2.1 h1:vyKvoNa4p6mmwp9AbbEdJoj+A5YK4G7S1QgmSNpXh7s=
 github.com/sfomuseum/go-edtf v1.2.1/go.mod h1:1rP0EJZ/84j3HO80vGcnG2T9MFBDAFyTNtjrr8cv3T4=
 github.com/sfomuseum/go-flags v0.7.0/go.mod h1:ML3DTNbF9xnjExSdS/9FtVLjIUhRU5gm/ehzISv+t2w=
-github.com/sfomuseum/go-flags v0.11.0 h1:HmMm5DgLxgz8iaNsvJ79dyRXjuAyX/fruqkBeHmopL0=
-github.com/sfomuseum/go-flags v0.11.0/go.mod h1:cUTByyudaM9d+iHwxsEpyYHemWVOGL/bqTRPIvydiC8=
+github.com/sfomuseum/go-flags v0.12.1 h1:xvg3iEz510JPr9ItPxOOF2C12JnlplodT1V/1Ty7Pg8=
+github.com/sfomuseum/go-flags v0.12.1/go.mod h1:cUTByyudaM9d+iHwxsEpyYHemWVOGL/bqTRPIvydiC8=
 github.com/sfomuseum/go-geojsonld v1.0.0 h1:BkHMEsmbTpDTQu1DClTT4VrNMXnLMPsSdBq8tYbMhB4=
 github.com/sfomuseum/go-geojsonld v1.0.0/go.mod h1:hluKfABMpnukBEf8qLwuWdwotdYFelMYKxO1njRmxPU=
 github.com/sfomuseum/go-http-opensearch v0.0.2 h1:smssY9rIOzI6E1CrZjxwM63873vI5WuyW3LgrDsY4cE=
@@ -248,8 +248,8 @@ github.com/whosonfirst/go-whosonfirst-placetypes v0.9.0/go.mod h1:4kUVNaG1uuWHjP
 github.com/whosonfirst/go-whosonfirst-sources v0.1.0/go.mod h1:EUMHyGzUmqPPxlMmOp+28BFeoBdxxE0HCKRd67lkqGM=
 github.com/whosonfirst/go-whosonfirst-sources v0.2.0 h1:G5U5lgtNUYHdJloEsI+uqQx5s+Q+zaQpq17nDMx2r2o=
 github.com/whosonfirst/go-whosonfirst-sources v0.2.0/go.mod h1:oAYirIVWxBmpE4/J0p7kpYqmgtQVDCyff2qJ8JzhdHc=
-github.com/whosonfirst/go-whosonfirst-spelunker v0.0.6 h1:m8gGEX1caPRjQpbAVMFR8rADBiziD5Yv0nD1TE4l17I=
-github.com/whosonfirst/go-whosonfirst-spelunker v0.0.6/go.mod h1:U1O+6W8uwD7jj/AeV4avVkYAfl3Jj7Thx742Kp/JvyY=
+github.com/whosonfirst/go-whosonfirst-spelunker v0.0.7 h1:TvPjFiGaA0OtDrw6lsYOk80mXcNtzZDAkPIzICp08kc=
+github.com/whosonfirst/go-whosonfirst-spelunker v0.0.7/go.mod h1:mR+bU4GkfliIL0i0nlJ7o9eSxm6FNgt5dEtB21gShn8=
 github.com/whosonfirst/go-whosonfirst-spr/v2 v2.2.1/go.mod h1:3P6fiSVGtIbM3UcyaVMs4i1N6Hi88GmTsdouuXzlr78=
 github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.8 h1:UNl4QuSdOD8ciZE2vNoZ8nSE38Z5ItWBJVeNS00pCeE=
 github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.8/go.mod h1:fWGHEhgG0799kSiGQapLuHV9ibXiQkuy48YLJN8gp6U=

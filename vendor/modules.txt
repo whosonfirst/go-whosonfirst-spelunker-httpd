@@ -303,7 +303,7 @@ github.com/sfomuseum/go-edtf/level2
 github.com/sfomuseum/go-edtf/parser
 github.com/sfomuseum/go-edtf/re
 github.com/sfomuseum/go-edtf/tests
-# github.com/sfomuseum/go-flags v0.11.0
+# github.com/sfomuseum/go-flags v0.12.1
 ## explicit; go 1.22
 github.com/sfomuseum/go-flags/flagset
 # github.com/sfomuseum/go-geojsonld v1.0.0
@@ -368,7 +368,7 @@ github.com/whosonfirst/go-whosonfirst-placetypes
 ## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-sources
 github.com/whosonfirst/go-whosonfirst-sources/sources
-# github.com/whosonfirst/go-whosonfirst-spelunker v0.0.6
+# github.com/whosonfirst/go-whosonfirst-spelunker v0.0.7
 ## explicit; go 1.24.0
 github.com/whosonfirst/go-whosonfirst-spelunker
 # github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.8

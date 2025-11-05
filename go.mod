@@ -10,7 +10,7 @@ require (
 	github.com/mitchellh/copystructure v1.2.0
 	github.com/rs/cors v1.11.1
 	github.com/sfomuseum/go-csvdict/v2 v2.0.1
-	github.com/sfomuseum/go-flags v0.11.0
+	github.com/sfomuseum/go-flags v0.12.1
 	github.com/sfomuseum/go-geojsonld v1.0.0
 	github.com/sfomuseum/go-http-opensearch v0.0.2
 	github.com/sfomuseum/go-template v1.10.1
@@ -20,7 +20,7 @@ require (
 	github.com/whosonfirst/go-sanitize v0.1.0
 	github.com/whosonfirst/go-whosonfirst-placetypes v0.9.0
 	github.com/whosonfirst/go-whosonfirst-sources v0.2.0
-	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.6
+	github.com/whosonfirst/go-whosonfirst-spelunker v0.0.7
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.3.8
 	github.com/whosonfirst/go-whosonfirst-svg v0.1.0
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
