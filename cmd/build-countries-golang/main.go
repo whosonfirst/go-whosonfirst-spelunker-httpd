@@ -14,7 +14,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sfomuseum/go-csvdict"
+	"github.com/sfomuseum/go-csvdict/v2"
 	"github.com/whosonfirst/go-whosonfirst-spelunker-httpd/templates/golang"
 )
 
@@ -56,7 +56,7 @@ func main() {
 	r, err := os.Open(meta)
 
 	if err != nil {
-		log.Fatalf("Failed to open %s for reading, %w", meta, err)
+		log.Fatalf("Failed to open %s for reading, %v", meta, err)
 	}
 
 	defer r.Close()
